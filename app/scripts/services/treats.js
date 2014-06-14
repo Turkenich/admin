@@ -5,7 +5,7 @@ angular.module('adminApp')
         return $resource(Consts.api_root + 'treat/:id', {}, {
             all: { method: 'GET', params: {}, isArray: true },
             query: { method: 'GET', params: {}, isArray: false },
-            create: { method: 'POST' },
+            create: { method: 'POST', params: {force: '1'} },
             update: { method: 'PUT', params: {id: '@_id'} },
             remove: { method: 'DELETE', params: {id: '@_id'} }
         });
