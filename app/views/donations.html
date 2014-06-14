@@ -4,19 +4,19 @@
     <li class="media line" ng-repeat="item in items">
         <div class="media-body">
             <div class="media-wrapper input-group input-group-sm space">
-                <span class="input-group-addon">Treat</span>
-                <select class="form-control" ng-model="item.treat._id">
+                <span class="input-group-addon">Treat [{{item.treat.name}}]</span>
+                <select class="form-control" ng-model="item.treat._id" >
                     <option ng-repeat="treat in treats" value="{{treat._id}}">{{treat.name}}</option>
                 </select>
             </div>
             <div class="media-wrapper input-group input-group-sm space">
-                <span class="input-group-addon">Pet</span>
-                <select class="form-control" ng-model="item.pet._id">
+                <span class="input-group-addon">Pet [{{item.pet.name}}]</span>
+                <select class="form-control" ng-model="item.pet._id" >
                     <option ng-repeat="pet in pets" value="{{pet._id}}">{{pet.name}}</option>
                 </select>
             </div>
             <div class="media-wrapper input-group input-group-sm space">
-                <span class="input-group-addon">User</span>
+                <span class="input-group-addon">User [{{item.user.name}}]</span>
                 <select class="form-control" ng-model="item.user._id">
                     <option ng-repeat="user in users" value="{{user._id}}">{{user.name}}</option>
                 </select>
