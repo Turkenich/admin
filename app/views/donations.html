@@ -1,0 +1,40 @@
+<h1>Donations</h1>
+<button class="btn btn-default" ng-click="addItem()">New Donation</button>
+<ul class="media-list">
+    <li class="media line" ng-repeat="item in items">
+        <div class="media-body">
+            <div class="media-wrapper input-group input-group-sm space">
+                <span class="input-group-addon">Treat</span>
+                <select class="form-control" ng-model="item.treat._id">
+                    <option ng-repeat="treat in treats" value="{{treat._id}}">{{treat.name}}</option>
+                </select>
+            </div>
+            <div class="media-wrapper input-group input-group-sm space">
+                <span class="input-group-addon">Pet</span>
+                <select class="form-control" ng-model="item.pet._id">
+                    <option ng-repeat="pet in pets" value="{{pet._id}}">{{pet.name}}</option>
+                </select>
+            </div>
+            <div class="media-wrapper input-group input-group-sm space">
+                <span class="input-group-addon">User</span>
+                <select class="form-control" ng-model="item.user._id">
+                    <option ng-repeat="user in users" value="{{user._id}}">{{user.name}}</option>
+                </select>
+            </div>
+            <div class="media-wrapper input-group input-group-sm space">
+                <span class="input-group-addon">Media</span>
+                <select class="form-control" ng-model="item.media._id">
+                    <option ng-repeat="media in medias" value="{{media._id}}">{{media._id}}</option>
+                </select>
+            </div>
+            <div class="media-wrapper input-group input-group-sm space" ng-repeat="(key, val) in item">
+                <span class="input-group-addon">{{key}}</span>
+                <input type="text" class="form-control" ng-model="item[key]" value="{{val}}"/>
+            </div>
+            <div class="media-wrapper btn-group space">
+                <button class="btn btn-default" ng-click="updateItem($index)">SAVE</button>
+                <button class="btn btn-default" ng-click="removeItem($index)">REMOVE</button>
+            </div>
+        </div>
+    </li>
+</ul>

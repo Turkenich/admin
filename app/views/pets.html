@@ -1,0 +1,27 @@
+<h1>Pets</h1>
+<button class="btn btn-default" ng-click="addItem()">New Pet</button>
+<ul class="media-list">
+    <li class="media line" ng-repeat="item in items">
+        <a class="pull-left thumbnail" ng-href="{{item.link}}" target="_blank">
+            <img class="media-object" ng-src="{{item.image}}" width="512"/>
+        </a>
+
+        <div class="media-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="media-wrapper btn-group" style="float: right; margin: -5px;">
+                        <button class="btn btn-default" ng-click="updateItem($index)">SAVE</button>
+                        <button class="btn btn-default" ng-click="removeItem($index)">REMOVE</button>
+                    </div>
+                    <h4 class="media-heading">{{item.name}}</h4>
+                </div>
+                <div style="padding:10px">
+                    <div class="media-wrapper input-group input-group-sm space" ng-repeat="(key, val) in item">
+                        <span class="input-group-addon">{{key}}</span>
+                        <input type="text" class="form-control" ng-model="item[key]" value="{{val}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

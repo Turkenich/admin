@@ -1,0 +1,30 @@
+rvm use ruby-1.9.3-p484
+
+function deploy() {
+    log "syncing dist"
+    cd dist
+    git pull bchmn master
+    cd ..
+    log "grunt clean"
+    grunt clean_dist
+    wait
+    cd dist
+    log "commiting clean dist"
+    git commit -am "clean"
+    cd ..
+    log "grunt build"
+    grunt deploy
+    wait
+    cd dist
+    log "comitting dist"
+    git add .
+    git commit -m "build"
+    log "pushing production"
+    git push bchmn master
+}
+
+log() {
+    echo "================================"
+    echo "          $1           "
+    echo "================================"
+}
