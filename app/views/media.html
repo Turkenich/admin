@@ -2,11 +2,11 @@
 <button class="btn btn-default" ng-click="fetchMedia()">Fetch Media From Instagram</button>
 
 <ul class="media-list">
-    <li class="media" ng-repeat="item in items" ng-if="!(item.removed==true)">
+    <li class="media" ng-repeat="item in items" ng-if="!(item.removed || item.donation || item.pet)">
         <a class="pull-left thumbnail" ng-href="{{item.link}}" target="_blank">
             <img ng-if="item.type=='im'" class="media-object" ng-src="{{item.image}}" width="256"/>
             <video ng-if="item.type=='vd'" class="media-object" width="256" controls>
-                <source src="{{trustUrl(item.video)}}" type="video/mp4">
+                <source ng-src="{{trustUrl(item.video)}}" type="video/mp4">
             </video>
         </a>
 
@@ -22,6 +22,7 @@
                 <div class="panel-body">
 
                     <ul class="nav nav-tabs" ng-init="activePill = ''">
+                        <li ng-class="{active: (activePill == '')}"><a ng-click="activePill = ''">None</a></li>
                         <li ng-class="{active: (activePill == 'raw')}"><a ng-click="activePill = 'raw'">Raw Data</a></li>
                         <li ng-hide="item.donation" ng-class="{active: (activePill == 'pet')}"><a ng-click="activePill = 'pet'">Create Pet</a></li>
                         <li ng-hide="item.pet" ng-class="{active: (activePill == 'donation')}"><a ng-click="activePill = 'donation'">Assign to Donation</a></li>

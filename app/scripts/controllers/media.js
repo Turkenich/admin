@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminApp')
-    .controller('MediaCtrl', ['$scope', '$http', '$timeout', 'Instagram', 'Media', 'Pets', 'Kennels', 'Treats', 'Donations', function ($scope, $http, $timeout, Instagram, Media, Pets, Kennels, Treats, Donations) {
+    .controller('MediaCtrl', ['$scope', '$http', '$timeout', '$routeParams', 'Instagram', 'Media', 'Pets', 'Kennels', 'Treats', 'Donations', function ($scope, $http, $timeout, $routeParams, Instagram, Media, Pets, Kennels, Treats, Donations) {
 
         function init() {
 //            $scope.fetchMedia();
@@ -28,7 +28,6 @@ angular.module('adminApp')
                 console.log('lastItem', lastItem);
                 Instagram.get(100).success(function (res) {
                     $timeout(function () {
-                        debugger;
                         $scope.instagram = [];
                         for (var i in res.data) {
                             var item = formatMedia(res.data[i]);
@@ -48,7 +47,7 @@ angular.module('adminApp')
         }
 
         $timeout(function () {
-            $scope.items = Media.all();
+            $scope.items = $routeParams.id ? [Media.query({id: $routeParams.id})] : Media.all();
             $scope.treats = Treats.all();
             $scope.pets = Pets.all();
             $scope.kennels = Kennels.all()

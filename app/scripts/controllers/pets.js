@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('PetsCtrl', ['$scope', 'Pets', function ($scope, Pets) {
-        $scope.items = Pets.all();
+  .controller('PetsCtrl', ['$scope', '$routeParams', 'Pets', function ($scope, $routeParams, Pets) {
+        $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
         $scope.updateItem = function(i){
             console.log('updating', $scope.items[i]);
             $scope.items[i].$update();

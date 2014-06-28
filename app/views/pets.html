@@ -2,8 +2,11 @@
 <button class="btn btn-default" ng-click="addItem()">New Pet</button>
 <ul class="media-list">
     <li class="media line" ng-repeat="item in items">
-        <a class="pull-left thumbnail" ng-href="{{item.link}}" target="_blank">
-            <img class="media-object" ng-src="{{item.image}}" width="512"/>
+        <a class="pull-left thumbnail" ng-href="{{item.media.link}}" target="_blank">
+            <img ng-if="item.media.type=='im'" class="media-object" ng-src="{{item.media.image}}" width="256"/>
+            <video ng-if="item.media.type=='vd'" class="media-object" width="256" controls>
+                <source ng-src="{{trustUrl(item.media.video)}}" type="video/mp4">
+            </video>
         </a>
 
         <div class="media-body">

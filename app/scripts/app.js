@@ -21,11 +21,19 @@ angular
                 templateUrl: 'views/media.html',
                 controller: 'MediaCtrl'
             })
+            .when('/media/:id', {
+                templateUrl: 'views/media.html',
+                controller: 'MediaCtrl'
+            })
             .when('/kennels', {
               templateUrl: 'views/kennels.html',
               controller: 'KennelsCtrl'
             })
             .when('/pets', {
+                templateUrl: 'views/pets.html',
+                controller: 'PetsCtrl'
+            })
+            .when('/pets/:id', {
                 templateUrl: 'views/pets.html',
                 controller: 'PetsCtrl'
             })
