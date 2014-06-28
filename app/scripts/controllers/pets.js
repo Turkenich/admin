@@ -19,4 +19,11 @@ angular.module('adminApp')
                 $scope.items.push(res);
             });
         }
+        $scope.updateField= function(item, params){
+            console.log('updating', item, params);
+            var data = {};
+            data['_id'] = item._id;
+            data[params['key']] = params['val'];
+            Pets.update(data);
+        }
   }]);
