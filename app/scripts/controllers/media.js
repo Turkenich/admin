@@ -5,6 +5,8 @@ angular.module('adminApp')
 
         function init() {
 //            $scope.fetchMedia();
+            $scope.hashtag = 'tfl';
+            $scope.activeFilter = '';
         }
 
         var formatMedia = function (item) {
@@ -26,19 +28,22 @@ angular.module('adminApp')
             //fetch from instagram
             Media.last(function (lastItem) {
                 console.log('lastItem', lastItem);
-                Instagram.get(100).success(function (res) {
+                Instagram.get($scope.hashtag, 100).success(function (res) {
                     $timeout(function () {
+                        debugger;
                         $scope.instagram = [];
                         for (var i in res.data) {
                             var item = formatMedia(res.data[i]);
                             if (lastItem.created_time >= item.created_time)
-                                break;
+                                continue;
                             $scope.instagram.push(item);
                             Media.create(item);
                         }
 
                         //fetch from our db
-                        $scope.items = Media.all();
+                        $timeout(function () {
+                            $scope.items = Media.all();
+                        });
 
                     });
                 });
@@ -57,14 +62,25 @@ angular.module('adminApp')
         })
 
         $scope.updateItem = function (i) {
-            console.log('updating', $scope.items[i]);
-            $scope.items[i].$update();
+            console.log('updating', i);
+            i.$update();
         }
         $scope.removeItem = function (i) {
-            if (confirm('Are You Sure???')) {
-                console.log('deleting', $scope.items[i]);
-                $scope.items[i].removed = true;
-                $scope.items[i].$update();
+            i.removed = true;
+            i.$update();
+        }
+
+        $scope.unremoveItem = function (i) {
+            i.removed = false;
+            i.$update();
+        }
+
+        $scope.shouldFilterItem = function (item) {
+            var filter = $scope.activeFilter;
+            if (filter == 'new') {
+                return (item.removed || item.donation || item.pet);
+            } else {
+                return !item[filter];
             }
         }
 
