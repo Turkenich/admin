@@ -1,11 +1,15 @@
-<h1>Media</h1>
-<button class="btn btn-default" ng-click="fetchMedia()">Fetch Media From Instagram</button>
+<h1>Fetch Media From Instagram</h1>
+<label>Hashtag: </label>
 <input type="text" ng-model="hashtag"/>
+<br/>
+
+<button class="btn btn-default" ng-click="fetchMedia(false)">Fetch NEW Items Only</button>
+<button class="btn btn-default" ng-click="fetchMedia(true)">Refetch ALL Items</button>
 
 <br/>
 <br/>
-<br/>
 
+<h1>Media</h1>
 <ul class="nav nav-pills" ng-init="activeFilter = 'new'">
     <li ng-class="{active: (activeFilter == 'new')}"><a ng-click="activeFilter = 'new'">New Items</a></li>
     <li ng-class="{active: (activeFilter == 'donation')}"><a ng-click="activeFilter = 'donation'">Items Assigned to Donations</a></li>

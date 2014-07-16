@@ -24,27 +24,30 @@ angular.module('adminApp')
             }
         }
 
-        $scope.fetchMedia = function () {
+        $scope.fetchMedia = function (all, min_tag_id) {
             //fetch from instagram
             Media.last(function (lastItem) {
                 console.log('lastItem', lastItem);
-                Instagram.get($scope.hashtag, 100).success(function (res) {
+                Instagram.get($scope.hashtag, 1000, min_tag_id).success(function (res) {
                     $timeout(function () {
-                        $scope.instagram = [];
                         for (var i in res.data) {
                             if (!res.data[i] || !res.data[i].id) {
                                 continue;
                             }
                             var item = formatMedia(res.data[i]);
-                            if (lastItem.created_time >= item.created_time)
+                            if (all || lastItem.created_time >= item.created_time)
                                 continue;
-                            $scope.instagram.push(item);
+//                            $scope.instagram.push(item);
                             Media.create(item);
                         }
 
                         //fetch from our db
                         $timeout(function () {
                             $scope.items = Media.all();
+                            if (res.pagination.min_tag_id){
+                                debugger;
+                                $scope.fetchMedia(all, res.pagination.min_tag_id);
+                            }
                         }, 500);
 
                     });
@@ -105,6 +108,7 @@ angular.module('adminApp')
                 $scope.pets.push(res);
                 item.pet = res;
                 item.$update();
+                item.activePill='';
             });
         }
 
