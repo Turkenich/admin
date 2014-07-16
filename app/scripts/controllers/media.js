@@ -5,7 +5,7 @@ angular.module('adminApp')
 
         function init() {
 //            $scope.fetchMedia();
-            $scope.hashtag = 'tfl';
+            $scope.hashtag = 'treatsforlife';
             $scope.activeFilter = '';
         }
 
@@ -30,9 +30,11 @@ angular.module('adminApp')
                 console.log('lastItem', lastItem);
                 Instagram.get($scope.hashtag, 100).success(function (res) {
                     $timeout(function () {
-                        debugger;
                         $scope.instagram = [];
                         for (var i in res.data) {
+                            if (!res.data[i] || !res.data[i].id) {
+                                continue;
+                            }
                             var item = formatMedia(res.data[i]);
                             if (lastItem.created_time >= item.created_time)
                                 continue;
@@ -43,7 +45,7 @@ angular.module('adminApp')
                         //fetch from our db
                         $timeout(function () {
                             $scope.items = Media.all();
-                        });
+                        }, 500);
 
                     });
                 });
@@ -78,7 +80,13 @@ angular.module('adminApp')
         $scope.shouldFilterItem = function (item) {
             var filter = $scope.activeFilter;
             if (filter == 'new') {
-                return (item.removed || item.donation || item.pet);
+                for (var field, i=0; field = ['removed','donation','pet'][i]; i++){
+                    if(item[field] && item.activePill!=field){
+                        return true;
+                    }
+                }
+                return false;
+//                return (item.removed || item.donation || item.pet);
             } else {
                 return !item[filter];
             }

@@ -36,27 +36,27 @@
                 </div>
                 <div class="panel-body">
 
-                    <ul class="nav nav-pills" ng-init="activePill = ''">
-                        <li ng-class="{active: (activePill == '')}"><a ng-click="activePill = ''">None</a></li>
-                        <li ng-class="{active: (activePill == 'raw')}"><a ng-click="activePill = 'raw'">Raw Data</a></li>
-                        <li ng-hide="item.donation" ng-class="{active: (activePill == 'pet')}"><a ng-click="activePill = 'pet'">Create Pet</a></li>
-                        <li ng-hide="item.pet" ng-class="{active: (activePill == 'donation')}"><a ng-click="activePill = 'donation'">Assign to Donation</a></li>
+                    <ul class="nav nav-pills" ng-init="item.activePill = ''">
+                        <li ng-class="{active: (item.activePill == '')}"><a ng-click="item.activePill = ''">None</a></li>
+                        <li ng-class="{active: (item.activePill == 'raw')}"><a ng-click="item.activePill = 'raw'">Raw Data</a></li>
+                        <li ng-hide="item.donation" ng-class="{active: (item.activePill == 'pet')}"><a ng-click="item.activePill = 'pet'">Create Pet</a></li>
+                        <li ng-hide="item.pet" ng-class="{active: (item.activePill == 'donation')}"><a ng-click="item.activePill = 'donation'">Assign to Donation</a></li>
                     </ul>
 
                     <div style="padding:10px">
-                        <table ng-if="activePill == 'raw'" class="table">
+                        <table ng-if="item.activePill == 'raw'" class="table">
                             <tr ng-repeat="(key, val) in item">
                                 <td>{{key}}</td>
                                 <td>{{item[key]}}</td>
                             </tr>
                         </table>
 
-                        <div ng-if="activePill == 'rawEdit'" class="stam media-wrapper input-group input-group-sm"
+                        <div ng-if="item.activePill == 'rawEdit'" class="stam media-wrapper input-group input-group-sm"
                              ng-repeat="(key, val) in item">
                             <span class="input-group-addon">{{key}}</span>
                             <input type="text" class="form-control" ng-model="item[key]" value="{{val}}" disabled/>
                         </div>
-                        <div ng-if="activePill == 'donation'">
+                        <div ng-if="item.activePill == 'donation'">
                             <div class="media-wrapper input-group">
                                 <span class="input-group-addon">Donation</span>
                                 <select class="form-control" ng-model="item['donation']">
@@ -67,7 +67,7 @@
                                 <button class="btn btn-default" type="button" ng-click="assignToDonation($index)">Assign to Donation</button>
                             </div>
                         </div>
-                        <div ng-if="activePill == 'pet'">
+                        <div ng-if="item.activePill == 'pet'">
                             <div class="media-wrapper input-group">
                                 <span class="input-group-addon">Name</span>
                                 <input type="text" class="form-control" ng-model="item.pet.name"/>
