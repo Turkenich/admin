@@ -99,8 +99,7 @@ angular.module('adminApp')
             return donation.treat.name + ' to ' + donation.pet.name + ' by ' + donation.user.name + ' at ' + donation.createdAt;
         }
 
-        $scope.createPet = function (i) {
-            var item = $scope.items[i];
+        $scope.createPet = function (item) {
             var pet = item.pet;
             pet.image = item.image;
             pet.media = item._id;
