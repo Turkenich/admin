@@ -37,6 +37,10 @@ angular
                 templateUrl: 'views/pets.html',
                 controller: 'PetsCtrl'
             })
+            .when('/pet/:id', {
+                templateUrl: 'views/pets.html',
+                controller: 'PetsCtrl'
+            })
             .when('/treats', {
                 templateUrl: 'views/treats.html',
                 controller: 'TreatsCtrl'

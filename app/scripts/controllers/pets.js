@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('PetsCtrl', ['$scope', '$routeParams', 'Pets', function ($scope, $routeParams, Pets) {
+  .controller('PetsCtrl', ['$scope', '$routeParams', 'Pets', 'Users', function ($scope, $routeParams, Pets, Users) {
         $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
+        $scope.users = Users.all();
         $scope.updateItem = function(i){
             console.log('updating', $scope.items[i]);
             $scope.items[i].$update();
@@ -26,4 +27,29 @@ angular.module('adminApp')
             data[params['key']] = params['val'];
             Pets.update(data);
         }
-  }]);
+        $scope.assignOwner = function (item) {
+            var user = $scope.users.findById(item.user);
+            user.pet = item._id;
+            user.$update(function (res) {
+                debugger;
+            });
+            item.user = user._id;
+            item.$update(function (res) {
+                debugger;
+            });
+        }
+
+        $scope.shouldFilterItem = function (item) {
+            var filter = $scope.activeFilter;
+            if (filter == 'all') {
+                return false;
+            }else if (filter == 'lonely') {
+                return (item['user'])
+            }else if (filter == 'owned') {
+                return (!item['user'])
+            } else {
+                return true;
+            }
+        }
+
+    }]);

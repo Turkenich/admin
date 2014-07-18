@@ -111,8 +111,7 @@ angular.module('adminApp')
             });
         }
 
-        $scope.assignToDonation = function (i) {
-            var item = $scope.items[i];
+        $scope.assignToDonation = function (item) {
             var donation = $scope.donations.findById(item.donation);
             donation.media = item;
             donation.$update(function (res) {
