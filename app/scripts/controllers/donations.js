@@ -5,7 +5,8 @@ angular.module('adminApp')
         $scope.items = Donations.all();
         $scope.updateItem = function(i){
             console.log('updating', $scope.items[i]);
-            $scope.items[i].$update();
+            $scope.items[i].$update(function(res){
+            });
         }
         $scope.removeItem = function(i){
             if (confirm('Are You Sure???')){
