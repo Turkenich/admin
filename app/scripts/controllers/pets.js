@@ -45,7 +45,7 @@ angular.module('adminApp')
                 return false;
             }else if (filter == 'lonely') {
                 return (item['user'])
-            }else if (filter == 'owned') {
+            }else if (filter == 'adopted') {
                 return (!item['user'])
             } else {
                 return true;
