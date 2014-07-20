@@ -31,11 +31,11 @@ angular.module('adminApp')
             var user = $scope.users.findById(item.user);
             user.pet = item._id;
             user.$update(function (res) {
-                debugger;
+                $scope.users = Users.all();
             });
             item.user = user._id;
             item.$update(function (res) {
-                debugger;
+                $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
             });
         }
 

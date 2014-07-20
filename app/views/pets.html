@@ -51,9 +51,8 @@
                         <div ng-if="item.activePill == 'user'">
                             <div class="media-wrapper input-group input-group-sm space">
                                 <span class="input-group-addon">Owner [{{item.user.name}}]</span>
-                                <select class="form-control" ng-model="item.user._id" >
-                                    <option value="{{item.user._id}}" selected="selected">{{item.user.name}}</option>
-                                    <option ng-repeat="user in users" ng-if="user._id!=item.user._id" value="{{user._id}}" >{{user.name}}</option>
+                                <select class="form-control" ng-model="item.user">
+                                    <option ng-repeat="user in users" ng-selected="user._id==item.user._id" value="{{user._id}}" >{{user.name}}</option>
                                 </select>
                             </div>
                             <div>
