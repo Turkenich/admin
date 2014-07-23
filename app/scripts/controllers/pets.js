@@ -2,22 +2,27 @@
 
 angular.module('adminApp')
   .controller('PetsCtrl', ['$scope', '$routeParams', 'Pets', 'Users', function ($scope, $routeParams, Pets, Users) {
-        $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
+
         $scope.users = Users.all();
+        function getItems(){
+            $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
+        }
+        getItems();
         $scope.updateItem = function(i){
             console.log('updating', $scope.items[i]);
             $scope.items[i].$update();
+            getItems();
         }
         $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
                 console.log('deleting', item);
                 item.$remove();
-                $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
+                getItems();
             }
         }
         $scope.addItem = function(){
             Pets.create(function(res){
-                $scope.items.push(res);
+                getItems();
             });
         }
         $scope.updateField= function(item, params){

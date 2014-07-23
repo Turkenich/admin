@@ -2,7 +2,27 @@
 
 angular.module('adminApp')
   .controller('DonationsCtrl', ['$scope', 'Donations', 'Pets', 'Users', 'Treats', 'Media', function ($scope, Donations, Pets, Users, Treats, Media) {
-        $scope.items = Donations.all();
+        function getItems(){
+            $scope.items =  Donations.all();
+        }
+        getItems();
+        $scope.updateItem = function(i){
+            console.log('updating', $scope.items[i]);
+            $scope.items[i].$update();
+            getItems();
+        }
+        $scope.removeItem = function(item){
+            if (confirm('Are You Sure???')){
+                console.log('deleting', item);
+                item.$remove();
+                getItems();
+            }
+        }
+        $scope.addItem = function(){
+            Donations.create(function(res){
+                getItems();
+            });
+        }
         $scope.updateItem = function(i){
             console.log('updating', $scope.items[i]);
             $scope.items[i].$update(function(res){
