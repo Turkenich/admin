@@ -6,16 +6,18 @@ angular.module('adminApp')
             $scope.items =  Donations.all();
         }
         getItems();
-        $scope.updateItem = function(i){
-            console.log('updating', $scope.items[i]);
-            $scope.items[i].$update();
-            getItems();
+        $scope.updateItem = function(item){
+            console.log('updating', item);
+            item.$update(function(){
+                getItems();
+            });
         }
         $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
                 console.log('deleting', item);
-                item.$remove();
-                getItems();
+                item.$remove(function(){
+                    getItems();
+                });
             }
         }
         $scope.addItem = function(){

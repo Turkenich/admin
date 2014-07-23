@@ -57,7 +57,7 @@ angular.module('adminApp')
         }
 
         $timeout(function () {
-            $scope.items = $routeParams.id ? [Media.query({id: $routeParams.id})] : Media.all();
+            getItems();
             $scope.treats = Treats.all();
             $scope.pets = Pets.all();
             $scope.kennels = Kennels.all()
@@ -66,18 +66,27 @@ angular.module('adminApp')
             window.debug = $scope;
         })
 
-        $scope.updateItem = function (i) {
-            console.log('updating', i);
-            i.$update();
+        function getItems(){
+            $scope.items = $routeParams.id ? [Media.query({id: $routeParams.id})] : Media.all();
         }
-        $scope.removeItem = function (i) {
-            i.removed = true;
-            i.$update();
+        $scope.updateItem = function(item){
+            console.log('updating', item);
+            item.$update(function(){
+                getItems();
+            });
         }
-
-        $scope.unremoveItem = function (i) {
-            i.removed = false;
-            i.$update();
+        $scope.removeItem = function(item){
+            item.removed = true;
+            $scope.updateItem(item);
+        }
+        $scope.unremoveItem = function(item){
+            item.removed = false;
+            $scope.updateItem(item);
+        }
+        $scope.addItem = function(){
+            Pets.create(function(res){
+                getItems();
+            });
         }
 
         $scope.shouldFilterItem = function (item) {
@@ -106,7 +115,7 @@ angular.module('adminApp')
             Pets.create(pet, function (res) {
                 $scope.pets.push(res);
                 item.pet = res;
-                item.$update();
+                $scope.updateItem(item);
                 item.activePill='';
             });
         }
@@ -116,7 +125,7 @@ angular.module('adminApp')
             donation.media = item;
             donation.$update(function (res) {
                 item.donation = res._id;
-                item.$update();
+                $scope.updateItem(item);
             });
         }
 
