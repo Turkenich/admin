@@ -8,11 +8,11 @@ angular.module('adminApp')
             console.log('updating', $scope.items[i]);
             $scope.items[i].$update();
         }
-        $scope.removeItem = function(i){
+        $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
-                console.log('deleting', $scope.items[i]);
-                $scope.items[i].$remove();
-                $scope.items.splice(i, 1);
+                console.log('deleting', item);
+                item.$remove();
+                $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
             }
         }
         $scope.addItem = function(){
