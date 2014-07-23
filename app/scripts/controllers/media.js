@@ -45,7 +45,6 @@ angular.module('adminApp')
                         $timeout(function () {
                             $scope.items = Media.all();
                             if (res.pagination.min_tag_id){
-                                debugger;
                                 $scope.fetchMedia(all, res.pagination.min_tag_id);
                             }
                         }, 500);
