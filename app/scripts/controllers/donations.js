@@ -2,44 +2,28 @@
 
 angular.module('adminApp')
   .controller('DonationsCtrl', ['$scope', 'Donations', 'Pets', 'Users', 'Treats', 'Media', function ($scope, Donations, Pets, Users, Treats, Media) {
-        function getItems(){
-            $scope.items =  Donations.all();
-        }
-        getItems();
+        $scope.items =  Donations.all();
         $scope.updateItem = function(item){
             console.log('updating', item);
-            item.$update(function(){
-                getItems();
+            item.$update(function(item){
+                Donations.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
         }
         $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
                 console.log('deleting', item);
-                item.$remove(function(){
-                    getItems();
+                var i = $scope.items.findIndexById(item._id);
+                Donations.remove({id: item._id});
+                $scope.items.splice(i,1);
+            }
+        }
+        $scope.addItem = function(){
+            Donations.create(function(item){
+                Donations.query({id: item._id}, function(item){
+                    $scope.items.push(item);
                 });
-            }
-        }
-        $scope.addItem = function(){
-            Donations.create(function(res){
-                getItems();
-            });
-        }
-        $scope.updateItem = function(i){
-            console.log('updating', $scope.items[i]);
-            $scope.items[i].$update(function(res){
-            });
-        }
-        $scope.removeItem = function(i){
-            if (confirm('Are You Sure???')){
-                console.log('deleting', $scope.items[i]);
-                $scope.items[i].$remove();
-                $scope.items.splice(i, 1);
-            }
-        }
-        $scope.addItem = function(){
-            Donations.create(function(res){
-                $scope.items.push(res);
             });
         }
 

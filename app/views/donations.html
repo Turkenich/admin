@@ -1,7 +1,7 @@
 <h1>Donations</h1>
 <button class="btn btn-default" ng-click="addItem()">New Donation</button>
 <ul class="media-list">
-    <li class="media line" ng-repeat="item in items">
+    <li class="media line" ng-repeat="item in items" ng-if="item">
         <a class="pull-left thumbnail" ng-href="{{item.media.link}}" target="_blank">
             <img ng-if="item.media.type=='im'" class="media-object" ng-src="{{item.media.image}}" width="256"/>
             <video ng-if="item.media.type=='vd'" class="media-object" width="256" controls="">
@@ -9,6 +9,10 @@
             </video>
         </a>
         <div class="media-body">
+            <div class="media-wrapper btn-group space">
+                <button class="btn btn-default" ng-click="updateItem(item)">SAVE</button>
+                <button class="btn btn-default" ng-click="removeItem(item)">REMOVE</button>
+            </div>
             <div class="media-wrapper input-group input-group-sm space">
                 <span class="input-group-addon">Treat [{{item.treat.name}}]</span>
                 <select class="form-control" ng-model="item.treat" >
@@ -37,10 +41,6 @@
             <div class="media-wrapper input-group input-group-sm space" ng-repeat="(key, val) in item">
                 <span class="input-group-addon">{{key}}</span>
                 <input type="text" class="form-control" ng-model="item[key]" value="{{val}}"/>
-            </div>
-            <div class="media-wrapper btn-group space">
-                <button class="btn btn-default" ng-click="updateItem(item)">SAVE</button>
-                <button class="btn btn-default" ng-click="removeItem(item)">REMOVE</button>
             </div>
         </div>
     </li>

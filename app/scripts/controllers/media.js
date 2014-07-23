@@ -65,35 +65,40 @@ angular.module('adminApp')
             window.debug = $scope;
         })
 
-        function getItems(){
-            $scope.items = $routeParams.id ? [Media.query({id: $routeParams.id})] : Media.all();
-        }
         $scope.updateItem = function(item){
             console.log('updating', item);
-            item.$update(function(){
-                getItems();
+            item.$update(function(item){
+                Media.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
+        }
+        $scope.deleteItem = function(item){
+            if (confirm('Are You Sure???')){
+                console.log('deleting', item);
+                var i = $scope.items.findIndexById(item._id);
+                Media.remove({id: item._id});
+                $scope.items.splice(i,1);
+            }
+        }
+        $scope.addItem = function(){
+            Media.create(function(item){
+                Media.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
+            });
+        }
+
+        function getItems(){
+            $scope.items = $routeParams.id ? [Media.query({id: $routeParams.id})] : Media.all();
         }
         $scope.removeItem = function(item){
             item.removed = true;
             $scope.updateItem(item);
         }
-        $scope.deleteItem = function(item){
-            if (confirm('Are You Sure???')){
-                console.log('deleting', item);
-                item.$remove(function(){
-                    getItems();
-                });
-            }
-        }
         $scope.unremoveItem = function(item){
             item.removed = false;
             $scope.updateItem(item);
-        }
-        $scope.addItem = function(){
-            Pets.create(function(res){
-                getItems();
-            });
         }
 
         $scope.shouldFilterItem = function (item) {

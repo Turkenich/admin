@@ -10,23 +10,28 @@ angular.module('adminApp')
         getItems();
         $scope.updateItem = function(item){
             console.log('updating', item);
-            item.$update(function(){
-                getItems();
+            item.$update(function(item){
+                Pets.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
         }
         $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
                 console.log('deleting', item);
-                item.$remove(function(){
-                    getItems();
-                });
+                var i = $scope.items.findIndexById(item._id);
+                Pets.remove({id: item._id});
+                $scope.items.splice(i,1);
             }
         }
         $scope.addItem = function(){
-            Pets.create(function(res){
-                getItems();
+            Pets.create(function(item){
+                Pets.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
         }
+
         $scope.updateField= function(item, params){
             console.log('updating', item, params);
             var data = {};

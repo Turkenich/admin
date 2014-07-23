@@ -25,3 +25,13 @@ Array.prototype.findById = function(idVal, idKey){
     }
     return false;
 }
+
+Array.prototype.findIndexById = function(idVal, idKey){
+    if (typeof idKey == 'undefined') idKey = '_id';
+    for (var i=0, a; a = this[i]; i++){
+        if (a[idKey] == idVal){
+            return i;
+        }
+    }
+    return false;
+}
