@@ -35,6 +35,7 @@
                         <button class="btn btn-default" ng-click="updateItem(item)">SAVE</button>
                         <button class="btn btn-default" ng-if="!item.removed" ng-click="removeItem(item)">REMOVE</button>
                         <button class="btn btn-default" ng-if="item.removed" ng-click="unremoveItem(item)">UNREMOVE</button>
+                        <button class="btn btn-default" ng-if="!item.removed" ng-click="deleteItem(item)">DELETE</button>
                     </div>
                     <h4 class="media-heading">{{item.caption}}</h4>
                 </div>

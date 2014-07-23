@@ -78,6 +78,14 @@ angular.module('adminApp')
             item.removed = true;
             $scope.updateItem(item);
         }
+        $scope.deleteItem = function(item){
+            if (confirm('Are You Sure???')){
+                console.log('deleting', item);
+                item.$remove(function(){
+                    getItems();
+                });
+            }
+        }
         $scope.unremoveItem = function(item){
             item.removed = false;
             $scope.updateItem(item);
