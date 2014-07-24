@@ -43,7 +43,7 @@
 
                     <ul class="nav nav-pills" ng-init="item.activePill = ''">
                         <li ng-class="{active: (item.activePill == '')}"><a ng-click="item.activePill = ''">None</a></li>
-                        <li ng-class="{active: (item.activePill == 'raw')}"><a ng-click="item.activePill = 'raw'">Raw Data</a></li>
+                        <li ng-class="{active: (item.activePill == 'rawEdit')}"><a ng-click="item.activePill = 'rawEdit'">Raw Data</a></li>
                         <li ng-hide="item.donation" ng-class="{active: (item.activePill == 'pet')}"><a ng-click="item.activePill = 'pet'">Create Pet</a></li>
                         <li ng-hide="item.pet" ng-class="{active: (item.activePill == 'donation')}"><a ng-click="item.activePill = 'donation'">Assign to Donation</a></li>
                     </ul>
@@ -59,7 +59,7 @@
                         <div ng-if="item.activePill == 'rawEdit'" class="stam media-wrapper input-group input-group-sm"
                              ng-repeat="(key, val) in item">
                             <span class="input-group-addon">{{key}}</span>
-                            <input type="text" class="form-control" ng-model="item[key]" value="{{val}}" disabled/>
+                            <input type="text" class="form-control" ng-model="item[key]" value="{{val}}"/>
                         </div>
                         <div ng-if="item.activePill == 'donation'">
                             <div class="media-wrapper input-group">
