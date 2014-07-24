@@ -12,7 +12,8 @@ angular.module('adminApp')
             console.log('updating', item);
             item.$update(function(item){
                 Pets.query({id: item._id}, function(item){
-                    $scope.items.push(item);
+                    var i = $scope.items.findIndexById(item._id);
+                    $scope.items[i] = item;
                 });
             });
         }

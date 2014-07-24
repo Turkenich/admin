@@ -42,11 +42,6 @@
                              ng-repeat="(key, val) in item">
                             <span class="input-group-addon">{{key}}</span>
                             <input type="text" class="form-control" ng-model="item[key]" value="{{val}}"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"
-                                        ng-click="updateField(item, {key: key, val: val})">Save!
-                                </button>
-                            </span>
                         </div>
                         <div ng-if="item.activePill == 'user'">
                             <div class="media-wrapper input-group input-group-sm space">
