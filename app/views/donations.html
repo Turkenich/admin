@@ -1,7 +1,14 @@
 <h1>Donations</h1>
 <button class="btn btn-default" ng-click="addItem()">New Donation</button>
+
+<ul class="nav nav-pills" ng-init="activeFilter = 'new'">
+    <li ng-class="{active: (activeFilter == 'new')}"><a ng-click="activeFilter = 'new'">New Items</a></li>
+    <li ng-class="{active: (activeFilter == 'given')}"><a ng-click="activeFilter = 'given'">Given Items</a></li>
+    <li ng-class="{active: (activeFilter == 'media')}"><a ng-click="activeFilter = 'media'">Given Items with Media</a></li>
+</ul>
+
 <ul class="media-list">
-    <li class="media line" ng-repeat="item in items" ng-if="item">
+    <li class="media line" ng-repeat="item in items" ng-if="item && ((!item.given || activeFilter=='given') && (!item.media || activeFilter=='media'))">
         <a class="pull-left thumbnail" ng-href="{{item.media.link}}" target="_blank">
             <img ng-if="item.media.type=='im'" class="media-object" ng-src="{{item.media.image}}" width="256"/>
             <video ng-if="item.media.type=='vd'" class="media-object" width="256" controls="">
