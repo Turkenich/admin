@@ -2,21 +2,32 @@
 
 angular.module('adminApp')
   .controller('UsersCtrl', ['$scope', 'Users', 'Pets', function ($scope, Users, Pets) {
-        $scope.items = Users.all();
-        $scope.updateItem = function(i){
-            console.log('updating', $scope.items[i]);
-            $scope.items[i].$update();
+        function getItems(){
+            $scope.items = Users.all();
         }
-        $scope.removeItem = function(i){
+        getItems();
+        $scope.updateItem = function(item){
+            console.log('updating', item);
+            item.$update(function(item){
+                Users.query({id: item._id}, function(item){
+                    var i = $scope.items.findIndexById(item._id);
+                    $scope.items[i] = item;
+                });
+            });
+        }
+        $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
-                console.log('deleting', $scope.items[i]);
-                $scope.items[i].$remove();
-                $scope.items.splice(i, 1);
+                console.log('deleting', item);
+                var i = $scope.items.findIndexById(item._id);
+                Users.remove({id: item._id});
+                $scope.items.splice(i,1);
             }
         }
         $scope.addItem = function(){
-            Users.create(function(res){
-                $scope.items.push(res);
+            Users.create(function(item){
+                Users.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
         }
 
