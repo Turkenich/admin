@@ -52,6 +52,18 @@ angular.module('adminApp')
             });
         }
 
+        $scope.unadopt = function (item) {
+            var user = $scope.users.findById(item.user);
+            user.pet = '';
+            user.$update(function (res) {
+                $scope.users = Users.all();
+            });
+            item.user = '';
+            item.$update(function (res) {
+                $scope.items = $routeParams.id ? [Pets.query({id: $routeParams.id})] : Pets.all();
+            });
+        }
+
         $scope.shouldFilterItem = function (item) {
             var filter = $scope.activeFilter;
             if (filter == 'all') {
