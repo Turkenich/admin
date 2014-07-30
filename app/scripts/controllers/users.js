@@ -6,6 +6,7 @@ angular.module('adminApp')
             $scope.items = Users.all();
         }
         getItems();
+        $scope.pets = Pets.all();
         $scope.updateItem = function(item){
             console.log('updating', item);
             item.$update(function(item){
@@ -31,7 +32,6 @@ angular.module('adminApp')
             });
         }
 
-        $scope.pets = Pets.all();
         $scope.assignPet = function (item) {
             var pet = $scope.pets.findById(item.pet);
             pet.user = item._id;
@@ -44,8 +44,8 @@ angular.module('adminApp')
             });
         }
 
-        $scope.assignPet = function (item) {
-            var pet = $scope.pets.findById(item.pet);
+        $scope.unadopt = function (item) {
+            var pet = $scope.pets.findById(item.pet._id);
             pet.user = '';
             pet.$update(function (res) {
                 $scope.pets = Pets.all();

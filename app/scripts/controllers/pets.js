@@ -53,7 +53,7 @@ angular.module('adminApp')
         }
 
         $scope.unadopt = function (item) {
-            var user = $scope.users.findById(item.user);
+            var user = $scope.users.findById(item.user._id);
             user.pet = '';
             user.$update(function (res) {
                 $scope.users = Users.all();
