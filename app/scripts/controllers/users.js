@@ -44,4 +44,16 @@ angular.module('adminApp')
             });
         }
 
+        $scope.assignPet = function (item) {
+            var pet = $scope.pets.findById(item.pet);
+            pet.user = '';
+            pet.$update(function (res) {
+                $scope.pets = Pets.all();
+            });
+            item.pet = '';
+            item.$update(function (res) {
+                $scope.items = Users.all();
+            });
+        }
+
     }]);
