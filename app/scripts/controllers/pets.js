@@ -19,6 +19,7 @@ angular.module('adminApp')
         }
         $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
+                $scope.unadopt();
                 console.log('deleting', item);
                 var i = $scope.items.findIndexById(item._id);
                 Pets.remove({id: item._id});

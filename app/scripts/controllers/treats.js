@@ -2,21 +2,33 @@
 
 angular.module('adminApp')
   .controller('TreatsCtrl', ['$scope', 'Treats', function ($scope, Treats) {
-        $scope.items = Treats.all();
-        $scope.updateItem = function(i){
-            console.log('updating', $scope.items[i]);
-            $scope.items[i].$update();
+        function getItems(){
+            $scope.items = Treats.all();
         }
-        $scope.removeItem = function(i){
+        getItems();
+        $scope.updateItem = function(item){
+            console.log('updating', item);
+            item.$update(function(item){
+                Treats.query({id: item._id}, function(item){
+                    var i = $scope.items.findIndexById(item._id);
+                    $scope.items[i] = item;
+                });
+            });
+        }
+        $scope.removeItem = function(item){
             if (confirm('Are You Sure???')){
-                console.log('deleting', $scope.items[i]);
-                $scope.items[i].$remove();
-                $scope.items.splice(i, 1);
+                $scope.unadopt();
+                console.log('deleting', item);
+                var i = $scope.items.findIndexById(item._id);
+                Treats.remove({id: item._id});
+                $scope.items.splice(i,1);
             }
         }
         $scope.addItem = function(){
-            Treats.create(function(res){
-                $scope.items.push(res);
+            Treats.create(function(item){
+                Treats.query({id: item._id}, function(item){
+                    $scope.items.push(item);
+                });
             });
         }
 

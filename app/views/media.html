@@ -65,7 +65,7 @@
                             <div class="media-wrapper input-group">
                                 <span class="input-group-addon">Donation</span>
                                 <select class="form-control" ng-model="item['donation']">
-                                    <option ng-repeat="donation in donations" ng-if="!donation.media" value="{{donation._id}}">{{($index+1) + '. ' + formatDonationName(donation)}}</option>
+                                    <option ng-repeat="donation in donations" ng-if="donation.pet && donation.user && donation.treat && !donation.media" value="{{donation._id}}">{{($index+1) + '. ' + formatDonationName(donation)}}</option>
                                 </select>
                             </div>
                             <div>
