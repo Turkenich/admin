@@ -28,6 +28,11 @@ angular.module('adminApp')
             });
         }
 
+        $scope.giveItem = function(item){
+            item.given = true;
+            $scope.updateItem(item);
+        }
+
         $scope.treats = Treats.all();
         $scope.users = Users.all();
         $scope.medias = Media.all();
