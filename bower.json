@@ -11,7 +11,8 @@
     "angular-cookies": "1.2.15",
     "angular-sanitize": "1.2.15",
     "angular-route": "1.2.15",
-    "animateCSS": "~1.1.5"
+    "animateCSS": "~1.1.5",
+    "bootstrap-rtl": "~3.3.2"
   },
   "devDependencies": {
     "angular-mocks": "1.2.15",
