@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', '$routeParams', 'Elements', 'Jewellery', function ($scope, $routeParams, Elements, Jewellery) {
+  .controller('ElementsCtrl', ['$scope', '$routeParams', 'Elements', 'ElementTypes', 'Jewellery', function ($scope, $routeParams, Elements, ElementTypes, Jewellery) {
 
     if ($routeParams['id']) {
       $scope.item = Elements.query({'id': $routeParams['id']});
@@ -28,4 +28,7 @@ angular.module('adminApp')
       });
     }
 
+
+    $scope.elementTypes = ElementTypes.all();
+    console.log($scope.elementTypes);
   }]);
