@@ -1,20 +1,16 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', 'Elements', 'Jewellery', function ($scope, Elements, Jewellery) {
-    function getItems() {
+  .controller('ElementsCtrl', ['$scope', '$routeParams', 'Elements', 'Jewellery', function ($scope, $routeParams, Elements, Jewellery) {
+
+    if ($routeParams['id']) {
+      $scope.item = Elements.query({'id': $routeParams['id']});
+    } else {
       $scope.items = Elements.all();
     }
-
-    getItems();
-    $scope.updateItem = function (item) {
-      console.log('updating', item);
-      item.$update(function (item) {
-        Elements.query({id: item._id}, function (item) {
-          var i = $scope.items.findIndexById(item._id);
-          $scope.items[i] = item;
-        });
-      });
+    $scope.updateItem = function () {
+      console.log('updating', $scope.item);
+      $scope.item.$update();
     }
     $scope.removeItem = function (item) {
       if (confirm('Are You Sure???')) {

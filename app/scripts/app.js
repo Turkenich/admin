@@ -34,7 +34,7 @@ angular
         controller: 'ElementsCtrl'
       })
       .when('/elements/:id', {
-        templateUrl: 'views/elements.html',
+        templateUrl: 'views/element.html',
         controller: 'ElementsCtrl'
       })
       .otherwise({
