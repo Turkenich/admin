@@ -15,22 +15,30 @@ angular.module('adminApp')
         model: '=',
         item: '=',
         name: '@',
+        desc: '@',
+        placeholder: '@',
         options: '=',
       },
       template: function (element) {
-        var tmpl = '<label for="{{id}}">{{name}}</label>';
+        var tmpl = '' +
+          '<div class="form-group tile">' +
+          '<label for="{{id}}" class="control-label" title="{{desc}}">{{name}}</label>';
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select id="{{id}}" ng-model="model" ng-options="option.name for option in options"></select>';
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" ng-options="option.name for option in options" ></select>';
             break;
           case 'textarea':
-            tmpl += '<textarea id="{{id}}" ng-model="model"/>';
+            tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';
             break;
           default:
-            tmpl += '<input id="{{id}}" type="{{type}}" ng-model="model" />';
+            tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
             break;
         }
+
+        //tmpl += '<p class="help-block"></p>' +
+        '</div>';
+
         return tmpl;
       },
       link: function postLink(scope, element, attrs) {
@@ -49,6 +57,12 @@ angular.module('adminApp')
               });
             }
           }
+
+          scope.$watch('options', function (newVal, oldVal) {
+            if (newVal) {
+              scope.options.unshift({name: '------  ' + scope.placeholder + '  ------' });
+            }
+          });
         })
       }
     };

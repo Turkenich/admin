@@ -1,6 +1,23 @@
-<h1>Element</h1>
-<form action="">
-<dynamic-input item="item" model="item.desc" type="textarea" options="" name="תיאור"></dynamic-input>
-<dynamic-input item="item" model="item.elementType" type="select" options="elementTypes" name="סוג"></dynamic-input>
-<button ng-click="updateItem(item)">SAVE</button>
-</form>
+<h1 xmlns="http://www.w3.org/1999/html">Element</h1>
+<div class="row">
+  <form role="form" class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-6">
+        <dynamic-input item="item" model="item.desc" type="textarea" options="" name="תיאור"
+                       placeholder="כתוב תיאור לאלמנט"
+                       desc="תיאור האלמנט"></dynamic-input>
+        <dynamic-input item="item" model="item.elementType" type="select" options="elementTypes" name="סוג"
+                       placeholder="בחר את סוג האלמנט"
+                       desc="סוג האלמנט"></dynamic-input>
+        <dynamic-input item="item" model="item.material" type="select" options="materials" name="חומר"
+                       placeholder="בחר את חומר האלמנט"
+                       desc="החומר ממנו עשוי האלמנט"></dynamic-input>
+      </div>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button class="btn btn-primary" ng-click="updateItem(item)"><i class="fa fa-check"></i> שמירה</button>
+      <button class="btn btn-success" ng-click="duplicateItem(item)"><i class="fa fa-plus"></i> שמירה כחדש</button>
+      <button class="btn btn-default" ng-click="reloadItem(item)"><i class="fa fa-times"></i> ביטול</button>
+    </div>
+  </form>
+</div>
