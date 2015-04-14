@@ -1,55 +1,43 @@
 'use strict';
 
 angular
-    .module('adminApp', [
-        'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'ngRoute'
-    ])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
-            })
-            .when('/users', {
-                templateUrl: 'views/users.html',
-                controller: 'UsersCtrl'
-            })
-            .when('/media', {
-                templateUrl: 'views/media.html',
-                controller: 'MediaCtrl'
-            })
-            .when('/media/:id', {
-                templateUrl: 'views/media.html',
-                controller: 'MediaCtrl'
-            })
-            .when('/kennels', {
-              templateUrl: 'views/kennels.html',
-              controller: 'KennelsCtrl'
-            })
-            .when('/pets', {
-                templateUrl: 'views/pets.html',
-                controller: 'PetsCtrl'
-            })
-            .when('/pets/:id', {
-                templateUrl: 'views/pets.html',
-                controller: 'PetsCtrl'
-            })
-            .when('/pet/:id', {
-                templateUrl: 'views/pets.html',
-                controller: 'PetsCtrl'
-            })
-            .when('/treats', {
-                templateUrl: 'views/treats.html',
-                controller: 'TreatsCtrl'
-            })
-            .when('/donations', {
-                templateUrl: 'views/donations.html',
-                controller: 'DonationsCtrl'
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
-    }]);
+  .module('adminApp', [
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute'
+  ])
+  .config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
+      })
+      .when('/orders', {
+        templateUrl: 'views/orders.html',
+        controller: 'OrdersCtrl'
+      })
+      .when('/orders/:id', {
+        templateUrl: 'views/orders.html',
+        controller: 'OrdersCtrl'
+      })
+      .when('/jeweleries', {
+        templateUrl: 'views/jeweleries.html',
+        controller: 'OrdersCtrl'
+      })
+      .when('/jeweleries/:id', {
+        templateUrl: 'views/jeweleries.html',
+        controller: 'OrdersCtrl'
+      })
+      .when('/elements', {
+        templateUrl: 'views/elements.html',
+        controller: 'ElementsCtrl'
+      })
+      .when('/elements/:id', {
+        templateUrl: 'views/elements.html',
+        controller: 'ElementsCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  }]);
