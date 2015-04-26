@@ -1,5 +1,4 @@
 var Utils = {
-    isBchmn: (document.location.host.search('bchmn.com') > -1),
     isHeroku: (document.location.host.search('herokuapp.com') > -1),
     findIdInArray: function(arr, idVal, idKey){
         if (typeof idKey == 'undefined') idKey = '_id';
@@ -13,7 +12,7 @@ var Utils = {
 }
 
 var Consts = {
-    api_root: Utils.isBchmn ? 'http://tfl.bchmn.com/' : (Utils.isHeroku ? 'http://treatsforlife-api.herokuapp.com/' : 'http://localhost:3000/')
+    api_root: (Utils.isHeroku ? 'http://turkenich-api.herokuapp.com/' : 'http://localhost:3000/')
 }
 
 Array.prototype.findById = function(idVal, idKey){

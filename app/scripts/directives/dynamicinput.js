@@ -26,7 +26,7 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" ng-options="option.name for option in options" ></select>';
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" ng-options="option.name for option in options track by option._id disable when option._id" ></select>';
             break;
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';
@@ -60,7 +60,9 @@ angular.module('adminApp')
 
           scope.$watch('options', function (newVal, oldVal) {
             if (newVal) {
-              scope.options.unshift({name: '------  ' + scope.placeholder + '  ------' });
+              if (!scope.options.findById(-1, '_id')){
+                scope.options.unshift({name: scope.placeholder , _id:-1});
+              }
             }
           });
         })

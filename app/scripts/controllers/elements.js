@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', '$routeParams', 'Elements', 'ElementTypes', 'Materials', 'Jewellery', function ($scope, $routeParams, Elements, ElementTypes, Materials, Jewellery) {
+  .controller('ElementsCtrl', ['$scope', '$routeParams', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Jewellery',
+    function ($scope, $routeParams, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Jewellery) {
 
     if ($routeParams['id']) {
       $scope.item = Elements.query({'id': $routeParams['id']});
@@ -28,7 +29,20 @@ angular.module('adminApp')
       });
     }
 
+    $scope.measureUnits = [
+      {name: "גרם", _id: 'gram'},
+      {name: "סנטימטר", _id: 'centimeter'},
+      {name: "יחידה", _id: 'unit'},
+    ]
+    $scope.currencies = [
+      {name: "שקל", icon:"ils", _id: 'ILS'},
+      {name: "דולר", icon:"usd", _id: 'USD'},
+      {name: "אירו", icon:"eur", _id: 'EUR'},
+      {name: "לירה שטרלינג", icon:"gbp", _id: 'GBP'},
+    ]
 
     $scope.elementTypes = ElementTypes.all();
     $scope.materials = Materials.all();
+    $scope.coatings = Coatings.all();
+    $scope.elementFeatures = ElementFeatures.all();
   }]);
