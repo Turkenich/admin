@@ -1,4 +1,4 @@
-<h1 xmlns="http://www.w3.org/1999/html">Element</h1>
+<h1 xmlns="http://www.w3.org/1999/html">דגם</h1>
 <form role="form" class="row">
   <div class="col-sm-3">
     <dynamic-input item="item"
@@ -9,117 +9,23 @@
                    desc="תיאור האלמנט">
     </dynamic-input>
     <dynamic-input item="item"
-                   model="item.elementType"
-                   type="select"
-                   options="elementTypes"
-                   name="סוג"
-                   desc="סוג האלמנט">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.material"
-                   type="select"
-                   options="materials"
-                   name="חומר"
-                   desc="החומר ממנו עשוי האלמנט">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.coating"
-                   type="select"
-                   options="coatings"
-                   name="ציפוי"
-                   desc="סוג הציפוי של האלמנט">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.elementFeatures"
-                   type="select"
-                   options="elementFeatures"
-                   name="תכונות נוספות"
-                   desc="תכונות נוספות המשנות את מחיר האלמנט">
-    </dynamic-input>
-  </div>
-  <div class="col-sm-3">
-    <dynamic-input item="item"
-                   model="item.provider"
-                   type="select"
-                   options="providers"
-                   name="ספקים"
-                   desc="שם הספק">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.providerCatalog"
-                   type="text"
-                   options=""
-                   name='מק"ט (לפי הספק)'
-                   desc="הזן את זיהוי האלמנט לפי הספק">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.providerDesc"
-                   type="textarea"
-                   options=""
-                   name="תיאור הספק"
-                   desc="תיאור האלמנט על פי הספק">
-    </dynamic-input>
-  </div>
-  <div class="col-sm-3">
-    <dynamic-input item="item"
-                   model="item.measureUnitWeight"
+                   model="item.requiredTime"
                    type="number"
-                   options=""
+                   name="זמן השחלה"
+                   desc="הזמן (בדקות) הנדרש להכנת הדגם">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.weight"
+                   type="number"
                    name="משקל"
-                   desc="משקל יחידת מדידה של האלמנט">
+                   desc="המשקל ברוטו (בגרם) של הדגם">
     </dynamic-input>
     <dynamic-input item="item"
-                   model="item.workUnit"
-                   type="select"
-                   options="measureUnits"
-                   name="יחידת תמחור עבודה"
-                   desc="היחידה על פיה הספק מתמחר את העבודה על האלמנט. למשל, שרשרת מתומחרת לפי סנטימטר">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.workUnitPrice"
+                   model="item.salePrice"
                    type="number"
-                   options=""
-                   name="מחיר יחידת עבודה"
-                   desc="מחיר כל יחידת עבודה">
+                   name="מחיר מכירה"
+                   desc="המחיר בו בדגם נמכר">
     </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.workUnitCurrency"
-                   type="select"
-                   options="currencies"
-                   name="מטבע יחידת עבודה"
-                   desc="המטבע איתו מתומחרת כל יחידת עבודה">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.waste"
-                   type="number"
-                   options=""
-                   name="פחת"
-                   desc="האחוז מהחומר שהולך לאיבוד בתהליך ייצור האלמנט">
-    </dynamic-input>
-  </div>
-  <div class="col-sm-3">
-    <dynamic-input item="item"
-                   model="item.length"
-                   type="number"
-                   options=""
-                   name="אורך"
-                   desc="אורך האלמנט (אם רלוונטי)">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.width"
-                   type="number"
-                   options=""
-                   name="רוחב"
-                   desc="רוחב האלמנט (אם רלוונטי)">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.thickness"
-                   type="number"
-                   options=""
-                   name="עובי"
-                   desc="עובי האלמנט (אם רלוונטי)">
-    </dynamic-input>
-
 
     <!--image: { type: String, default:' ', required: false },-->
 

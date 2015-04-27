@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('JewelleriesCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models',
+  .controller('ModelsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models',
     function ($scope, $rootScope, $routeParams, $location, $timeout, Models) {
 
       $scope.reloadItem = function (item) {

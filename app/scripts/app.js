@@ -21,14 +21,16 @@ angular
         templateUrl: 'views/orders.html',
         controller: 'OrdersCtrl'
       })
-      .when('/jeweleries', {
-        templateUrl: 'views/jeweleries.html',
-        controller: 'OrdersCtrl'
+
+      .when('/models', {
+        templateUrl: 'views/models.html',
+        controller: 'ModelsCtrl'
       })
-      .when('/jeweleries/:id', {
-        templateUrl: 'views/jeweleries.html',
-        controller: 'OrdersCtrl'
+      .when('/models/:id', {
+        templateUrl: 'views/model.html',
+        controller: 'ModelsCtrl'
       })
+
       .when('/elements', {
         templateUrl: 'views/elements.html',
         controller: 'ElementsCtrl'
@@ -37,6 +39,7 @@ angular
         templateUrl: 'views/element.html',
         controller: 'ElementsCtrl'
       })
+
       .when('/coatings', {
         templateUrl: 'views/coatings.html',
         controller: 'CoatingsCtrl'

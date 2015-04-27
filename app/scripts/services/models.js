@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminApp')
-    .factory('models', ['$resource', function ($resource) {
+    .factory('Models', ['$resource', function ($resource) {
         return $resource(Consts.api_root + 'models/:id', {}, {
             all: { method: 'GET', params: {}, isArray: true },
             query: { method: 'GET', params: {}, isArray: false },
