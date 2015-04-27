@@ -29,6 +29,7 @@ angular.module('adminApp')
       }
 
 
+      //piece of code for item duplication
       if ($rootScope.tempItem) {
         $timeout(function () {
           debugger;

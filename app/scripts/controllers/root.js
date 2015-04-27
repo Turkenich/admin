@@ -34,7 +34,7 @@ angular.module('adminApp')
           if (angular.isFunction(callback)) callback(item);
         });
         if (scope.items && scope.items.length > 0) {
-          var i = $scope.items.findIndexById(item._id);
+          var i = scope.items.findIndexById(item._id);
           scope.items.splice(i, 1);
         }
       }
