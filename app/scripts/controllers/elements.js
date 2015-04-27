@@ -28,11 +28,9 @@ angular.module('adminApp')
         });
       }
 
-
       //piece of code for item duplication
       if ($rootScope.tempItem) {
         $timeout(function () {
-          debugger;
           $scope.item = $rootScope.tempItem;
           $scope.item['_id'] = $routeParams['id'];
 
@@ -45,7 +43,6 @@ angular.module('adminApp')
         $scope.reloadItem({_id: $routeParams['id']});
       }
 
-
       $scope.addTo = $location.search()['addTo'];
 
       $rootScope.filter = {};
@@ -55,4 +52,14 @@ angular.module('adminApp')
       $scope.providers = Providers.all();
       $scope.coatings = Coatings.all();
       $scope.elementFeatures = ElementFeatures.all();
-    }]);
+
+
+      //duplicate items to reach 10000 (for testing)
+      $scope.duplicateForTest = function(){
+        var limit = 1000000;
+        while ($scope.items.length < limit){
+          $scope.items = $scope.items.concat($scope.items);
+        }
+      };
+
+      }]);

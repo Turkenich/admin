@@ -1,5 +1,6 @@
 <h1>אלמנטים</h1>
 <button class="btn btn-default" ng-click="addItem()">New Element</button>
+<button class="btn btn-default" ng-click="duplicateForTest()">Duplicate For Test</button>
 <div class="row">
   <div class="col-sm-6">
     <div class="row">
@@ -15,7 +16,7 @@
   </div>
   <div class="col-sm-6">
     <ul class="media-list">
-      <li ng-repeat="item in items | listFilter">
+      <li ng-repeat="item in items | listFilter track by $index">
         <list-item item="item" path="elements" addto="addTo"></list-item>
       </li>
     </ul>

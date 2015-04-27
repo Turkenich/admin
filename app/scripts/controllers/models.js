@@ -76,7 +76,6 @@ angular.module('adminApp')
         var eles = JSON.parse($scope.item.elements);
 
         if (addId) {
-          debugger;
           eles.push({
             id: addId, amount: 1
           });

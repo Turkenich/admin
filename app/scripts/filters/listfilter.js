@@ -15,9 +15,13 @@ angular.module('adminApp')
 
       var filter = $rootScope.filter;
       var list = [];
+      var limit = 10;
 
       for (var item, i=0; item=input[i]; i++){
-        if (shouldKeepItem(item, filter)) list.push(item);
+        if (list.length > limit) break;
+        if (shouldKeepItem(item, filter)) {
+          list.push(item);
+        }
       }
 
       function shouldKeepItem(item, filter){
