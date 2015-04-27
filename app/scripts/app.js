@@ -53,6 +53,14 @@ angular
         templateUrl: 'views/elementFeature.html',
         controller: 'ElementFeaturesCtrl'
       })
+      .when('/elementTypes', {
+        templateUrl: 'views/elementTypes.html',
+        controller: 'ElementTypesCtrl'
+      })
+      .when('/elementTypes/:id', {
+        templateUrl: 'views/elementType.html',
+        controller: 'ElementTypesCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

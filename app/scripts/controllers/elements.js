@@ -45,11 +45,6 @@ angular.module('adminApp')
         $scope.reloadItem({_id: $routeParams['id']});
       }
 
-      $scope.measureUnits = [
-        {name: "גרם", _id: 'gram'},
-        {name: "סנטימטר", _id: 'centimeter'},
-        {name: "יחידה", _id: 'unit'},
-      ]
       $scope.currencies = [
         {name: "שקל", icon: "ils", _id: 'ILS'},
         {name: "דולר", icon: "usd", _id: 'USD'},
