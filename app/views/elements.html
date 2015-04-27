@@ -1,7 +1,23 @@
 <h1>אלמנטים</h1>
 <button class="btn btn-default" ng-click="addItem()">New Element</button>
-<ul class="media-list">
-    <li ng-repeat="item in items">
-      <list-item item="item" path="elements" addto="addTo"></list-item>
-    </li>
-</ul>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-6">
+        <dynamic-filter
+          model="desc"
+          type="textarea"
+          name="תיאור"
+          desc="תיאור האלמנט">
+        </dynamic-filter>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <ul class="media-list">
+      <li ng-repeat="item in items">
+        <list-item item="item" path="elements" addto="addTo"></list-item>
+      </li>
+    </ul>
+  </div>
+</div>
