@@ -15,29 +15,35 @@ angular
       })
       .when('/orders', {
         templateUrl: 'views/orders.html',
-        controller: 'OrdersCtrl'
+        controller: 'OrdersCtrl',
+        reloadOnSearch: false
       })
       .when('/orders/:id', {
         templateUrl: 'views/orders.html',
-        controller: 'OrdersCtrl'
+        controller: 'OrdersCtrl',
+        reloadOnSearch: false
       })
 
       .when('/models', {
         templateUrl: 'views/models.html',
-        controller: 'ModelsCtrl'
+        controller: 'ModelsCtrl',
+        reloadOnSearch: false
       })
       .when('/models/:id', {
         templateUrl: 'views/model.html',
-        controller: 'ModelsCtrl'
+        controller: 'ModelsCtrl',
+        reloadOnSearch: false
       })
 
       .when('/elements', {
         templateUrl: 'views/elements.html',
-        controller: 'ElementsCtrl'
+        controller: 'ElementsCtrl',
+        reloadOnSearch: false
       })
       .when('/elements/:id', {
         templateUrl: 'views/element.html',
-        controller: 'ElementsCtrl'
+        controller: 'ElementsCtrl',
+        reloadOnSearch: false
       })
 
       .when('/coatings', {

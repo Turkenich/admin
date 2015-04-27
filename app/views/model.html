@@ -2,6 +2,18 @@
 <form role="form" class="row">
   <div class="col-sm-3">
     <dynamic-input item="item"
+                   model="item.modelType"
+                   type="text"
+                   name="סוג הדגם"
+                   desc="אות המתארת את סוג הדגם">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.modelId"
+                   type="text"
+                   name="מספר סידורי"
+                   desc="המספר הסידורי של הדגם">
+    </dynamic-input>
+    <dynamic-input item="item"
                    model="item.desc"
                    type="textarea"
                    options=""
@@ -29,6 +41,18 @@
 
     <!--image: { type: String, default:' ', required: false },-->
 
+  </div>
+  <div class="col-sm-6">
+    <ul>
+      <li ng-repeat="element in elements">
+        <span>{{element.desc}}</span>
+        <input type="number" ng-model="element.amount">
+        <i class="fa fa-trash" ng-click="removeElement(element)"></i>
+        <i class="fa fa-times" ng-click="zeroElement(element)"></i>
+        <a class="" ng-href="#/elements/{{element._id}}"><i class="fa fa-external-link"></i></a>
+      </li>
+    </ul>
+    <a href="#/elements?addTo={{item._id}}">הוסף אלמנט</a>
   </div>
 
 <item-actions></item-actions>

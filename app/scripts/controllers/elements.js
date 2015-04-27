@@ -45,6 +45,8 @@ angular.module('adminApp')
         $scope.reloadItem({_id: $routeParams['id']});
       }
 
+      $scope.addTo = $location.search()['addTo'];
+
       $scope.elementTypes = ElementTypes.all();
       $scope.materials = Materials.all();
       $scope.providers = Providers.all();
