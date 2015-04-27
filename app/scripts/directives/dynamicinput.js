@@ -7,7 +7,7 @@
  * # dynamicInput
  */
 angular.module('adminApp')
-  .directive('dynamicInput', ['$timeout', function ($timeout) {
+  .directive('dynamicInput', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
@@ -26,7 +26,7 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" ng-options="option.name for option in options track by option._id disable when option._id" ></select>';
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-options="option.name  for option in options track by option._id " ></select>';
             break;
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';
@@ -46,6 +46,7 @@ angular.module('adminApp')
 
         //pre select existing value in select boxes
         scope.$watch('model', function (newVal, oldVal) {
+
           if (newVal) {
             if (element.attr('type') == 'select') {
               $timeout(function () {
@@ -59,9 +60,15 @@ angular.module('adminApp')
           }
 
           scope.$watch('options', function (newVal, oldVal) {
-            if (newVal) {
-              if (!scope.options.findById(-1, '_id')){
-                scope.options.unshift({name: scope.placeholder , _id:-1});
+            if (0 && newVal) { //removed because it caused trouble in casting to objectId
+              debugger;
+              if (!scope.options.findById(null, '_id')) {
+                scope.options.unshift({name: scope.placeholder, _id: null});
+              }
+              if (element.attr('type') == 'select') {
+                  if (null == scope.model && angular.isDefined(scope.options) && scope.options[0] && scope.options[0]._id==null) {
+                    scope.model = scope.options[0];
+                  }
               }
             }
           });
