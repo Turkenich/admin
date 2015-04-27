@@ -37,6 +37,22 @@ angular
         templateUrl: 'views/element.html',
         controller: 'ElementsCtrl'
       })
+      .when('/coatings', {
+        templateUrl: 'views/coatings.html',
+        controller: 'CoatingsCtrl'
+      })
+      .when('/coatings/:id', {
+        templateUrl: 'views/coating.html',
+        controller: 'CoatingsCtrl'
+      })
+      .when('/elementFeatures', {
+        templateUrl: 'views/elementFeatures.html',
+        controller: 'ElementFeaturesCtrl'
+      })
+      .when('/elementFeatures/:id', {
+        templateUrl: 'views/elementFeature.html',
+        controller: 'ElementFeaturesCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

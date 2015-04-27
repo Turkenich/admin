@@ -1,0 +1,27 @@
+<h1 xmlns="http://www.w3.org/1999/html">Element</h1>
+<form role="form" class="row">
+  <div class="col-sm-3">
+    <dynamic-input item="item"
+                   model="item.name"
+                   type="textarea"
+                   options=""
+                   name="שם התכונה"
+                   desc="שם התכונה">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.price"
+                   type="number"
+                   options=""
+                   name="מחיר"
+                   desc="מחיר התכונה">
+    </dynamic-input>
+  </div>
+
+
+  <div class="btn-group" role="group" aria-label="...">
+    <button class="btn btn-primary" ng-click="updateItem(item)"><i class="fa fa-check"></i> שמירה</button>
+    <button class="btn btn-success" ng-click="duplicateItem(item)"><i class="fa fa-plus"></i> שמירה כחדש</button>
+    <button class="btn btn-default" ng-click="reloadItem(item)"><i class="fa fa-undo"></i> ביטול</button>
+    <button class="btn btn-default" ng-click="removeItem(item)"><i class="fa fa-trash"></i> מחיקה</button>
+  </div>
+</form>

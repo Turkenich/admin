@@ -1,19 +1,7 @@
-<h1>Users</h1>
+<h1>אלמנטים</h1>
 <button class="btn btn-default" ng-click="addItem()">New Element</button>
 <ul class="media-list">
-    <li class="media line" ng-repeat="item in items">
-      <a ng-href="#/elements/{{item._id}}" >
-<!--
-        <a class="pull-left thumbnail" ng-href="http://www.facebook.com/{{item.fb_id}}" target="_blank">
-            <img class="media-object" ng-src="{{item.image}}?type=large" width="256"/>
-        </a>
--->
-
-        <div class="media-body">
-          {{item.desc || 'Unnamed Element'}}
-        </div>
-      </a>
-      <i class="fa fa-trash" ng-click="removeItem(item)"></i>
-      <hr/>
+    <li ng-repeat="item in items">
+      <list-item item="item" path="elements"></list-item>
     </li>
 </ul>

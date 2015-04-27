@@ -16,7 +16,6 @@ angular.module('adminApp')
         item: '=',
         name: '@',
         desc: '@',
-        placeholder: '@',
         options: '=',
       },
       template: function (element) {
@@ -26,13 +25,13 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-options="option.name  for option in options track by option._id " ></select>';
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{desc}}" ng-options="option.name  for option in options track by option._id " ></select>';
             break;
           case 'textarea':
-            tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{desc}}"/>';
             break;
           default:
-            tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{desc}}"/>';
             break;
         }
 
