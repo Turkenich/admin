@@ -45,6 +45,22 @@ angular
         templateUrl: 'views/coating.html',
         controller: 'CoatingsCtrl'
       })
+      .when('/materials', {
+        templateUrl: 'views/materials.html',
+        controller: 'MaterialsCtrl'
+      })
+      .when('/materials/:id', {
+        templateUrl: 'views/material.html',
+        controller: 'MaterialsCtrl'
+      })
+      .when('/providers', {
+        templateUrl: 'views/providers.html',
+        controller: 'ProvidersCtrl'
+      })
+      .when('/providers/:id', {
+        templateUrl: 'views/provider.html',
+        controller: 'ProvidersCtrl'
+      })
       .when('/elementFeatures', {
         templateUrl: 'views/elementFeatures.html',
         controller: 'ElementFeaturesCtrl'

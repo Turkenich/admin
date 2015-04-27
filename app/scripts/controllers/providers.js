@@ -1,30 +1,30 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementTypesCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'ElementTypes',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, ElementTypes) {
+  .controller('ProvidersCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Providers',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Providers) {
 
       $scope.reloadItem = function (item) {
-        $rootScope.reloadItemImp($scope, ElementTypes, item);
+        $rootScope.reloadItemImp($scope, Providers, item);
       }
       $scope.updateItem = function (item) {
-        $rootScope.updateItemImp($scope, ElementTypes, item);
+        $rootScope.updateItemImp($scope, Providers, item);
       }
       $scope.removeItem = function (item) {
-        $rootScope.removeItemImp($scope, ElementTypes, item, function(){
-          $location.path('/elementTypes');
+        $rootScope.removeItemImp($scope, Providers, item, function(){
+          $location.path('/providers');
         });
       }
       $scope.addItem = function (item) {
-        $rootScope.addItemImp($scope, ElementTypes, null, function (item) {
-          $location.path('/elementTypes/' + item._id);
+        $rootScope.addItemImp($scope, Providers, null, function (item) {
+          $location.path('/providers/' + item._id);
         });
       }
 
       $scope.duplicateItem = function (item) {
         $rootScope.tempItem = item;
-        $rootScope.addItemImp($scope, ElementTypes, null, function (item) {
-          $location.path('/elementTypes/' + item._id);
+        $rootScope.addItemImp($scope, Providers, null, function (item) {
+          $location.path('/providers/' + item._id);
         });
       }
 

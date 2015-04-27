@@ -28,6 +28,7 @@ angular.module('adminApp')
         return tmpl;
       },
       link: function postLink(scope, element, attrs) {
+        scope.removeItem = scope.$parent.removeItem;
       }
     };
   }]);

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Jewellery',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Jewellery) {
+  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Providers) {
 
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Elements, item);
@@ -45,15 +45,9 @@ angular.module('adminApp')
         $scope.reloadItem({_id: $routeParams['id']});
       }
 
-      $scope.currencies = [
-        {name: "שקל", icon: "ils", _id: 'ILS'},
-        {name: "דולר", icon: "usd", _id: 'USD'},
-        {name: "אירו", icon: "eur", _id: 'EUR'},
-        {name: "לירה שטרלינג", icon: "gbp", _id: 'GBP'},
-      ]
-
       $scope.elementTypes = ElementTypes.all();
       $scope.materials = Materials.all();
+      $scope.providers = Providers.all();
       $scope.coatings = Coatings.all();
       $scope.elementFeatures = ElementFeatures.all();
     }]);
