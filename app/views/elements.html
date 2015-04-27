@@ -15,7 +15,7 @@
   </div>
   <div class="col-sm-6">
     <ul class="media-list">
-      <li ng-repeat="item in items">
+      <li ng-repeat="item in items | listFilter">
         <list-item item="item" path="elements" addto="addTo"></list-item>
       </li>
     </ul>
