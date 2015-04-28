@@ -13,3 +13,9 @@
   border-radius: 7px;
   border: 1px solid transparent;
 }
+
+.ltr-datepicker ~ ul{
+  direction: ltr !important;
+  min-width: 296px !important;
+  padding: 5px !important;
+}

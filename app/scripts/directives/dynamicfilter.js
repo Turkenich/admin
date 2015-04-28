@@ -16,6 +16,7 @@ angular.module('adminApp')
         name: '@',
         desc: '@',
         options: '=',
+        range: '@'
       },
       template: function (element) {
         var tmpl = '' +
@@ -29,6 +30,16 @@ angular.module('adminApp')
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
             break;
+          case 'date':
+            tmpl += '<p class="input-group">' +
+            '<input type="text" class="form-control ltr-datepicker" datepicker-popup="shortDate" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
+            '<span class="input-group-btn">' +
+            '<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>' +
+            '</span>' +
+            '</p>';
+
+            break;
+
           default:
             tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" placeholder="{{desc}}" ng-model="filter" ng-change="updateFilter()"/>';
             break;
@@ -42,10 +53,29 @@ angular.module('adminApp')
       link: function postLink(scope, element, attrs) {
         scope.id = attrs.model.replace(/'/g, "");
 
-        scope.updateFilter = function() {
-          $rootScope.filter[scope.id] = scope.filter;
+        scope.updateFilter = function () {
+          var suffix='';
+          if (angular.isUndefined(scope.range)) {
+            suffix='';
+          }else{
+            suffix = '_' + scope.range;
+          }
+          $rootScope.filter[scope.id + suffix] = scope.filter;
           console.log('filter updated', $rootScope.filter);
         }
+
+        scope.open = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          scope.opened = true;
+        };
+
+        scope.dateOptions = {
+          formatYear: 'yy',
+          startingDay: 1
+        };
+
+
       }
     };
   }]);

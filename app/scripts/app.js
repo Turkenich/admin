@@ -5,7 +5,10 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls',
+    'ui.bootstrap.transition'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider

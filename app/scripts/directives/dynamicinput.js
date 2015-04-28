@@ -60,7 +60,6 @@ angular.module('adminApp')
 
           scope.$watch('options', function (newVal, oldVal) {
             if (0 && newVal) { //removed because it caused trouble in casting to objectId
-              debugger;
               if (!scope.options.findById(null, '_id')) {
                 scope.options.unshift({name: scope.placeholder, _id: null});
               }
