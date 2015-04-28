@@ -7,7 +7,7 @@
  * # dynamicInput
  */
 angular.module('adminApp')
-  .directive('listItem', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+  .directive('listItem', ['$rootScope', '$location', function ($rootScope, $location) {
     return {
       restrict: 'E',
       scope: {
@@ -17,17 +17,9 @@ angular.module('adminApp')
       },
       template: function (element) {
 
-        var link = '';
-        if (element.attr('addTo')) {
-          link = '<a ng-href="#/{{parentPath}}/{{addto}}?addId={{item._id}}" >'
-        } else {
-          link = '<a ng-href="#/{{path}}/{{item._id}}" >';
-        }
-
-
         var tmpl = '' +
           '<div class="media line">' +
-          link +
+          '<a ng-href="{{link}}" >' +
           '<div class="media-body">{{item.name}} {{item.desc}} <i class="fa fa-external-link"></i> </div>' +
           '</a>' +
           '<i class="fa fa-trash" ng-click="removeItem(item)"></i>' +
@@ -49,6 +41,12 @@ angular.module('adminApp')
             break;
           default :
             scope.parentPath = false;
+        }
+
+        if (scope.addto){
+          scope.link = '#/' + scope.parentPath + '/' + scope.addto + '?addId=' + scope.item._id;
+        }else{
+          scope.link = '#/' + scope.path + '/' + scope.item._id;
         }
       }
     };

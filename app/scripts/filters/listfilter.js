@@ -34,7 +34,13 @@ angular.module('adminApp')
           if (f_parts[1]) {var f_type = f_parts[1];}
 
           if (!item[f]) return false;
-          //if ((item[f] == filter)) return true;
+          if (angular.isObject(filter)) {
+            if (angular.isObject(item[f])){
+              if (filter._id != item[f]._id) return false;
+            }else{
+              if (filter._id != item[f]) return false;
+            }
+          }
           if (angular.isDate(filter)){
             var filterDate = new Date(filter);
             var itemDate = new Date(item[f]);

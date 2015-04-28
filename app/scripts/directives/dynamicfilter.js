@@ -32,7 +32,7 @@ angular.module('adminApp')
             break;
           case 'date':
             tmpl += '<p class="input-group">' +
-            '<input type="text" class="form-control ltr-datepicker" datepicker-popup="shortDate" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
+            '<input type="text" class="form-control ltr-datepicker" datepicker-popup="dd/MM/yy" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
             '<span class="input-group-btn">' +
             '<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>' +
             '</span>' +
