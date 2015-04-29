@@ -29,19 +29,26 @@ angular.module('adminApp')
 
           var filter = filters[field];
 
-          var f_parts = field.split('_');
-          var f = f_parts[0];
-          if (f_parts[1]) {var f_type = f_parts[1];}
+          if (field.indexOf('_') > 0){
+            var f_parts = field.split('_');
+            var f = f_parts[0];
+            if (f_parts[1]) {var f_type = f_parts[1];}
+          }else{
+            f = field;
+          }
 
           if (!item[f]) return false;
-          if (angular.isObject(filter)) {
+          if (angular.isArray(filter)){
+            if (filter.indexOf(item[f])==-1) return false;
+          }
+          else if (angular.isObject(filter)) {
             if (angular.isObject(item[f])){
               if (filter._id != item[f]._id) return false;
             }else{
               if (filter._id != item[f]) return false;
             }
           }
-          if (angular.isDate(filter)){
+          else if (angular.isDate(filter)){
             var filterDate = new Date(filter);
             var itemDate = new Date(item[f]);
             if (f_type=='below'){
@@ -52,7 +59,7 @@ angular.module('adminApp')
               if (filter && filterDate != itemDate) return false;
             }
           }
-          if (angular.isNumber(filter)){
+          else if (angular.isNumber(filter)){
             if (f_type=='below'){
               if (filter < item[f]) return false;
             }else if (f_type=='above'){
@@ -61,7 +68,7 @@ angular.module('adminApp')
               if (filter && filter != item[f]) return false;
             }
           }
-          if ((typeof(item[f]) == 'string') && (typeof(filter) == 'string')){
+          else if ((typeof(item[f]) == 'string') && (typeof(filter) == 'string')){
             var patt = new RegExp(filter);
             if (!patt.test(item[f])) return false;
           }

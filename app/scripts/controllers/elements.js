@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Providers) {
+  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Providers) {
 
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Elements, item);
@@ -11,7 +11,7 @@ angular.module('adminApp')
         $rootScope.updateItemImp($scope, Elements, item);
       }
       $scope.removeItem = function (item) {
-        $rootScope.removeItemImp($scope, Elements, item, function(){
+        $rootScope.removeItemImp($scope, Elements, item, function () {
           $location.path('/elements');
         });
       }
@@ -60,13 +60,35 @@ angular.module('adminApp')
       $scope.coatings = Coatings.all();
       $scope.elementFeatures = ElementFeatures.all();
 
+      Models.all(function (models) {
+        $scope.models = [];
+        for (var model, i = 0; model = models[i]; i++) {
+          var _model = {
+            name: model.modelCode || model.desc,
+          }
+          var id = parseModelElements(model.elements);
+          id.unshift(model._id);
+          _model._id = JSON.stringify(id);
+
+          $scope.models.push(_model);
+        }
+      });
+
+      function parseModelElements(elements) {
+        var eles = JSON.parse(elements);
+        var res = [];
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          res.push(ele['id']);
+        }
+        return res
+      }
 
       //duplicate items to reach 10000 (for testing)
-      $scope.duplicateForTest = function(){
+      $scope.duplicateForTest = function () {
         var limit = 1000000;
-        while ($scope.items.length < limit){
+        while ($scope.items.length < limit) {
           $scope.items = $scope.items.concat($scope.items);
         }
       };
 
-      }]);
+    }]);

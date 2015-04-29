@@ -29,6 +29,11 @@ angular.module('adminApp')
             '<option value="" selected>--------</option>' +
             '</select>';
             break;
+          case 'parent':
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
+            '<option value="" selected>--------</option>' +
+            '</select>';
+            break;
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
             break;
@@ -56,13 +61,21 @@ angular.module('adminApp')
         scope.id = attrs.model.replace(/'/g, "");
 
         scope.updateFilter = function () {
-          var suffix='';
-          if (angular.isUndefined(scope.range)) {
-            suffix='';
+          if (scope.type == 'parent'){
+            if (!scope.filter) {
+              $rootScope.filter['_id']=null;
+              return;
+            }
+            $rootScope.filter['_id'] = JSON.parse(scope.filter._id);
           }else{
-            suffix = '_' + scope.range;
+            var suffix='';
+            if (angular.isUndefined(scope.range)) {
+              suffix='';
+            }else{
+              suffix = '_' + scope.range;
+            }
+            $rootScope.filter[scope.id + suffix] = scope.filter;
           }
-          $rootScope.filter[scope.id + suffix] = scope.filter;
           console.log('filter updated', $rootScope.filter);
         }
 
@@ -75,7 +88,6 @@ angular.module('adminApp')
         scope.$watch('options', function (newVal, oldVal) {
           if (newVal) {
             if (element.attr('type') == 'select') {
-              debugger;
               if (angular.isDefined(scope.options) && scope.options[0] && !scope.model) {
                 scope.model = scope.options[0];
               }
