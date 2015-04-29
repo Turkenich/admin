@@ -1,7 +1,7 @@
 <h1>סוגי אלמנטים</h1>
 <button class="btn btn-default" ng-click="addItem()">הוסף סוג חדש</button>
 <ul class="media-list">
-  <li ng-repeat="item in items">
+  <li ng-repeat="item in items | orderBy:'pos'">
     <list-item item="item" path="elementTypes"></list-item>
   </li>
 </ul>

@@ -34,3 +34,30 @@ Array.prototype.findIndexById = function(idVal, idKey){
     }
     return false;
 }
+
+Array.prototype.findNextById = function(idVal, idKey){
+  if (typeof idKey == 'undefined') idKey = '_id';
+  var res = null;
+  for (var i=0, a; a = this[i]; i++){
+    if (a[idKey] > idVal){
+      if (!res || a[idKey]<res[idKey]){
+        res = a;
+      }
+    }
+  }
+  return res;
+}
+
+Array.prototype.findPrevById = function(idVal, idKey){
+  if (typeof idKey == 'undefined') idKey = '_id';
+  var res = null;
+  for (var i=0, a; a = this[i]; i++){
+    if (a[idKey] < idVal){
+      if (!res || a[idKey]>res[idKey]){
+        res = a;
+      }
+    }
+  }
+  return res;
+}
+

@@ -11,6 +11,7 @@ angular.module('adminApp')
     return {
       restrict: 'E',
       scope: {
+        index: '=',
         item: '=',
         path: '@',
         addto: '=',
@@ -23,6 +24,8 @@ angular.module('adminApp')
           '<div class="media-body">{{item.name}} {{item.desc}} <i class="fa fa-external-link"></i> </div>' +
           '</a>' +
           '<i class="fa fa-trash" ng-click="removeItem(item)"></i>' +
+          '<i class="fa fa-arrow-up" ng-show="item.pos" ng-click="moveItemUp(item)"></i>' +
+          '<i class="fa fa-arrow-down" ng-show="item.pos" ng-click="moveItemDown(item)"></i>' +
           '<hr/>' +
           '</div>' +
           '';
@@ -31,6 +34,8 @@ angular.module('adminApp')
       },
       link: function postLink(scope, element, attrs) {
         scope.removeItem = scope.$parent.removeItem;
+        scope.moveItemUp = scope.$parent.moveItemUp;
+        scope.moveItemDown = scope.$parent.moveItemDown;
 
         switch (scope.path){
           case 'elements':

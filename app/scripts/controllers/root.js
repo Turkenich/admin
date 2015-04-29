@@ -41,14 +41,29 @@ angular.module('adminApp')
       }
     }
     $rootScope.addItemImp = function (scope, Model, item, callback) {
-      if (item){
+      if (item) {
         Model.create(item, function (item) {
           if (angular.isFunction(callback)) callback(item);
         });
-      }else{
+      } else {
         Model.create(function (item) {
           if (angular.isFunction(callback)) callback(item);
         });
+      }
+    }
+
+    $rootScope.moveItemImp = function (scope, Model, items, item, dir, callback) {
+      debugger;
+      //var index = items.findIndexById(item._id, '_id');
+      if (dir > 0) var item1 = items.findNextById(item.pos, 'pos');
+      else if (dir < 0) var item1 = items.findPrevById(item.pos, 'pos');
+
+      if (item && item1) {
+        var tmp = item.pos;
+        item.pos = item1.pos;
+        item1.pos = tmp;
+        $rootScope.updateItemImp(scope, Model, item, callback);
+        $rootScope.updateItemImp(scope, Model, item1, callback);
       }
     }
 
@@ -65,7 +80,6 @@ angular.module('adminApp')
       {name: "אירו", icon: "eur", _id: 'EUR'},
       {name: "לירה שטרלינג", icon: "gbp", _id: 'GBP'},
     ]
-
 
 
   }]);
