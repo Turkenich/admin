@@ -43,7 +43,14 @@ angular.module('adminApp')
         $scope.reloadItem({_id: $routeParams['id']});
       }
 
+      //when this page is opened to choose and element to add to a model
       $scope.addTo = $location.search()['addTo'];
+
+
+      $scope.clearForm = function () {
+        $('.form-control').val('').text('');
+        $rootScope.filter = {};
+      }
 
       $rootScope.filter = {};
 

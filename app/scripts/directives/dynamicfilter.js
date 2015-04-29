@@ -25,7 +25,9 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " ></select>';
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
+            '<option value="" selected>--------</option>' +
+            '</select>';
             break;
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
@@ -70,10 +72,16 @@ angular.module('adminApp')
           scope.opened = true;
         };
 
-        scope.dateOptions = {
-          formatYear: 'yy',
-          startingDay: 1
-        };
+        scope.$watch('options', function (newVal, oldVal) {
+          if (newVal) {
+            if (element.attr('type') == 'select') {
+              debugger;
+              if (angular.isDefined(scope.options) && scope.options[0] && !scope.model) {
+                scope.model = scope.options[0];
+              }
+            }
+          }
+        });
 
 
       }

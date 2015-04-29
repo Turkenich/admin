@@ -23,8 +23,9 @@ angular.module('adminApp')
 
     $rootScope.updateItemImp = function (scope, Model, item, callback) {
       console.log('updating', item);
-      Model.update(item, function () {
-        if (angular.isFunction(callback)) callback(item);
+      Model.update(item, function (_item) {
+        console.log('updated', _item);
+        if (angular.isFunction(callback)) callback(_item);
       });
     }
     $rootScope.removeItemImp = function (scope, Model, item, callback) {

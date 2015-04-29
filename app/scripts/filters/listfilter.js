@@ -45,9 +45,20 @@ angular.module('adminApp')
             var filterDate = new Date(filter);
             var itemDate = new Date(item[f]);
             if (f_type=='below'){
-              if (filterDate <= itemDate) return false;
+              if (filterDate < itemDate) return false;
             }else if (f_type=='above'){
-              if (filterDate >= itemDate) return false;
+              if (filterDate > itemDate) return false;
+            }else{
+              if (filter && filterDate != itemDate) return false;
+            }
+          }
+          if (angular.isNumber(filter)){
+            if (f_type=='below'){
+              if (filter < item[f]) return false;
+            }else if (f_type=='above'){
+              if (filter > item[f]) return false;
+            }else{
+              if (filter && filter != item[f]) return false;
             }
           }
           if ((typeof(item[f]) == 'string') && (typeof(filter) == 'string')){
