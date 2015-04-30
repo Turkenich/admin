@@ -78,12 +78,5 @@ angular.module('adminApp')
       {name: "יחידה", _id: 'unit'},
     ]
 
-    $scope.currencies = [
-      {name: "שקל", icon: "ils", _id: 'ILS'},
-      {name: "דולר", icon: "usd", _id: 'USD'},
-      {name: "אירו", icon: "eur", _id: 'EUR'},
-      {name: "לירה שטרלינג", icon: "gbp", _id: 'GBP'},
-    ]
-
 
   }]);
