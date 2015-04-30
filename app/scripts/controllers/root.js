@@ -53,7 +53,6 @@ angular.module('adminApp')
     }
 
     $rootScope.moveItemImp = function (scope, Model, items, item, dir, callback) {
-      debugger;
       //var index = items.findIndexById(item._id, '_id');
       if (dir > 0) var item1 = items.findNextById(item.pos, 'pos');
       else if (dir < 0) var item1 = items.findPrevById(item.pos, 'pos');
@@ -65,6 +64,11 @@ angular.module('adminApp')
         $rootScope.updateItemImp(scope, Model, item, callback);
         $rootScope.updateItemImp(scope, Model, item1, callback);
       }
+    }
+
+    $scope.clearForm = function () {
+      $('.form-control').val('').text('');
+      $rootScope.filter = {};
     }
 
 

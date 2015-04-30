@@ -47,11 +47,6 @@ angular.module('adminApp')
       $scope.addTo = $location.search()['addTo'];
 
 
-      $scope.clearForm = function () {
-        $('.form-control').val('').text('');
-        $rootScope.filter = {};
-      }
-
       $rootScope.filter = {};
 
       $scope.elementTypes = ElementTypes.all();
@@ -63,6 +58,7 @@ angular.module('adminApp')
       Models.all(function (models) {
         $scope.models = [];
         for (var model, i = 0; model = models[i]; i++) {
+          if (!model.elements) continue;
           var _model = {
             name: model.modelCode || model.desc,
           }
@@ -72,16 +68,16 @@ angular.module('adminApp')
 
           $scope.models.push(_model);
         }
+        function parseModelElements(elements) {
+          var eles = JSON.parse(elements);
+          var res = [];
+          for (var ele, e = 0; ele = eles[e]; e++) {
+            res.push(ele['id']);
+          }
+          return res
+        }
       });
 
-      function parseModelElements(elements) {
-        var eles = JSON.parse(elements);
-        var res = [];
-        for (var ele, e = 0; ele = eles[e]; e++) {
-          res.push(ele['id']);
-        }
-        return res
-      }
 
       //duplicate items to reach 10000 (for testing)
       $scope.duplicateForTest = function () {

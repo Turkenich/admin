@@ -1,20 +1,14 @@
-<h1>דגמים</h1>
-<button class="btn btn-default" ng-click="addItem()">דגם חדש</button>
+<h1>הזמנות</h1>
+<button class="btn btn-default" ng-click="addItem()">הזמנה חדשה</button>
 <div class="row">
   <div class="col-sm-4">
     <div class="row">
-        <dynamic-filter
-          model="modelType"
-          type="text"
-          name="סוג המודל"
-          desc="אות המייצגת את סוג המודל">
-        </dynamic-filter>
-        <dynamic-filter
-          model="modelId"
-          type="text"
-          name="קוד המודל"
-          desc="מספר המייצג את קוד המודל">
-        </dynamic-filter>
+      <dynamic-filter
+        model="orderId"
+        type="text"
+        name="קןד ההזמנה"
+        desc="קוד ההזמנה">
+      </dynamic-filter>
         <dynamic-filter
           model="desc"
           type="textarea"
@@ -35,13 +29,6 @@
           name="עד תאריך"
           desc="תאריך הקמת האלמנט המקסימאלי">
         </dynamic-filter>
-        <dynamic-filter
-          model="order"
-          type="parent"
-          options="orders"
-          name="מופיע בהזמנה"
-          desc="שם ההזמנה בה מופיע הדגם">
-        </dynamic-filter>
     </div>
   </div>
   <div class="btn-group" role="group" aria-label="...">
@@ -52,7 +39,7 @@
   <div class="col-sm-8">
     <ul class="media-list">
       <li ng-repeat="item in items | listFilter track by $index">
-        <list-item item="item" path="models" addto="addTo"></list-item>
+        <list-item item="item" path="orders"></list-item>
       </li>
     </ul>
   </div>

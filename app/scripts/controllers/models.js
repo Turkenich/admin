@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ModelsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models) {
+  .controller('ModelsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models', 'Orders',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models, Orders) {
 
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Models, item, function () {
@@ -49,6 +49,12 @@ angular.module('adminApp')
 
       var addId = $location.search()['addId'];
 
+      //when this page is opened to choose and element to add to a model
+      $scope.addTo = $location.search()['addTo'];
+
+
+      $rootScope.filter = {};
+
       $scope.removeElement = function (element) {
         console.log('deleting', element);
         if ($scope.elements && $scope.elements.length > 0) {
@@ -68,10 +74,35 @@ angular.module('adminApp')
         $scope.updateItem($scope.item);
       }
 
+      Orders.all(function (orders) {
+        $scope.orders = [];
+        for (var order, i = 0; order = orders[i]; i++) {
+          if (!order.models) continue;
+          var _order = {
+            name: order.name || order.desc,
+          }
+          var id = parseOrderModels(order.models);
+          id.unshift(order._id);
+          _order._id = JSON.stringify(id);
+
+          $scope.orders.push(_order);
+        }
+        function parseOrderModels(models) {
+          var eles = JSON.parse(models);
+          var res = [];
+          for (var ele, e = 0; ele = eles[e]; e++) {
+            res.push(ele['id']);
+          }
+          return res
+        }
+      });
+
+
       //private
       $scope.parseElementsFromDb = function () {
 
-        if (!$scope.item || !$scope.item.elements) return;
+        if (!$scope.item) return;
+        if (!$scope.item.elements) $scope.item.elements = "[]";
 
         var eles = JSON.parse($scope.item.elements);
 
@@ -97,6 +128,7 @@ angular.module('adminApp')
 
 
       }
+
 
       $scope.parseElementsToDb = function() {
 

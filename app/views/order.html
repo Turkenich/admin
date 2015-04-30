@@ -1,0 +1,35 @@
+<h1 xmlns="http://www.w3.org/1999/html">הזמנה</h1>
+<form role="form" class="row">
+  <div class="col-sm-3">
+    <dynamic-input item="item"
+                   model="item.orderId"
+                   type="text"
+                   name="קוד ההזמנה"
+                   desc="קוד המתאר את ההזמנה">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.desc"
+                   type="textarea"
+                   options=""
+                   name="תיאור"
+                   desc="תיאור ההזמנה">
+    </dynamic-input>
+
+    <!--image: { type: String, default:' ', required: false },-->
+
+  </div>
+  <div class="col-sm-6">
+    <ul>
+      <li ng-repeat="model in models">
+        <span>{{model.desc}}</span>
+        <input type="number" ng-model="model.amount">
+        <i class="fa fa-trash" ng-click="removeModel(model)"></i>
+        <i class="fa fa-times" ng-click="zeroModel(model)"></i>
+        <a class="" ng-href="#/models/{{model._id}}"><i class="fa fa-external-link"></i></a>
+      </li>
+    </ul>
+    <a href="#/models?addTo={{item._id}}">הוסף דגם</a>
+  </div>
+
+<item-actions></item-actions>
+</form>

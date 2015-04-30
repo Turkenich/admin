@@ -22,7 +22,7 @@ angular
         reloadOnSearch: false
       })
       .when('/orders/:id', {
-        templateUrl: 'views/orders.html',
+        templateUrl: 'views/order.html',
         controller: 'OrdersCtrl',
         reloadOnSearch: false
       })
