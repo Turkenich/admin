@@ -33,7 +33,7 @@ Array.prototype.findIndexById = function (idVal, idKey) {
       return i;
     }
   }
-  return 0;
+  return -1;
 }
 
 Array.prototype.findNextById = function (idVal, idKey) {

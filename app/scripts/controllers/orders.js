@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('OrdersCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Orders',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Orders) {
+  .controller('OrdersCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models', 'Orders',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models, Orders) {
 
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Orders, item, function () {
@@ -96,6 +96,10 @@ angular.module('adminApp')
               addId = false;
               $location.search({'addId': null});
             }
+
+            if (($scope.models.length == eles.length)) {
+              $scope.getOrderElements();
+            }
           });
         }
 
@@ -118,5 +122,66 @@ angular.module('adminApp')
         return $scope.item.models;
 
       }
+
+      $scope.getOrderElements = function () {
+
+        if (!$scope.models || !$scope.models.length) return;
+
+        var elements = {};
+        for (var model, i = 0; model = $scope.models[i]; i++) {
+          var eles = JSON.parse(model.elements);
+          for (var ele, j = 0; ele = eles[j]; j++) {
+            if (!elements[ele.id]) elements[ele.id] = 0;
+            elements[ele.id] += 1;
+          }
+        }
+
+        $scope.elements = [];
+        for (var e in elements) {
+          Elements.query({'id': e}, function (_element) {
+            $scope.elements.push(_element);
+
+            if (($scope.elements.length == eles.length)) {
+              $scope.orderCost();
+            }
+
+          });
+        }
+      }
+
+      $scope.updateOrderQuantities = function () {
+
+        $scope.totalWorkTime = 0;
+
+        var elements = {};
+        for (var model, i = 0; model = $scope.models[i]; i++) {
+          $scope.totalWorkTime += model.amount * (model.requiredTime || 0);
+          var eles = JSON.parse(model.elements);
+          for (var ele, j = 0; ele = eles[j]; j++) {
+            if (!elements[ele.id]) elements[ele.id] = 0;
+            elements[ele.id] += (model.amount * ele.amount);
+          }
+        }
+
+        for (var e in elements) {
+          //var amount = elements[e]; //not needed
+          var ele = $scope.elements.findIndexById(e);
+          if (ele >= 0) {
+            $scope.elements[ele].amount = (elements[e] || 0);
+          }
+        }
+      }
+
+      $scope.orderCost = function () {
+
+        if (!$scope.elements || !$scope.elements.length>0) {
+          return
+        }
+
+        $scope.updateOrderQuantities();
+        return $scope.elementsCost({requiredTime: $scope.totalWorkTime}, $scope.elements);
+
+      }
+
 
     }]);

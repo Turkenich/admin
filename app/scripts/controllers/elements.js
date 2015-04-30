@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Elements', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Elements',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements) {
 
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Elements, item, function(){
@@ -50,21 +50,6 @@ angular.module('adminApp')
 
 
       $rootScope.filter = {};
-
-      $scope.elementTypes = ElementTypes.all();
-      $scope.materials = Materials.all();
-      $scope.providers = Providers.all();
-      $scope.coatings = Coatings.all();
-      $scope.elementFeatures = ElementFeatures.all();
-      $scope.prices = Prices.all(function (prices) {
-        $scope.prices = [];
-        for (var price, i = 0; price = prices[i]; i++) {
-          var patt = new RegExp('^[A-Z]{3}$');
-          if (price.code && patt.test(price.code)) {
-            $scope.prices.push(price);
-          }
-        }
-      });
 
       if (!$routeParams['id']) {
         //only fetch models on elements screen (used for filtering)

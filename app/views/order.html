@@ -29,6 +29,32 @@
       </li>
     </ul>
     <a href="#/models?addTo={{item._id}}">הוסף דגם</a>
+
+    <br/>
+    <div class="tile">
+      <label>עלות כוללת</label>
+      <div ng-bind="orderCost()"></div>
+    </div>
+    <div class="tile">
+      <label>עלות חומרים</label>
+      <div ng-bind="materialCost"></div>
+    </div>
+    <div class="tile">
+      <label>עלות ציפוי</label>
+      <div ng-bind="coatingCost"></div>
+    </div>
+    <div class="tile">
+      <label>עלות תכונות נוספות</label>
+      <div ng-bind="elementFeatureCost"></div>
+    </div>
+    <div class="tile">
+      <label>עלות עבודת ספק</label>
+      <div ng-bind="providerWorkCost"></div>
+    </div>
+    <div class="tile">
+      <label>עלות השחלה</label>
+      <div ng-bind="workCost"></div>
+    </div>
   </div>
 
 <item-actions></item-actions>
