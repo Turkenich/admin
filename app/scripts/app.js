@@ -16,6 +16,11 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl',
+        reloadOnSearch: false
+      })
       .when('/orders', {
         templateUrl: 'views/orders.html',
         controller: 'OrdersCtrl',
@@ -46,6 +51,17 @@ angular
       .when('/elements/:id', {
         templateUrl: 'views/element.html',
         controller: 'ElementsCtrl',
+        reloadOnSearch: false
+      })
+
+      .when('/prices', {
+        templateUrl: 'views/prices.html',
+        controller: 'PricesCtrl',
+        reloadOnSearch: false
+      })
+      .when('/prices/:id', {
+        templateUrl: 'views/price.html',
+        controller: 'PricesCtrl',
         reloadOnSearch: false
       })
 
