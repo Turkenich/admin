@@ -49,3 +49,7 @@
   </div>
   <!-- /.container-fluid -->
 </nav>
+
+<ol class="breadcrumb bottom">
+  <li ng-repeat="breadcrumb in breadcrumbs" ng-class="breadcrumb.class"><a ng-href="{{breadcrumb.link}}">{{breadcrumb.name}}</a></li>
+</ol>

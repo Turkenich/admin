@@ -5,6 +5,20 @@ angular.module('adminApp')
 
     console.log('VERSION: ' + '1.0');
 
+    $scope.updateBreadcrumbs = function(name, path, item){
+      $rootScope.breadcrumbs = [{name: 'ראשי', link: '#/'}];
+      if (!name || !path) return;
+      $rootScope.breadcrumbs.push({
+        name: name, link: '#/' + path
+      });
+      if (item){
+        $rootScope.breadcrumbs.push({
+          name: (item.code || item.name || item.desc), link: '#/' + path + '/' + item._id
+        });
+      }
+    }
+    $scope.updateBreadcrumbs();
+
     $scope.trustUrl = function (url) {
       return $sce.trustAsResourceUrl(url);
     }

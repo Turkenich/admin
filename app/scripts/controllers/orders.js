@@ -7,6 +7,7 @@ angular.module('adminApp')
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Orders, item, function () {
           $scope.parseModelsFromDb();
+          $scope.updateBreadcrumbs('הזמנות', 'orders', $scope.item);
         });
       }
       $scope.updateItem = function (item) {
@@ -102,7 +103,7 @@ angular.module('adminApp')
       }
 
 
-      $scope.parseModelsToDb = function() {
+      $scope.parseModelsToDb = function () {
 
         if (!$scope.item || !$scope.item.models) return;
 

@@ -5,7 +5,9 @@ angular.module('adminApp')
     function ($scope, $rootScope, $routeParams, $location, $timeout, Prices) {
 
       $scope.reloadItem = function (item) {
-        $rootScope.reloadItemImp($scope, Prices, item);
+        $rootScope.reloadItemImp($scope, Prices, item, function(){
+          $scope.updateBreadcrumbs('מטבעות', 'prices', $scope.item);
+        });
       }
       $scope.updateItem = function (item) {
         $rootScope.updateItemImp($scope, Prices, item);

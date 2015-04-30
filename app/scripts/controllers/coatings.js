@@ -5,7 +5,9 @@ angular.module('adminApp')
     function ($scope, $rootScope, $routeParams, $location, $timeout, Coatings) {
 
       $scope.reloadItem = function (item) {
-        $rootScope.reloadItemImp($scope, Coatings, item);
+        $rootScope.reloadItemImp($scope, Coatings, item, function(){
+          $scope.updateBreadcrumbs('ציפויים', 'coatings', $scope.item);
+        });
       }
       $scope.updateItem = function (item) {
         $rootScope.updateItemImp($scope, Coatings, item);

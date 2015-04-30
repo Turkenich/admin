@@ -5,7 +5,9 @@ angular.module('adminApp')
     function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       $scope.reloadItem = function (item) {
-        $rootScope.reloadItemImp($scope, Elements, item);
+        $rootScope.reloadItemImp($scope, Elements, item, function(){
+          $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
+        });
       }
       $scope.updateItem = function (item) {
         $rootScope.updateItemImp($scope, Elements, item);
@@ -57,7 +59,7 @@ angular.module('adminApp')
       $scope.prices = Prices.all(function (prices) {
         $scope.prices = [];
         for (var price, i = 0; price = prices[i]; i++) {
-          var patt = new RegExp('[A-Z]{3}');
+          var patt = new RegExp('^[A-Z]{3}$');
           if (price.code && patt.test(price.code)) {
             $scope.prices.push(price);
           }
