@@ -1,5 +1,5 @@
 <h1 xmlns="http://www.w3.org/1999/html">אלמנט</h1>
-<form role="form" class="row">
+<form id="upload_form" role="form" class="row">
   <div class="col-sm-3">
     <dynamic-input item="item"
                    model="item.desc"
@@ -123,7 +123,7 @@
 
     <!--image: { type: String, default:' ', required: false },-->
 
-    <input name="file" type="file"
+    <input name="file" type="file" id="template-upload"
            class="cloudinary-fileupload" data-cloudinary-field="image_id"
            data-form-data="{{cloudinaryData}}" ></input>
 

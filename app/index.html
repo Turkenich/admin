@@ -27,7 +27,8 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/root.css">
+  <link rel="stylesheet" href="styles/root.css">
+  <link rel="stylesheet" href="styles/upload.css">
     <link rel="stylesheet" href="styles/gd-ui-jsonexplorer.css">
     <!-- endbuild -->
 </head>
@@ -96,7 +97,9 @@
 <script src="bower_components/blueimp-file-upload/js/jquery.fileupload-jquery-ui.js"></script>
 <script src="bower_components/blueimp-file-upload/js/jquery.fileupload-angular.js"></script>
 <script src="bower_components/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
-<script src="bower_components/cloudinary/js/jquery.cloudinary.js"></script>
+<script src="bower_components/cloudinary_js/js/jquery.cloudinary.js"></script>
+<script src="bower_components/cloudinary_ng/js/angular.cloudinary.js"></script>
+<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -120,6 +123,7 @@
 <script src="scripts/controllers/providers.js"></script>
 <script src="scripts/controllers/elementFeatures.js"></script>
 <script src="scripts/controllers/elementTypes.js"></script>
+<script src="scripts/controllers/cloudinary.js"></script>
 
 <script src="scripts/services/prices.js"></script>
 <script src="scripts/services/settings.js"></script>

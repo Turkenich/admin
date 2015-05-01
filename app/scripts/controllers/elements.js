@@ -5,7 +5,7 @@ angular.module('adminApp')
     function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements) {
 
       $scope.reloadItem = function (item) {
-        $rootScope.reloadItemImp($scope, Elements, item, function(){
+        $rootScope.reloadItemImp($scope, Elements, item, function () {
           $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
         });
       }
@@ -77,11 +77,17 @@ angular.module('adminApp')
         });
       }
 
+      $timeout(function () {
+        debugger;
+        $('#upload_form').append($.cloudinary.unsigned_upload_tag("zcudy0uz",
+          {cloud_name: 'turkenich'}));
+      })
+
       $scope.cloudinaryData = {
-        "timestamp":  1345719094,
-        "callback": "https://www.turkenich.herokuapp.com/cloudinary_cors.html",
+        "timestamp": 1345719094,
+        "callback": "https://turkenich.herokuapp.com/cloudinary_cors.html",
         "signature": "7ac8c757e940d95f95495aa0f1cba89ef1a8aa7a",
-        "api_key": "1234567890"
+        "api_key": "438331198318935"
       }
 
 
@@ -92,7 +98,6 @@ angular.module('adminApp')
           $scope.items = $scope.items.concat($scope.items);
         }
       };
-
 
 
     }]);

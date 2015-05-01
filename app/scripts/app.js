@@ -6,6 +6,8 @@ angular
     'ngResource',
     'ngSanitize',
     'ngRoute',
+    'angularFileUpload',
+    'cloudinary',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
     'ui.bootstrap.transition'
@@ -15,6 +17,10 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      }).
+      when('/upload', {
+        templateUrl: 'views/partials/photo-upload.html',
+        controller: 'photoUploadCtrl'
       })
       .when('/settings', {
         templateUrl: 'views/settings.html',
