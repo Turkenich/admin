@@ -77,20 +77,6 @@ angular.module('adminApp')
         });
       }
 
-      $timeout(function () {
-        debugger;
-        $('#upload_form').append($.cloudinary.unsigned_upload_tag("zcudy0uz",
-          {cloud_name: 'turkenich'}));
-      })
-
-      $scope.cloudinaryData = {
-        "timestamp": 1345719094,
-        "callback": "https://turkenich.herokuapp.com/cloudinary_cors.html",
-        "signature": "7ac8c757e940d95f95495aa0f1cba89ef1a8aa7a",
-        "api_key": "438331198318935"
-      }
-
-
       //duplicate items to reach 10000 (for testing)
       $scope.duplicateForTest = function () {
         var limit = 1000000;

@@ -32,6 +32,11 @@ angular.module('adminApp')
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{desc}}"/>';
             break;
+          case 'image':
+            tmpl += '<input class="form-control" id="{{id}}" type="hidden" ng-model="model" placeholder="{{desc}}"/>' +
+            '<div class="input-uploader" style="background-image: url({{model}})" ng-click="displayUploader(true);"></div></div>' +
+            '<image-uploader ng-show="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
+            break;
           default:
             tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{desc}}"/>';
             break;
@@ -44,6 +49,12 @@ angular.module('adminApp')
       },
       link: function postLink(scope, element, attrs) {
         scope.id = attrs.type + '_' + attrs.name.replace(/'/g, "");
+
+        scope.showUploader = $rootScope.showUploader;
+        scope.displayUploader = function(status){
+          $rootScope.showUploader = status;
+          scope.showUploader = $rootScope.showUploader;
+        }
 
         //pre select existing value in select boxes
         scope.$watch('model', function (newVal, oldVal) {

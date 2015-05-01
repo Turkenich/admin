@@ -87,3 +87,79 @@ form .error { color: #c55; margin: 0 10px; }
   background-color: #ff0000;
   width: 0%;
 }
+
+.camera-container {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+}
+
+.camera-wrapper {
+  margin: 100px auto 20px;
+  width: 640px;
+  height: 480px;
+  padding: 0px;
+  box-sizing: content-box;
+  position: relative;
+}
+
+.camera-messages {
+  color: #999;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.camera-overlay, .camera-feed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 480px;
+  background-size: contain;
+  border: 1px solid #111;
+  border-radius: 10px;
+  background: #000;
+}
+
+.camera-controls {
+  margin: 0px auto;
+  height: 120px;
+  text-align: center;
+}
+
+.ng-camera-take-btn {
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  background: #ccc;
+  background: linear-gradient(to bottom, #f7f7f7, #aaa);
+  border: 1px solid #111;
+  font-size: 50px;
+  color: #111;
+}
+.camera-close{
+  position: absolute;
+  top: -28px;
+  right: -20px;
+  font-size: 32px;
+  z-index: 10;
+  color: #efefef;
+  cursor: pointer;
+  &:hover{
+    color: white;
+  }
+}
+
+.input-uploader {
+  height: 200px;
+  background-color: #fff;
+  margin-top: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
