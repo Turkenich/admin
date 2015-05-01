@@ -8,6 +8,7 @@ angular
     'ngRoute',
     'angularFileUpload',
     'cloudinary',
+    'omr.directives',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
     'ui.bootstrap.transition'
