@@ -77,6 +77,14 @@ angular.module('adminApp')
         });
       }
 
+      $scope.cloudinaryData = {
+        "timestamp":  1345719094,
+        "callback": "https://www.turkenich.herokuapp.com/cloudinary_cors.html",
+        "signature": "7ac8c757e940d95f95495aa0f1cba89ef1a8aa7a",
+        "api_key": "1234567890"
+      }
+
+
       //duplicate items to reach 10000 (for testing)
       $scope.duplicateForTest = function () {
         var limit = 1000000;
@@ -84,5 +92,7 @@ angular.module('adminApp')
           $scope.items = $scope.items.concat($scope.items);
         }
       };
+
+
 
     }]);
