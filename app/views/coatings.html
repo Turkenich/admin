@@ -1,7 +1,14 @@
-<h1>ציפויים</h1>
-<button class="btn btn-default" ng-click="addItem()">הוסף ציפוי חדש</button>
+<h1>ציפויים
+  <div class="btn-group" role="group" aria-label="...">
+    <button class="btn btn-success" ng-click="addItem()"><i
+      class="fa fa-plus fa-fw"></i> הוסף ציפוי חדש
+    </button>
+  </div>
+</h1>
+<form class="row">
 <ul class="media-list">
   <li ng-repeat="item in items | orderBy:'pos'">
     <list-item item="item" path="coatings"></list-item>
   </li>
 </ul>
+</form>

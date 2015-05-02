@@ -14,7 +14,8 @@ angular.module('adminApp')
       '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="duplicateItem(item)"><i class="fa fa-plus"></i> שמירה כחדש</button>' +
       '<button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="reloadItem(item)"><i class="fa fa-undo"></i> ביטול</button>' +
       '<button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-trash"></i> מחיקה</button>' +
-      '</div>'
+      '</div>' +
+      '<div style="clear:both;"></div>'
       ,
       restrict: 'E',
       link: function postLink(scope, element, attrs) {

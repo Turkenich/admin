@@ -33,8 +33,8 @@ angular.module('adminApp')
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{desc}}"/>';
             break;
           case 'image':
-            tmpl += '<input class="form-control" id="{{id}}" type="hidden" ng-model="model" placeholder="{{desc}}"/>' +
-            '<div class="input-uploader" style="background-image: url({{model}})" ng-click="displayUploader(true);"></div></div>' +
+            tmpl += '<input class="form-control" id="{{id}}" type="text" ng-model="model" placeholder="{{desc}}" style="height:0px; padding:0px; visibility: hidden;"/>' +
+            '<a  ng-click="displayUploader(true);" class="thumbnail"><img ng-src="{{model}}" alt="..."></a>' +
             '<image-uploader ng-show="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
             break;
           default:
@@ -51,7 +51,7 @@ angular.module('adminApp')
         scope.id = attrs.type + '_' + attrs.name.replace(/'/g, "");
 
         scope.showUploader = $rootScope.showUploader;
-        scope.displayUploader = function(status){
+        scope.displayUploader = function (status) {
           $rootScope.showUploader = status;
           scope.showUploader = $rootScope.showUploader;
         }

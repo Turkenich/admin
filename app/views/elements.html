@@ -1,7 +1,14 @@
-<h1>אלמנטים</h1>
-<button class="btn btn-default" ng-click="addItem()">New Element</button>
-<button class="btn btn-default" ng-click="duplicateForTest()">Duplicate For Test</button>
-<div class="row">
+<h1>אלמנטים
+  <div class="btn-group" role="group" aria-label="...">
+    <button class="btn btn-success" ng-click="addItem()"><i
+      class="fa fa-plus fa-fw"></i> צור אלמנט חדש</button>
+    <button class="btn btn-danger" ng-click="clearForm()"><i
+      class="fa fa-undo"></i> נקה טופס
+    </button>
+    <button class="btn btn-disabled" ng-click="duplicateForTest()">TEST</button>
+  </div>
+</h1>
+<form class="row">
   <div class="col-sm-8">
     <div class="row">
       <div class="col-sm-4">
@@ -41,7 +48,7 @@
         </dynamic-filter>
       </div>
       <div class="col-sm-4">
-      <dynamic-filter
+        <dynamic-filter
           model="provider"
           type="select"
           options="providers"
@@ -116,11 +123,6 @@
       </div>
     </div>
   </div>
-  <div class="btn-group" role="group" aria-label="...">
-    <button class="btn btn-danger" ng-click="clearForm()"><i
-      class="fa fa-undo"></i> נקה טופס
-    </button>
-  </div>
   <div class="col-sm-4">
     <ul class="media-list">
       <li ng-repeat="item in items | listFilter track by $index">
@@ -128,4 +130,4 @@
       </li>
     </ul>
   </div>
-</div>
+</form>
