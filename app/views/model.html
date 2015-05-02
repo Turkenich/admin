@@ -119,6 +119,15 @@
       </li>
     </ul>
 
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="price in prices">
+        <span class="list-cost">
+          <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
+               <i class="fa fa-ils"></i>
+        </span>
+        {{price.name}}
+      </li>
+    </ul>
   </div>
 
 </form>

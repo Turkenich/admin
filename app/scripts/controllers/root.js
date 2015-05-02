@@ -22,7 +22,7 @@ angular.module('adminApp')
 
       $scope.goBack = function () {
         var path = $location.path().split('/');
-        path.splice(path.length-1,1);
+        path.splice(path.length - 1, 1);
         $location.path(path.join('/'));
         //window.history.back();
       }
@@ -93,11 +93,11 @@ angular.module('adminApp')
       }
 
       $rootScope.sort = 'name';
-      $rootScope.sortBy = function(name){
+      $rootScope.sortBy = function (name) {
         $rootScope.sort = name;
       }
 
-      $rootScope.isSortedBy = function(name){
+      $rootScope.isSortedBy = function (name) {
         return $rootScope.sort == name;
       }
 
@@ -114,7 +114,7 @@ angular.module('adminApp')
       $scope.providers = Providers.all();
       $scope.coatings = Coatings.all();
       $scope.elementFeatures = ElementFeatures.all();
-      $scope.prices = Prices.all();
+      $scope.currencies = Prices.all();
 
       $scope.measureUnits = [
         {name: "גרם", _id: 'gram'},
@@ -123,7 +123,7 @@ angular.module('adminApp')
       ]
 
 
-      $scope.elementsCost = function (model, elements) {
+      $scope.elementsCost = function (model, elements, prices) {
 
         if (!elements || !elements.length) return;
 
@@ -145,6 +145,11 @@ angular.module('adminApp')
             var material = $scope.materials.findById(ele.material);
             //get material price for gram
             var materialPrice = (material.price || 0) / Consts.OunceToGrams;
+            debugger;
+            var override = (prices.findById(material._id));
+            if (override && override.newPrice) {
+              materialPrice = (override.newPrice) / Consts.OunceToGrams;
+            }
 
             //add to cost
             $scope.materialCost += eleWeight * ele.amount * materialPrice;
@@ -184,8 +189,12 @@ angular.module('adminApp')
           //work cost
 
           //get the work cost per unit in ILS
-          var workUnitPrice = ele.workUnitPrice * (($scope.prices.findById(ele.workUnitCurrency) || {}).conversion || 0);
-
+          var workUnitCurrency = $scope.currencies.findById(ele.workUnitCurrency);
+          var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
+          override = (prices.findById(workUnitCurrency._id));
+          if (override && override.newPrice) {
+            workUnitPrice = ele.workUnitPrice * (override.newPrice || 0);
+          }
           var workUnit = ele.workUnit;
           if (workUnit == 'gram') {
             $scope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
@@ -196,7 +205,11 @@ angular.module('adminApp')
         }
         //add work time
         var workTime = model.requiredTime || 0;
-        var minutePrice = ($scope.prices.findById('TIME', 'code').conversion || 0);
+        var minutePrice = ($scope.currencies.findById('TIME', 'code').conversion || 0);
+        override = (prices.findById('TIME', 'code'));
+        if (override && override.newPrice) {
+          minutePrice = (override.newPrice || 0);
+        }
 
         $scope.workCost = (minutePrice || 0) * workTime;
 

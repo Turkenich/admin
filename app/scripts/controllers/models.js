@@ -7,12 +7,14 @@ angular.module('adminApp')
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Models, item, function () {
           $scope.parseElementsFromDb();
+          $scope.parsePricesFromDb();
           $scope.updateBreadcrumbs('דגמים', 'models', $scope.item);
         });
       }
       $scope.updateItem = function (item) {
         item.name = $scope.item.modelType + $scope.item.modelId;
         item.elements = $scope.parseElementsToDb();
+        item.prices = $scope.parsePricesToDb();
         $rootScope.updateItemImp($scope, Models, item);
       }
       $scope.removeItem = function (item) {
@@ -154,11 +156,54 @@ angular.module('adminApp')
 
       }
 
+      $scope.parsePricesFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.prices) $scope.item.prices = "[]";
+
+        $scope.prices = [];
+        for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          ele.newPrice = null;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.materials[e]; e++) {
+          ele.newPrice = null;
+          $scope.prices.push(ele);
+        }
+
+        var eles = JSON.parse($scope.item.prices);
+        //format is: _id: newPrice
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          $scope.prices[$scope.prices.findIndexById(ele.id)].newPrice = ele.newPrice;
+        }
+
+      }
+
+
+      $scope.parsePricesToDb = function () {
+
+        if (!$scope.item || !$scope.item.prices) return;
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.prices[e]; e++) {
+          if (ele.newPrice){
+            eles.push({
+              id: ele._id, newPrice: ele.newPrice
+            });
+          }
+        }
+
+        $scope.item.prices = JSON.stringify(eles);
+
+        return $scope.item.prices;
+
+      }
+
       $scope.modelCost = function () {
 
         if (!$scope.elements || !$scope.elements.length) return;
 
-        return $scope.elementsCost($scope.item, $scope.elements);
+        return $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
 
       }
 

@@ -128,7 +128,7 @@ ul.nav.nav-pills{
   border-top-right-radius: 0 !important;
 }
 .input-group.below {
-  margin-top: -8px;
+  margin-top: -10px;
 }
 .form-control.above, .btn.above, .input-group.above  {
   border-bottom-left-radius: 0 !important;
@@ -160,4 +160,13 @@ ul.nav.nav-pills{
 .list-cost{
   float: left;
   font-weight: bold;
+}
+input.list-cost {
+  float: none;
+  width: 50px;
+  padding: 0;
+  margin-top: 0px;
+  margin-left: 5px;
+  border: none;
+  text-align: left;
 }

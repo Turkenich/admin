@@ -7,11 +7,13 @@ angular.module('adminApp')
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Orders, item, function () {
           $scope.parseModelsFromDb();
+          $scope.parsePricesFromDb();
           $scope.updateBreadcrumbs('הזמנות', 'orders', $scope.item);
         });
       }
       $scope.updateItem = function (item) {
         item.models = $scope.parseModelsToDb();
+        item.prices = $scope.parsePricesToDb();
         $rootScope.updateItemImp($scope, Orders, item);
       }
       $scope.removeItem = function (item) {
@@ -123,6 +125,48 @@ angular.module('adminApp')
 
       }
 
+      $scope.parsePricesFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.prices) $scope.item.prices = "[]";
+
+        $scope.prices = [];
+        for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          ele.newPrice = null;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.materials[e]; e++) {
+          ele.newPrice = null;
+          $scope.prices.push(ele);
+        }
+
+        var eles = JSON.parse($scope.item.prices);
+        //format is: _id: newPrice
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          $scope.prices[$scope.prices.findIndexById(ele.id)].newPrice = ele.newPrice;
+        }
+
+      }
+
+
+      $scope.parsePricesToDb = function () {
+
+        if (!$scope.item || !$scope.item.prices) return;
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.prices[e]; e++) {
+          if (ele.newPrice){
+            eles.push({
+              id: ele._id, newPrice: ele.newPrice
+            });
+          }
+        }
+
+        $scope.item.prices = JSON.stringify(eles);
+
+        return $scope.item.prices;
+
+      }
       $scope.getOrderElements = function () {
 
         if (!$scope.models || !$scope.models.length) return;
@@ -179,7 +223,7 @@ angular.module('adminApp')
         }
 
         $scope.updateOrderQuantities();
-        return $scope.elementsCost({requiredTime: $scope.totalWorkTime}, $scope.elements);
+        return $scope.elementsCost({requiredTime: $scope.totalWorkTime}, $scope.elements, $scope.prices);
 
       }
 
