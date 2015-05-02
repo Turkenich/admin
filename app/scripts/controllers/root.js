@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $sce, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$location', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $sce, $timeout, $location, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
 
@@ -20,6 +20,12 @@ angular.module('adminApp')
       }
       $scope.updateBreadcrumbs();
 
+      $scope.goBack = function () {
+        var path = $location.path().split('/');
+        path.splice(path.length-1,1);
+        $location.path(path.join('/'));
+        //window.history.back();
+      }
       $scope.trustUrl = function (url) {
         return $sce.trustAsResourceUrl(url);
       }
@@ -86,9 +92,18 @@ angular.module('adminApp')
         $rootScope.filter = {};
       }
 
+      $rootScope.sort = 'name';
+      $rootScope.sortBy = function(name){
+        $rootScope.sort = name;
+      }
+
+      $rootScope.isSortedBy = function(name){
+        return $rootScope.sort == name;
+      }
+
 
       $rootScope.showUploader = false;
-      $rootScope.displayUploader = function(status){
+      $rootScope.displayUploader = function (status) {
         debugger;
         $rootScope.showUploader = status;
       }
@@ -189,7 +204,6 @@ angular.module('adminApp')
 
         return cost;
       }
-
 
 
     }]);

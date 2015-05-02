@@ -1,35 +1,30 @@
-.line{
+.line {
   margin-top: 15px !important;
   padding-top: 15px !important;
   border-top: 1px solid #cccccc !important;
 }
-.space{
+
+.space {
   margin-top: 5px !important;
 }
 
-.form-group.tile{
-  background: #f1f1f1;
-  padding: 8px 17px 12px;
-  border-radius: 7px;
-  border: 1px solid transparent;
-}
-
-.ltr-datepicker ~ ul{
+.ltr-datepicker ~ ul {
   direction: ltr !important;
   min-width: 296px !important;
   padding: 5px !important;
 }
 
-.navbar-inverse.navbar-custom{
+.navbar-inverse.navbar-custom {
   border-bottom: 1px solid #ccc;
   border-radius: 0;
   background: linear-gradient(to bottom, #333, #000);
-  a{
+  a {
     color: #999;
 
   }
 }
-.breadcrumb.bottom{
+
+.breadcrumb.bottom {
   position: fixed;
   width: 100%;
   margin: 0;
@@ -38,22 +33,23 @@
   border-top: 1px solid #ccc;
   border-radius: 0;
   background: linear-gradient(to bottom, #333, #000);
-  a{
+  a {
     color: #999;
 
   }
 }
-body{
+
+body {
   padding-bottom: 35px;
   background: url('/images/bg.jpg');
   background-size: 400px;
 }
 
-.container-fluid{
+.container-fluid {
   padding: 0;
 }
 
-h1{
+h1 {
   padding: 15px 20px;
   margin: 0;
   width: 100%;
@@ -61,20 +57,65 @@ h1{
   box-sizing: border-box;
   color: #111;
   border-bottom: 1px solid #666;
-  .btn-group{
+  .btn-group {
     float: left;
     margin-top: 4px;
   }
 }
-form.row{
-  margin: 10px 30px;
+
+form.row {
+  margin: 10px auto;
   padding: 20px;
+  max-width: 1200px;
 }
+
 .form-group.tile {
-  background: #fefefe;
-  padding: 8px 17px 12px;
-  border-radius: 3px;
+  background: transparent;
+  padding: 4px 3px 12px;
+  /* border-radius: 3px; */
+  /* border: 1px solid #ccc; */
+  margin: -10px -10px;
+  /* box-shadow: -1px -1px 8px -3px rgba(255,255,255, 0.9); */
+  label {
+    margin-bottom: 0px;
+    font-weight: normal;
+    color: #444;
+    text-shadow: -1px -1px 0px #fefefe;
+    margin-right: 5px;
+    font-size: 13px;
+  }
+}
+
+.list-item{
+  margin:10px 0;
+  background: white;
   border: 1px solid #ccc;
-  margin: 10px -10px;
-  box-shadow: 1px 1px 8px -3px rgba(0,0,0,0.2);
+  border-radius: 7px;
+  padding: 10px;
+  position: relative;
+  max-width: 500px;
+  min-height: 60px;
+  a{
+    color:#333;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+}
+
+.list-buttons {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+ul.nav.nav-pills{
+  margin-bottom: 10px;
+  a{
+    color: #333;
+    cursor: pointer;
+  }
+  li.active a{
+    cursor: default;
+    background: #333;
+    color: #ccc;
+  }
 }

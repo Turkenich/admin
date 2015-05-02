@@ -9,7 +9,7 @@
   </div>
 </h1>
 <form class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-6">
     <div class="row">
       <div class="col-sm-4">
         <dynamic-filter
@@ -123,11 +123,18 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-4">
-    <ul class="media-list">
-      <li ng-repeat="item in items | listFilter track by $index">
-        <list-item item="item" path="elements" addto="addTo"></list-item>
-      </li>
+  <div class="col-sm-1">
+  </div>
+  <div class="col-sm-5">
+    <ul class="nav nav-pills">
+      <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>
+      <li role="presentation" ng-class="{active: isSortedBy('createdAt')}"><a ng-click="sortBy('createdAt')">תאריך הקמה</a></li>
+      <li role="presentation" ng-class="{active: isSortedBy('updatedAt')}"><a ng-click="sortBy('updatedAt')">תאריך עדכון אחרון</a></li>
     </ul>
+    <div class="media-list">
+      <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
+        <list-item item="item" path="elements" addto="addTo"></list-item>
+      </div>
+    </div>
   </div>
 </form>
