@@ -181,6 +181,12 @@ angular.module('adminApp')
         }
 
         scope.uploading = {};
+        scope.uploadedImage = scope.$parent.item.image;
+
+        scope.retakePicture = function(){
+          scope.uploadedImage = '';
+        }
+
         scope.captureCallback = function (dataURI) {
 
           if (!dataURI) return;
@@ -198,7 +204,6 @@ angular.module('adminApp')
             scope.uploading.status = "Uploading... " + file.progress + "%";
           }).success(function (data, status, headers, config) {
             console.log('uploaded!!!', data);
-            debugger;
             scope.uploadedImage = data.url;
             scope.$parent.item.image = data.url;
             $timeout(function(){

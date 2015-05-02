@@ -15,7 +15,8 @@
     <canvas id="ng-photo-canvas" width="640" height="480" style="display:none;"></canvas>
   </div>
   <div class="camera-controls" ng-hide="hideUI">
-    <button class="ng-camera-take-btn" ng-click="takePicture()"><i class="fa fa-camera"></i></button>
+    <button class="ng-camera-take-btn" ng-hide="uploadedImage" ng-click="takePicture()"><i class="fa fa-camera"></i></button>
+    <button class="ng-camera-take-btn" ng-show="uploadedImage" ng-click="retakePicture()"><i class="fa fa-undo"></i></button>
   </div>
 </div>
 
