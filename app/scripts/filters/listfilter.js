@@ -15,7 +15,7 @@ angular.module('adminApp')
 
       var filter = $rootScope.filter;
       var list = [];
-      var limit = 10;
+      var limit = 1000;
 
       for (var item, i=0; item=input[i]; i++){
         if (list.length > limit) break;

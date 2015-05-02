@@ -119,3 +119,21 @@ ul.nav.nav-pills{
     color: #ccc;
   }
 }
+.form-control{
+  box-shadow: none !important;
+}
+.form-control.below, .btn.below, .input-group.below {
+  margin-top: -6px;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.input-group.below {
+  margin-top: -8px;
+}
+.form-control.above, .btn.above, .input-group.above  {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.control-label.below {
+  display:none;
+}

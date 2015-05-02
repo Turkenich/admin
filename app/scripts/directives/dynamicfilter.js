@@ -20,8 +20,8 @@ angular.module('adminApp')
       },
       template: function (element) {
         var tmpl = '' +
-          '<div class="form-group tile">' +
-          '<label for="{{id}}" class="control-label" title="{{desc}}">{{name}}</label>';
+          '<div class="form-group tile {{range}}">' +
+          '<label for="{{id}}" class="control-label {{range}}" title="{{desc}}">{{name}}</label>';
 
         switch (element.attr('type')) {
           case 'select':
@@ -38,17 +38,17 @@ angular.module('adminApp')
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
             break;
           case 'date':
-            tmpl += '<p class="input-group">' +
-            '<input type="text" class="form-control ltr-datepicker" datepicker-popup="dd/MM/yy" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
+            tmpl += '<p class="input-group {{range}}">' +
+            '<input type="text" class="form-control ltr-datepicker {{range}}" datepicker-popup="dd/MM/yy" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
             '<span class="input-group-btn">' +
-            '<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>' +
+            '<button type="button" class="btn btn-default {{range}}" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>' +
             '</span>' +
             '</p>';
 
             break;
 
           default:
-            tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" placeholder="{{desc}}" ng-model="filter" ng-change="updateFilter()"/>';
+            tmpl += '<input class="form-control {{range}}" id="{{id}}" type="{{type}}" placeholder="{{desc}}" ng-model="filter" ng-change="updateFilter()"/>';
             break;
         }
 
