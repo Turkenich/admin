@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$location', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $sce, $timeout, $location, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$window', '$location', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $sce, $timeout, $window, $location, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
 
@@ -20,12 +20,25 @@ angular.module('adminApp')
       }
       $scope.updateBreadcrumbs();
 
-      $scope.goBack = function () {
+      $scope.goBack = function (delay) {
+        $timeout(function () {
         var path = $location.path().split('/');
         path.splice(path.length - 1, 1);
         $location.path(path.join('/'));
         //window.history.back();
+        }, (delay || 0))
       }
+/*
+      $scope.goBack = function (delay) {
+        $timeout(function () {
+          var path = document.location.href.split('/');
+          path.splice(path.length - 1, 1);
+          path = (path.join('/'));
+          $location.location.href = path;
+          //window.history.back();
+        }, (delay || 0))
+      }
+*/
       $scope.trustUrl = function (url) {
         return $sce.trustAsResourceUrl(url);
       }
@@ -106,7 +119,6 @@ angular.module('adminApp')
 
       $rootScope.showUploader = false;
       $rootScope.displayUploader = function (status) {
-        debugger;
         $rootScope.showUploader = status;
       }
       $scope.elementTypes = ElementTypes.all();

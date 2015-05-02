@@ -31,10 +31,10 @@ angular.module('adminApp')
       }
 
       $scope.moveItemDown = function(item){
-        $rootScope.moveItemImp($scope, Materials, $scope.items, item, 1)
+        $rootScope.moveItemImp($scope, ElementTypes, $scope.items, item, 1)
       }
       $scope.moveItemUp = function(item){
-        $rootScope.moveItemImp($scope, Materials, $scope.items, item, -1)
+        $rootScope.moveItemImp($scope, ElementTypes, $scope.items, item, -1)
       }
 
 

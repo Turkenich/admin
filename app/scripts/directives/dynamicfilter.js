@@ -74,7 +74,11 @@ angular.module('adminApp')
             }else{
               suffix = '_' + scope.range;
             }
-            $rootScope.filter[scope.id + suffix] = scope.filter;
+            if (scope.filter){
+              $rootScope.filter[scope.id + suffix] = scope.filter;
+            }else{
+              delete $rootScope.filter[scope.id + suffix];
+            }
           }
           console.log('filter updated', $rootScope.filter);
         }
