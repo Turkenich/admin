@@ -1,7 +1,7 @@
 <div class="media list-item">
   <div class="media-left" ng-show="item.small_image">
     <a ng-href="{{link}}" class="thumbnail" style="margin: 0;">
-      <img class="media-object" src="{{item.small_image}}">
+      <img class="media-object" ng-src="{{item.small_image}}">
     </a>
   </div>
   <div class="media-body">
@@ -17,7 +17,7 @@
       </p>
     </a>
 
-    <div class="list-buttons btn-group" role="group" aria-label="...">
+    <div class="list-buttons btn-group" role="group" >
       <a class="btn btn-default fa fa-arrow-up" ng-show="item.pos" ng-click="moveItemUp(item)"></a>
       <a class="btn btn-default fa fa-arrow-down" ng-show="item.pos" ng-click="moveItemDown(item)"></a>
     </div>

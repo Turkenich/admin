@@ -102,6 +102,8 @@ angular.module('adminApp')
       }
 
 
+      $scope.noimage = 'images/noimage.jpg';
+
       $rootScope.showUploader = false;
       $rootScope.displayUploader = function (status) {
         debugger;
@@ -200,6 +202,13 @@ angular.module('adminApp')
 
 
         //Calc Total Cost
+
+        $scope.workCost = Math.round($scope.workCost * 100) / 100;
+        $scope.providerWorkCost = Math.round($scope.providerWorkCost * 100) / 100;
+        $scope.elementFeatureCost = Math.round($scope.elementFeatureCost * 100) / 100;
+        $scope.coatingCost = Math.round($scope.coatingCost * 100) / 100;
+        $scope.materialCost = Math.round($scope.materialCost * 100) / 100;
+
         cost = $scope.workCost + $scope.providerWorkCost + $scope.elementFeatureCost + $scope.coatingCost + $scope.materialCost;
 
         return cost;

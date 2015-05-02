@@ -1,7 +1,7 @@
 .line {
   margin-top: 15px !important;
   padding-top: 15px !important;
-  border-top: 1px solid #cccccc !important;
+  border-top: 1px solid #ddd !important;
 }
 
 .space {
@@ -15,7 +15,7 @@
 }
 
 .navbar-inverse.navbar-custom {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
   border-radius: 0;
   background: linear-gradient(to bottom, #333, #000);
   a {
@@ -30,7 +30,7 @@
   margin: 0;
   bottom: 0;
   z-index: 99;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #ddd;
   border-radius: 0;
   background: linear-gradient(to bottom, #333, #000);
   a {
@@ -73,7 +73,7 @@ form.row {
   background: transparent;
   padding: 4px 3px 12px;
   /* border-radius: 3px; */
-  /* border: 1px solid #ccc; */
+  /* border: 1px solid #ddd; */
   margin: -10px -10px;
   /* box-shadow: -1px -1px 8px -3px rgba(255,255,255, 0.9); */
   label {
@@ -89,11 +89,11 @@ form.row {
 .list-item{
   margin:10px 0;
   background: white;
-  border: 1px solid #ccc;
-  border-radius: 7px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   padding: 10px;
   position: relative;
-  max-width: 500px;
+  max-width: 600px;
   min-height: 60px;
   a{
     color:#333;
@@ -116,7 +116,7 @@ ul.nav.nav-pills{
   li.active a{
     cursor: default;
     background: #333;
-    color: #ccc;
+    color: #ddd;
   }
 }
 .form-control{
@@ -136,4 +136,28 @@ ul.nav.nav-pills{
 }
 .control-label.below {
   display:none;
+}
+.media-left {
+  input {
+    border: none;
+    width: 50px;
+    font-size: 28px;
+    line-height: 70px;
+    text-align: center;
+    margin: 2px 0px -5px;
+    direction: ltr;
+    margin-left: 10px;
+  }
+  i{
+    margin: 31px 2px 0 7px;
+    float: left;
+  }
+}
+
+.list-group{
+  max-width: 600px;
+}
+.list-cost{
+  float: left;
+  font-weight: bold;
 }

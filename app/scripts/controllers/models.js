@@ -11,6 +11,7 @@ angular.module('adminApp')
         });
       }
       $scope.updateItem = function (item) {
+        item.name = $scope.item.modelType + $scope.item.modelId;
         item.elements = $scope.parseElementsToDb();
         $rootScope.updateItemImp($scope, Models, item);
       }
@@ -148,6 +149,7 @@ angular.module('adminApp')
         }
 
         $scope.item.elements = JSON.stringify(eles);
+
         return $scope.item.elements;
 
       }
