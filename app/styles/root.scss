@@ -15,7 +15,7 @@
   width: 100%;
   height: 100%;
   z-index: 999999;
-  background: radial-gradient(white, #aaa);//rgba(255, 255, 255, 0.9));
+  background: radial-gradient(white 30%, #aaa);//rgba(255, 255, 255, 0.9));
   transition: all 2s ease;
   &:after {
       content:'';
