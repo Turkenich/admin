@@ -25,7 +25,7 @@ angular.module('adminApp')
         //scope.item.smallImage = function(){
         if (scope.item.image) {
           var splitted = scope.item.image.split('/');
-          splitted[splitted.length-2] = 'w_64,h_64,c_fill'
+          splitted[splitted.length-2] = 'c_fill,g_center,h_64,w_64'
           scope.item.small_image = splitted.join('/');
         }else if (angular.isDefined(scope.item.image)) {
           scope.item.small_image = 'images/noimage64.jpg';
