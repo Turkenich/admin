@@ -13,7 +13,7 @@ var Utils = {
 
 var Consts = {
   OunceToGrams: 28.3495,
-  api_root: (Utils.isHeroku ? 'http://turkenich-api.herokuapp.com/' : 'http://localhost:3000/'),
+  api_root: (Utils.isHeroku ? 'https://turkenich-api.herokuapp.com/' : 'http://localhost:3000/'),
 }
 
 Array.prototype.findById = function (idVal, idKey) {

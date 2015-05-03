@@ -33,7 +33,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        //tasks: ['newer:jshint:all'],
         options: {
           livereload: false
         }
@@ -223,6 +223,13 @@ module.exports = function (grunt) {
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
+        patterns: {
+          css: [
+            [/(\/bower_components\/bootstrap\/dist\/fonts)/g, 'god help me', function(match) {
+              return match.replace('/bower_components/bootstrap/dist/fonts', '../fonts');
+            }]
+          ]
+        }
       }
     },
 
