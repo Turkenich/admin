@@ -79,7 +79,7 @@ angular.module('adminApp')
 
       //duplicate items to reach 10000 (for testing)
       $scope.duplicateForTest = function () {
-        var limit = 1000000;
+        var limit = 100000;
         while ($scope.items.length < limit) {
           $scope.items = $scope.items.concat($scope.items);
         }
