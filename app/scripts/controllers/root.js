@@ -1,10 +1,25 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$window', '$location', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $sce, $timeout, $window, $location, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$http', '$location', '$interval', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $sce, $timeout, $http, $location, $interval, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
+
+      $scope.connected = false;
+      $scope.waitForConnection = $interval(function () {
+        $http.get(Consts.api_root + 'ping').
+          success(function (data, status, headers, config) {
+            $('.loader').css('opacity', 0);
+            $interval.cancel($scope.waitForConnection);
+            $timeout(function () {
+              $('.loader').remove();
+            },2000);
+          }).
+          error(function (data, status, headers, config) {
+          });
+      }, 3000);
+
 
       $scope.updateBreadcrumbs = function (name, path, item) {
         $rootScope.breadcrumbs = [{name: 'ראשי', link: '#/'}];
@@ -22,23 +37,23 @@ angular.module('adminApp')
 
       $scope.goBack = function (delay) {
         $timeout(function () {
-        var path = $location.path().split('/');
-        path.splice(path.length - 1, 1);
-        $location.path(path.join('/'));
-        //window.history.back();
-        }, (delay || 0))
-      }
-/*
-      $scope.goBack = function (delay) {
-        $timeout(function () {
-          var path = document.location.href.split('/');
+          var path = $location.path().split('/');
           path.splice(path.length - 1, 1);
-          path = (path.join('/'));
-          $location.location.href = path;
+          $location.path(path.join('/'));
           //window.history.back();
         }, (delay || 0))
       }
-*/
+      /*
+       $scope.goBack = function (delay) {
+       $timeout(function () {
+       var path = document.location.href.split('/');
+       path.splice(path.length - 1, 1);
+       path = (path.join('/'));
+       $location.location.href = path;
+       //window.history.back();
+       }, (delay || 0))
+       }
+       */
       $scope.trustUrl = function (url) {
         return $sce.trustAsResourceUrl(url);
       }
