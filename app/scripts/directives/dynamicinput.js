@@ -35,7 +35,7 @@ angular.module('adminApp')
             break;
           case 'image':
             tmpl += '<input class="form-control" id="{{id}}" type="text" ng-model="model" placeholder="{{placeholder}}" style="height:0px; padding:0px; visibility: hidden;"/>' +
-            '<a  ng-click="displayUploader(true);" class="thumbnail" style="margin: -15px 0 0 0;"><img ng-src="{{model || \'/images/default_image.png\'}}" alt="..."></a>' +
+            '<a  ng-click="displayUploader(true);" id="imageUploader" class="thumbnail" style="malrgin: -15px 0 0 0;"><img ng-src="{{model || \'/images/default_image.png\'}}" alt="..."></a>' +
             '<image-uploader ng-if="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
             break;
           default:

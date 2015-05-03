@@ -208,3 +208,19 @@ input.list-cost {
   border: none;
   text-align: left;
 }
+
+
+.alert-container {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  transition: all 2s ease;
+  bottom: -100px;
+  &.active{
+    bottom: 30px;
+  }
+  .alert {
+    width: auto;
+    display: inline-block;
+  }
+}

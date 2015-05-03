@@ -206,6 +206,7 @@ angular.module('adminApp')
             console.log('uploaded!!!', data);
             scope.uploadedImage = data.url;
             scope.$parent.item.image = data.url;
+            $('#imageUploader').addClass('ng-dirty');
             $timeout(function(){
               scope.close();
             }, 1000);

@@ -6,6 +6,19 @@ angular.module('adminApp')
 
       console.log('VERSION: ' + '1.0');
 
+      $scope.alert = '';
+      $scope.alertClass = '';
+      $scope.showAlert = function (text, type) {
+        $timeout(function () {
+          $scope.alertClass = type || 'warning';
+          $scope.alert = text;
+          $scope.alertIsShown = true;
+        });
+        $timeout(function () {
+          $scope.alertIsShown = false;
+        }, 3000);
+
+      }
       $scope.connected = false;
       $scope.waitForConnection = $interval(function () {
         $http.get(Consts.api_root + 'ping').
@@ -64,14 +77,16 @@ angular.module('adminApp')
         Model.update(item, function (_item) {
           console.log('updated', _item);
           $('.ng-dirty').removeClass('ng-dirty');
+          $scope.showAlert('הפריט נשמר בהצלחה');
           if (angular.isFunction(callback)) callback(_item);
         });
       }
       $rootScope.removeItemImp = function (scope, Model, item, callback) {
-        $scope.openModal('confirmDelete', function(){
+        $scope.openModal('confirmDelete', function () {
           if (confirm('האם אתה בטוח שברצונך למחוק את הפריט?')) {
             console.log('deleting', item);
             Model.remove({id: item._id}, function () {
+              $scope.showAlert('הפריט נמחק בהצלחה');
               if (angular.isFunction(callback)) callback(item);
             });
             if (scope.items && scope.items.length > 0) {
@@ -79,7 +94,9 @@ angular.module('adminApp')
               scope.items.splice(i, 1);
             }
           }
-        }, function(){console.log('CANCELED')});
+        }, function () {
+          console.log('CANCELED')
+        });
       }
       $rootScope.addItemImp = function (scope, Model, item, callback) {
         if (item) {
@@ -113,8 +130,12 @@ angular.module('adminApp')
       }
 
       $rootScope.sort = 'name';
-      $rootScope.sortBy = function (name) {$rootScope.sort = name;}
-      $rootScope.isSortedBy = function (name) {return $rootScope.sort == name;}
+      $rootScope.sortBy = function (name) {
+        $rootScope.sort = name;
+      }
+      $rootScope.isSortedBy = function (name) {
+        return $rootScope.sort == name;
+      }
 
 
       $scope.openModal = function (template, ok, cancel) {
