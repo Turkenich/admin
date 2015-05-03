@@ -204,8 +204,8 @@ angular.module('adminApp')
             scope.uploading.status = "Uploading... " + file.progress + "%";
           }).success(function (data, status, headers, config) {
             console.log('uploaded!!!', data);
-            scope.uploadedImage = data.url;
-            scope.$parent.item.image = data.url;
+            scope.uploadedImage = data.secure_url;
+            scope.$parent.item.image = data.secure_url;
             $('#imageUploader').addClass('ng-dirty');
             $timeout(function(){
               scope.close();
