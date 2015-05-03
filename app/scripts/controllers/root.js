@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$http', '$location', '$interval', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $sce, $timeout, $http, $location, $interval, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$http', '$location', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $sce, $timeout, $http, $location, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
 
@@ -14,7 +14,7 @@ angular.module('adminApp')
             $interval.cancel($scope.waitForConnection);
             $timeout(function () {
               $('.loader').remove();
-            },2000);
+            }, 2000);
           }).
           error(function (data, status, headers, config) {
           });
@@ -43,17 +43,6 @@ angular.module('adminApp')
           //window.history.back();
         }, (delay || 0))
       }
-      /*
-       $scope.goBack = function (delay) {
-       $timeout(function () {
-       var path = document.location.href.split('/');
-       path.splice(path.length - 1, 1);
-       path = (path.join('/'));
-       $location.location.href = path;
-       //window.history.back();
-       }, (delay || 0))
-       }
-       */
       $scope.trustUrl = function (url) {
         return $sce.trustAsResourceUrl(url);
       }
@@ -74,20 +63,23 @@ angular.module('adminApp')
         console.log('updating', item);
         Model.update(item, function (_item) {
           console.log('updated', _item);
+          $('.ng-dirty').removeClass('ng-dirty');
           if (angular.isFunction(callback)) callback(_item);
         });
       }
       $rootScope.removeItemImp = function (scope, Model, item, callback) {
-        if (confirm('Are You Sure???')) {
-          console.log('deleting', item);
-          Model.remove({id: item._id}, function () {
-            if (angular.isFunction(callback)) callback(item);
-          });
-          if (scope.items && scope.items.length > 0) {
-            var i = scope.items.findIndexById(item._id);
-            scope.items.splice(i, 1);
+        $scope.openModal('confirmDelete', function(){
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריט?')) {
+            console.log('deleting', item);
+            Model.remove({id: item._id}, function () {
+              if (angular.isFunction(callback)) callback(item);
+            });
+            if (scope.items && scope.items.length > 0) {
+              var i = scope.items.findIndexById(item._id);
+              scope.items.splice(i, 1);
+            }
           }
-        }
+        }, function(){console.log('CANCELED')});
       }
       $rootScope.addItemImp = function (scope, Model, item, callback) {
         if (item) {
@@ -121,12 +113,24 @@ angular.module('adminApp')
       }
 
       $rootScope.sort = 'name';
-      $rootScope.sortBy = function (name) {
-        $rootScope.sort = name;
-      }
+      $rootScope.sortBy = function (name) {$rootScope.sort = name;}
+      $rootScope.isSortedBy = function (name) {return $rootScope.sort == name;}
 
-      $rootScope.isSortedBy = function (name) {
-        return $rootScope.sort == name;
+
+      $scope.openModal = function (template, ok, cancel) {
+        var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'views/partials/' + template + '.html',
+          controller: 'ModalInstanceCtrl',
+          resolve: {
+            ok: function () {
+              return ok;
+            },
+            cancel: function () {
+              return cancel;
+            }
+          }
+        });
       }
 
 

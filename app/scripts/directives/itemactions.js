@@ -19,7 +19,18 @@ angular.module('adminApp')
       ,
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.isDirty = function() { return ($('.ng-dirty').length > 0); }
+        scope.isDirty = function () {
+          return ($('.ng-dirty').length > 0);
+        }
+
+        scope.$on('$locationChangeStart', function (event) {
+          if (scope.isDirty()) {
+            var answer = confirm("עדיין לא שמרת את הפריט. מעבר העמוד יבטל את השינויים, האם ברצונך להמשיך?")
+            if (!answer) {
+              event.preventDefault();
+            }
+          }
+        });
       }
     };
   });
