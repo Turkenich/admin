@@ -11,9 +11,8 @@ angular.module('adminApp')
           $scope.updateBreadcrumbs('הזמנות', 'orders', $scope.item);
         });
       }
-      $scope.updateItem = function (item) {
-        item.models = $scope.parseModelsToDb();
-        item.prices = $scope.parsePricesToDb();
+      $scope.updateItem = function (item, asIs) {
+        if (!asIs) item = $scope.setItemVars(item);
         $rootScope.updateItemImp($scope, Orders, item);
       }
       $scope.removeItem = function (item) {
@@ -28,6 +27,7 @@ angular.module('adminApp')
       }
 
       $scope.duplicateItem = function (item) {
+        item = $scope.setItemVars(item);
         $rootScope.tempItem = item;
         $rootScope.addItemImp($scope, Orders, null, function (item) {
           $location.path('/orders/' + item._id);
@@ -37,15 +37,15 @@ angular.module('adminApp')
 
       //piece of code for item duplication
       if ($rootScope.tempItem) {
-        $timeout(function () {
           $scope.item = $rootScope.tempItem;
           $scope.item['_id'] = $routeParams['id'];
 
           $rootScope.tempItem = null;
           $timeout(function () {
-            $scope.updateItem($scope.item);
+            $scope.updateItem($scope.item, true);
+            $scope.parseModelsFromDb();
+            $scope.parsePricesFromDb();
           })
-        })
       } else {
         $scope.reloadItem({_id: $routeParams['id']});
       }
@@ -53,6 +53,12 @@ angular.module('adminApp')
       var addId = $location.search()['addId'];
 
       $rootScope.filter = {};
+
+      $scope.setItemVars = function (item) {
+        item.models = $scope.parseModelsToDb();
+        item.prices = $scope.parsePricesToDb();
+        return item;
+      }
 
       $scope.removeModel = function (model) {
         console.log('deleting', model);
@@ -111,7 +117,7 @@ angular.module('adminApp')
 
       $scope.parseModelsToDb = function () {
 
-        if (!$scope.item || !$scope.item.models) return;
+        if (!$scope.item || !$scope.item.models || !$scope.models) return;
 
         var eles = [];
         for (var ele, e = 0; ele = $scope.models[e]; e++) {
@@ -151,7 +157,7 @@ angular.module('adminApp')
 
       $scope.parsePricesToDb = function () {
 
-        if (!$scope.item || !$scope.item.prices) return;
+        if (!$scope.item || !$scope.item.prices || !$scope.prices) return;
 
         var eles = [];
         for (var ele, e = 0; ele = $scope.prices[e]; e++) {

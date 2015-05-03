@@ -157,7 +157,6 @@ angular.module('adminApp')
             var material = $scope.materials.findById(ele.material);
             //get material price for gram
             var materialPrice = (material.price || 0) / Consts.OunceToGrams;
-            debugger;
             var override = (prices.findById(material._id));
             if (override && override.newPrice) {
               materialPrice = (override.newPrice) / Consts.OunceToGrams;

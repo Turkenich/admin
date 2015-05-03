@@ -8,13 +8,12 @@ angular.module('adminApp')
         $rootScope.reloadItemImp($scope, Models, item, function () {
           $scope.parseElementsFromDb();
           $scope.parsePricesFromDb();
+          $scope.setmodelId();
           $scope.updateBreadcrumbs('דגמים', 'models', $scope.item);
         });
       }
-      $scope.updateItem = function (item) {
-        item.name = $scope.item.modelType + $scope.item.modelId;
-        item.elements = $scope.parseElementsToDb();
-        item.prices = $scope.parsePricesToDb();
+      $scope.updateItem = function (item, asIs) {
+        if (!asIs) item = $scope.setItemVars(item);
         $rootScope.updateItemImp($scope, Models, item);
       }
       $scope.removeItem = function (item) {
@@ -29,6 +28,7 @@ angular.module('adminApp')
       }
 
       $scope.duplicateItem = function (item) {
+        item = $scope.setItemVars(item);
         $rootScope.tempItem = item;
         $rootScope.addItemImp($scope, Models, null, function (item) {
           $location.path('/models/' + item._id);
@@ -38,14 +38,15 @@ angular.module('adminApp')
 
       //piece of code for item duplication
       if ($rootScope.tempItem) {
-        $timeout(function () {
-          $scope.item = $rootScope.tempItem;
-          $scope.item['_id'] = $routeParams['id'];
+        $scope.item = $rootScope.tempItem;
+        $scope.item['_id'] = $routeParams['id'];
 
-          $rootScope.tempItem = null;
-          $timeout(function () {
-            $scope.updateItem($scope.item);
-          })
+        $rootScope.tempItem = null;
+        $timeout(function () {
+          $scope.updateItem($scope.item, true);
+          $scope.parseElementsFromDb();
+          $scope.parsePricesFromDb();
+          $scope.setmodelId();
         })
       } else {
         $scope.reloadItem({_id: $routeParams['id']});
@@ -58,6 +59,22 @@ angular.module('adminApp')
 
 
       $rootScope.filter = {};
+
+      $scope.setItemVars = function (item) {
+        item.name = ($scope.item.modelType || "") + ($scope.item.modelId || "");
+        item.elements = $scope.parseElementsToDb();
+        item.prices = $scope.parsePricesToDb();
+        return item;
+      }
+
+      $scope.setmodelId = function(){
+        //get the next recommended id
+        if ($routeParams['id'] && !$scope.item.modelId){
+          Models.maxId(function(item){
+            $scope.item.modelId = parseInt(item.modelId) + 1;
+          });
+        }
+      }
 
       $scope.removeElement = function (element) {
         console.log('deleting', element);
@@ -102,6 +119,7 @@ angular.module('adminApp')
       });
 
 
+
       //private
       $scope.parseElementsFromDb = function () {
 
@@ -141,7 +159,7 @@ angular.module('adminApp')
 
       $scope.parseElementsToDb = function () {
 
-        if (!$scope.item || !$scope.item.elements) return;
+        if (!$scope.item || !$scope.item.elements || !$scope.elements) return;
 
         var eles = [];
         for (var ele, e = 0; ele = $scope.elements[e]; e++) {
@@ -182,11 +200,11 @@ angular.module('adminApp')
 
       $scope.parsePricesToDb = function () {
 
-        if (!$scope.item || !$scope.item.prices) return;
+        if (!$scope.item || !$scope.item.prices || !$scope.prices) return;
 
         var eles = [];
         for (var ele, e = 0; ele = $scope.prices[e]; e++) {
-          if (ele.newPrice){
+          if (ele.newPrice) {
             eles.push({
               id: ele._id, newPrice: ele.newPrice
             });
