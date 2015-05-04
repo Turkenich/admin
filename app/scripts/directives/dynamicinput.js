@@ -26,7 +26,7 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'select':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-options="option.name  for option in options track by option._id " >' +
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-change="measureUnitsChanged()" ng-options="option.name  for option in options track by option._id " >' +
             '<option value="" selected>--------</option>' +
             '</select>';
             break;
@@ -72,6 +72,10 @@ angular.module('adminApp')
             }
           }
         });
+
+        scope.measureUnitsChanged = function(){
+          scope.$emit('measureUnitsChanged');
+        }
       }
     }
   }]);
