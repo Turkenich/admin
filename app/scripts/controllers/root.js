@@ -162,14 +162,14 @@ angular.module('adminApp')
       $rootScope.displayUploader = function (status) {
         $rootScope.showUploader = status;
       }
-      $scope.elementTypes = ElementTypes.all();
-      $scope.materials = Materials.all();
-      $scope.providers = Providers.all();
-      $scope.coatings = Coatings.all();
-      $scope.elementFeatures = ElementFeatures.all();
-      $scope.currencies = Prices.all();
+      $rootScope.elementTypes = ElementTypes.all();
+      $rootScope.materials = Materials.all();
+      $rootScope.providers = Providers.all();
+      $rootScope.coatings = Coatings.all();
+      $rootScope.elementFeatures = ElementFeatures.all();
+      $rootScope.currencies = Prices.all();
 
-      $scope.measureUnits = [
+      $rootScope.measureUnits = [
         {name: "גרם", _id: 'gram'},
         {name: "סנטימטר", _id: 'centimeter'},
         {name: "יחידה", _id: 'unit'},
@@ -279,5 +279,8 @@ angular.module('adminApp')
         return cost;
       }
 
+      $scope.$on('$locationChangeEnd', function (event) {
+        $('.navbar-collapse.collapse').removeClass('in');
+      });
 
     }]);

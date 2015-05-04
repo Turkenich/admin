@@ -60,7 +60,6 @@ angular.module('adminApp')
 
         //pre select existing value in select boxes
         scope.$watch('model', function (newVal, oldVal) {
-
           if (newVal) {
             if (element.attr('type') == 'select') {
               $timeout(function () {

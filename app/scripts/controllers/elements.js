@@ -7,10 +7,13 @@ angular.module('adminApp')
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Elements, item, function () {
           $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
+          $scope.setUnitsNames();
         });
       }
       $scope.updateItem = function (item) {
-        $rootScope.updateItemImp($scope, Elements, item);
+        $rootScope.updateItemImp($scope, Elements, item, function () {
+          $scope.setUnitsNames();
+        });
       }
       $scope.removeItem = function (item) {
         $rootScope.removeItemImp($scope, Elements, item, function () {
@@ -58,7 +61,7 @@ angular.module('adminApp')
           for (var model, i = 0; model = models[i]; i++) {
             if (!model.elements) continue;
             var _model = {
-              name: model.modelCode || model.desc,
+              name: model.modelCode || model.desc
             }
             var id = parseModelElements(model.elements);
             id.unshift(model._id);
@@ -77,6 +80,47 @@ angular.module('adminApp')
         });
       }
 
+      $scope.setUnitsNames = function () {
+        $timeout(function () {
+          var labels = $('label.control-label');
+          var inputs = $('.form-control');
+          $scope.measureUnitName = 'יחידת מדידה';
+          if ($scope.item.elementType && $scope.item.elementType.measureUnit) {
+            if (angular.isObject($scope.item.elementType.measureUnit)) {
+              $scope.measureUnitName = $rootScope.measureUnits.findById($scope.item.elementType.measureUnit._id).name;
+            } else {
+              $scope.measureUnitName = $rootScope.measureUnits.findById($scope.item.elementType.measureUnit).name;
+            }
+          }
+          $scope.workUnitName = 'יחידת עבודה';
+          if ($scope.item.workUnit && $scope.item.workUnit._id) {
+            if (angular.isObject($scope.item.workUnit)) {
+              $scope.workUnitName = $rootScope.measureUnits.findById($scope.item.workUnit._id).name;
+            } else {
+              $scope.workUnitName = $rootScope.measureUnits.findById($scope.item.workUnit).name;
+            }
+          }
+          labels.each(function (i) {
+            var label = labels[i];
+            if ($(label).text()) {
+              $(label).text($(label).text().replace('יחידת עבודה', $scope.workUnitName));
+              $(label).text($(label).text().replace('יחידת מדידה', $scope.measureUnitName));
+            }
+            if ($(label).attr('title')) {
+              $(label).attr('title', $(label).attr('title').replace('יחידת עבודה', $scope.workUnitName));
+              $(label).attr('title', $(label).attr('title').replace('יחידת מדידה', $scope.measureUnitName));
+            }
+          });
+          inputs.each(function (i) {
+            var input = inputs[i];
+            if ($(input).attr('placeholder')) {
+              $(input).attr('placeholder', $(input).attr('placeholder').replace('יחידת עבודה', $scope.workUnitName));
+              $(input).attr('placeholder', $(input).attr('placeholder').replace('יחידת מדידה', $scope.measureUnitName));
+            }
+          });
+        }, 1000)
+      }
+
       //duplicate items to reach 10000 (for testing)
       $scope.duplicateForTest = function () {
         var limit = 100000;
@@ -86,4 +130,5 @@ angular.module('adminApp')
       };
 
 
-    }]);
+    }])
+;
