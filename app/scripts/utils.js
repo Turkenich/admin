@@ -41,7 +41,7 @@ Array.prototype.findNextById = function (idVal, idKey) {
   var res = {};
   for (var i = 0, a; a = this[i]; i++) {
     if (a[idKey] > idVal) {
-      if (!res || a[idKey] < res[idKey]) {
+      if (!res[idKey] || a[idKey] < res[idKey]) {
         res = a;
       }
     }
@@ -54,7 +54,7 @@ Array.prototype.findPrevById = function (idVal, idKey) {
   var res = {};
   for (var i = 0, a; a = this[i]; i++) {
     if (a[idKey] < idVal) {
-      if (!res || a[idKey] > res[idKey]) {
+      if (!res[idKey] || a[idKey] > res[idKey]) {
         res = a;
       }
     }

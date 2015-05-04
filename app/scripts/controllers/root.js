@@ -112,6 +112,7 @@ angular.module('adminApp')
 
       $rootScope.moveItemImp = function (scope, Model, items, item, dir, callback) {
         //var index = items.findIndexById(item._id, '_id');
+        debugger
         if (dir > 0) var item1 = items.findNextById(item.pos, 'pos');
         else if (dir < 0) var item1 = items.findPrevById(item.pos, 'pos');
 

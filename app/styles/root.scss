@@ -89,6 +89,11 @@ h1 {
   .btn-group {
     float: left;
     margin-top: 4px;
+    &:after{
+      content: "";
+      position: relative;
+      clear: both;
+    }
   }
 }
 
@@ -128,6 +133,9 @@ form.row {
     color: #333;
     text-decoration: none;
     margin-top: 4px;
+  }
+  .media-object{
+    max-width: none;
   }
 }
 
