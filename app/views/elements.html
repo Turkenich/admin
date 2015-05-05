@@ -1,12 +1,14 @@
 <h1>אלמנטים
   <div class="btn-group" role="group" aria-label="...">
     <button class="btn btn-success" ng-click="addItem()"><i
-      class="fa fa-fw fa-plus"></i> צור אלמנט חדש</button>
+      class="fa fa-fw fa-plus"></i> צור אלמנט חדש
+    </button>
     <button class="btn btn-danger" ng-click="clearForm()"><i
       class="fa fa-fw fa-undo"></i> נקה טופס
     </button>
     <button class="btn btn-disabled" ng-click="duplicateForTest()"><i
-      class="fa fa-fw fa-bug"></i> בדיקת עומסים</button>
+      class="fa fa-fw fa-bug"></i> בדיקת עומסים
+    </button>
   </div>
   <div style="clear:both;"></div>
 </h1>
@@ -131,17 +133,19 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-1">
-  </div>
-  <div class="col-sm-5">
-    <ul class="nav nav-pills">
-      <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>
-      <li role="presentation" ng-class="{active: isSortedBy('createdAt')}"><a ng-click="sortBy('createdAt')">תאריך הקמה</a></li>
-      <li role="presentation" ng-class="{active: isSortedBy('updatedAt')}"><a ng-click="sortBy('updatedAt')">תאריך עדכון אחרון</a></li>
-    </ul>
-    <div class="media-list">
-      <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
-        <list-item item="item" path="elements" addto="addTo"></list-item>
+  <div class="col-sm-6">
+    <div class="list-container row">
+      <ul class="nav nav-pills">
+        <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>
+        <li role="presentation" ng-class="{active: isSortedBy('createdAt')}"><a ng-click="sortBy('createdAt')">תאריך
+          הקמה</a></li>
+        <li role="presentation" ng-class="{active: isSortedBy('updatedAt')}"><a ng-click="sortBy('updatedAt')">תאריך
+          עדכון אחרון</a></li>
+      </ul>
+      <div class="media-list">
+        <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
+          <list-item item="item" path="elements" addto="addTo"></list-item>
+        </div>
       </div>
     </div>
   </div>

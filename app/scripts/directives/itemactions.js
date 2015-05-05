@@ -13,7 +13,7 @@ angular.module('adminApp')
       '<button class="btn btn-{{isDirty() ? \'primary\' : \'disabled\' }}" ng-click="saving=true; updateItem(item); goBack(1000);"><i class="fa fa-fw fa-{{saving ? \'refresh fa-spin\' : \'check\'}}"></i> שמירה וסיום</button>' +
       '<button class="btn btn-{{isDirty() ? \'primary\' : \'disabled\' }}" ng-click="updateItem(item);"><i class="fa fa-fw fa-save"></i> שמירה</button>' +
       '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button>' +
-      '<button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="reloadItem(item)"><i class="fa fa-fw fa-undo"></i> ביטול</button>' +
+      '<button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="cancelChanges(); goBack(0);"><i class="fa fa-fw fa-undo"></i> ביטול</button>' +
       '<button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-fw fa-trash"></i> מחיקה</button>' +
       '</div>' +
       '<div style="clear:both;"></div>'
@@ -22,6 +22,10 @@ angular.module('adminApp')
       link: function postLink(scope, element, attrs) {
         scope.isDirty = function () {
           return ($('.ng-dirty').length > 0);
+        }
+
+        scope.cancelChanges = function () {
+          ($('.ng-dirty').removeClass('ng-dirty'));
         }
 
         scope.$on('$locationChangeStart', function (event) {

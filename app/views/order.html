@@ -1,4 +1,6 @@
-<h1 xmlns="http://www.w3.org/1999/html">הזמנה <item-actions></item-actions></h1>
+<h1 xmlns="http://www.w3.org/1999/html">הזמנה
+  <item-actions></item-actions>
+</h1>
 <form role="form" class="row">
   <div class="col-sm-3">
     <dynamic-input item="item"
@@ -20,43 +22,42 @@
   </div>
 
 
-
-
   <div class="col-sm-6">
-    <div class="media-list">
-      <div ng-repeat="model in models track by $index">
-        <div class="media list-item">
-          <div class="media-left">
-            <input type="number" ng-model="model.amount"/>
-            <i class="fa fa-times fa-fw"></i>
-          </div>
-          <div class="media-left">
-            <a class="thumbnail" style="margin: 0;">
-              <img class="media-object" style="height: 64px" ng-src="{{model.image || noimage}}">
-            </a>
-          </div>
-          <div class="media-body">
-            <h4 class="list-group-item-heading" ng-bind="model.name">
-            </h4>
+    <div class="list-container row">
+      <div class="media-list">
+        <div ng-repeat="model in models track by $index">
+          <div class="media list-item">
+            <div class="media-left">
+              <input type="number" ng-model="model.amount"/>
+              <i class="fa fa-times fa-fw"></i>
+            </div>
+            <div class="media-left">
+              <a class="thumbnail" style="margin: 0;">
+                <img class="media-object" style="height: 64px" ng-src="{{model.image || noimage}}">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="list-group-item-heading" ng-bind="model.name">
+              </h4>
 
-            <p class="list-group-item-text">
-              {{model.desc}}
-            </p>
+              <p class="list-group-item-text">
+                {{model.desc}}
+              </p>
 
 
+            </div>
             <div class="list-buttons btn-group" role="group">
               <a class="btn btn-default fa fa-trash" ng-click="removeModel(model)"></a>
               <a class="btn btn-default fa fa-times" ng-click="zeroModel(model)"></a>
               <a class="btn btn-default fa fa-chevron-circle-left" ng-href="#/models/{{model._id}}"></a>
-
             </div>
           </div>
-        </div>
 
+        </div>
+        <a class="btn btn-success" style="width: 100%;" href="#/models?addTo={{item._id}}">
+          <i class="fa fa-plus fa-fw"></i>
+          הוסף דגם</a>
       </div>
-      <a class="btn btn-success" style="width: 100%;" href="#/models?addTo={{item._id}}">
-        <i class="fa fa-plus fa-fw"></i>
-        הוסף דגם</a>
     </div>
   </div>
   <div class="col-sm-3">

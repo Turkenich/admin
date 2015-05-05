@@ -56,14 +56,18 @@
   <div class="col-sm-1">
   </div>
   <div class="col-sm-7">
-    <ul class="nav nav-pills">
-      <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>
-      <li role="presentation" ng-class="{active: isSortedBy('createdAt')}"><a ng-click="sortBy('createdAt')">תאריך הקמה</a></li>
-      <li role="presentation" ng-class="{active: isSortedBy('updatedAt')}"><a ng-click="sortBy('updatedAt')">תאריך עדכון אחרון</a></li>
-    </ul>
-    <div class="media-list">
-      <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
-        <list-item item="item" path="models" addto="addTo"></list-item>
+    <div class="list-container row">
+      <ul class="nav nav-pills">
+        <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>
+        <li role="presentation" ng-class="{active: isSortedBy('createdAt')}"><a ng-click="sortBy('createdAt')">תאריך
+          הקמה</a></li>
+        <li role="presentation" ng-class="{active: isSortedBy('updatedAt')}"><a ng-click="sortBy('updatedAt')">תאריך
+          עדכון אחרון</a></li>
+      </ul>
+      <div class="media-list">
+        <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
+          <list-item item="item" path="models" addto="addTo"></list-item>
+        </div>
       </div>
     </div>
   </div>

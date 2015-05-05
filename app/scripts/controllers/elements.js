@@ -87,6 +87,7 @@ angular.module('adminApp')
       $scope.measureUnitName = $scope.measureUnitOldName = 'יחידת מדידה';
       $scope.workUnitName = $scope.workUnitOldName = 'יחידת עבודה';
       $scope.setUnitsNames = function () {
+        if (!$scope.item) return;
         $timeout(function () {
           var labels = $('label.control-label');
           var inputs = $('.form-control');
