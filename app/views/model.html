@@ -1,4 +1,4 @@
-<h1 xmlns="http://www.w3.org/1999/html">דגם
+<h1 xmlns="http://www.w3.org/1999/html">{{item.name || 'דגם'}}
   <item-actions></item-actions>
 </h1>
 <form role="form" class="row">
@@ -47,6 +47,18 @@
                    type="number"
                    name="מחיר מכירה"
                    desc="המחיר בו הדגם נמכר">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.createdAt"
+                   type="date"
+                   name="תאריך הקמה"
+                   desc="תאריך הקמת הדגם בתוכנה">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.updatedAt"
+                   type="date"
+                   name="תאריך עדכון אחרון"
+                   desc="תאריך העדכון האחרון של הדגם בתוכנה">
     </dynamic-input>
 
     <!--<input type="hidden" ng-model="item.name" value="{{item.modelType}}{{item.modelId}}"/>-->

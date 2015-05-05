@@ -25,6 +25,9 @@ angular.module('adminApp')
           '<label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label>';
 
         switch (element.attr('type')) {
+          case 'date':
+            tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>';
+            break;
           case 'select':
             tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-change="measureUnitsChanged()" ng-options="option.name  for option in options track by option._id " >' +
             '<option value="" selected>--------</option>' +

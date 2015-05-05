@@ -49,7 +49,10 @@
   padding: 0 20px;
   a {
     color: #999;
-
+  }
+  a.active {
+    background: black !important;
+    color: white !important;
   }
 }
 

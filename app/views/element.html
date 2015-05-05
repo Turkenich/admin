@@ -1,4 +1,4 @@
-<h1 xmlns="http://www.w3.org/1999/html">אלמנט
+<h1 xmlns="http://www.w3.org/1999/html">{{item.name || 'אלמנט'}}
   <item-actions></item-actions>
 </h1>
 <form id="upload_form" role="form" class="row">
@@ -51,6 +51,18 @@
                    options="elementFeatures"
                    name="תכונות נוספות"
                    desc="תכונות נוספות המשנות את מחיר האלמנט">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.createdAt"
+                   type="date"
+                   name="תאריך הקמה"
+                   desc="תאריך הקמת האלמנט בתוכנה">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.updatedAt"
+                   type="date"
+                   name="תאריך עדכון אחרון"
+                   desc="תאריך העדכון האחרון של האלמנט בתוכנה">
     </dynamic-input>
   </div>
   <div class="col-sm-3">

@@ -41,13 +41,6 @@ angular.module('adminApp')
           if (angular.isArray(filter)){
             if (filter.indexOf(item[f])==-1) return false;
           }
-          else if (angular.isObject(filter)) {
-            if (angular.isObject(item[f])){
-              if (filter._id != item[f]._id) return false;
-            }else{
-              if (filter._id != item[f]) return false;
-            }
-          }
           else if (angular.isDate(filter)){
             var filterDate = new Date(filter);
             var itemDate = new Date(item[f]);
@@ -57,6 +50,13 @@ angular.module('adminApp')
               if (filterDate > itemDate) return false;
             }else{
               if (filter && filterDate != itemDate) return false;
+            }
+          }
+          else if (angular.isObject(filter)) {
+            if (angular.isObject(item[f])){
+              if (filter._id != item[f]._id) return false;
+            }else{
+              if (filter._id != item[f]) return false;
             }
           }
           else if (angular.isNumber(filter)){

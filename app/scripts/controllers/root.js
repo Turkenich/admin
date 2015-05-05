@@ -35,6 +35,7 @@ angular.module('adminApp')
 
 
       $scope.updateBreadcrumbs = function (name, path, item) {
+        $rootScope.location = path;
         $rootScope.breadcrumbs = [{name: 'ראשי', link: '#/'}];
         if (!name || !path) return;
         $rootScope.breadcrumbs.push({
@@ -138,6 +139,10 @@ angular.module('adminApp')
         return $rootScope.sort == name;
       }
 
+      $rootScope.location = 'main';
+      $rootScope.locationIs = function (name) {
+        return $rootScope.location == name;
+      }
 
       $scope.openModal = function (template, ok, cancel) {
         var modalInstance = $modal.open({
