@@ -1,14 +1,30 @@
-<h1>מטבעות  <div class="btn-group" role="group" aria-label="...">
-  <button class="btn btn-success" ng-click="addItem()"><i
-    class="fa fa-plus fa-fw"></i> הוסף מטבע חדש
-  </button>
-</div>
+<h1>מטבעות
+  <div class="btn-group" role="group" aria-label="...">
+    <button class="btn btn-success" ng-click="addItem()"><i
+      class="fa fa-plus fa-fw"></i> הוסף מטבע חדש
+    </button>
+  </div>
   <div style="clear:both;"></div>
 </h1>
 <form class="row">
-<ul class="media-list">
-  <li ng-repeat="item in items | orderBy:'pos'">
-    <list-item item="item" path="prices"></list-item>
-  </li>
-</ul>
+  <div class="col-sm-4">
+
+    <ul class="media-list">
+      <li ng-repeat="item in items | orderBy:'pos'">
+        <list-item item="item" path="prices"></list-item>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-1">
+  </div>
+  <div class="col-sm-7">
+
+    <iframe
+      src="http://www.exchangerates.org.uk/widget/ER-LRTICKER.php?w=490&s=1&mc=ILS&mbg=F0F0F0&bs=yes&bc=000044&f=verdana&fs=10px&fc=000044&lc=000044&lhc=FE9A00&vc=FE9A00&vcu=008000&vcd=FF0000&"
+      width="490" height="30" frameborder="0" scrolling="no" marginwidth="0" marginheight="0"></iframe>
+
+    <iframe scrolling="no" frameborder=0 height="260" width="200"
+            src="http://likeforex.com/widget-exchange-rates.php?m=ILS"></iframe>
+
+  </div>
 </form>
