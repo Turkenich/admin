@@ -158,6 +158,10 @@ ul.nav.nav-pills {
     background: #eee;
     color: #333;
   }
+  li:hover a {
+    background: #aaa;
+    color: #333;
+  }
 }
 
 .form-control {
