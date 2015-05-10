@@ -12,8 +12,22 @@
                    model="item.price"
                    type="number"
                    options=""
-                   name="מחיר לאונקייה בשקלים"
-                   desc="מחיר החומר לאונקייה בשקלים">
+                   name="מחיר"
+                   desc="מחיר החומר">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.currency"
+                   type="select"
+                   options="currencies"
+                   name="מטבע"
+                   desc="מטבע">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.weightUnit"
+                   type="select"
+                   options="weightUnits"
+                   name="יחידת משקל"
+                   desc="יחידת משקל">
     </dynamic-input>
   </div>
 

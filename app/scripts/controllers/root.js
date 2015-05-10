@@ -28,6 +28,18 @@ angular.module('adminApp')
         $rootScope.currencies = Prices.all();
       }
 
+      $rootScope.measureUnits = [
+        {name: "גרם", _id: 'gram'},
+        {name: "סנטימטר", _id: 'centimeter'},
+        {name: "יחידה", _id: 'unit'},
+      ]
+
+      $rootScope.weightUnits = [
+        {name: "אונקייה", _id: 'ounce', grams: 28.35},
+        {name: "גרם", _id: 'gram', grams: 1},
+        {name: "קילוגרם", _id: 'kilo', grams: 1000},
+      ]
+
       $scope.logout = function () {
         localStorage['__id'] = "";
         document.location.reload();
@@ -199,11 +211,6 @@ angular.module('adminApp')
         $rootScope.showUploader = status;
       }
 
-      $rootScope.measureUnits = [
-        {name: "גרם", _id: 'gram'},
-        {name: "סנטימטר", _id: 'centimeter'},
-        {name: "יחידה", _id: 'unit'},
-      ]
 
 
       $scope.elementsCost = function (model, elements, prices) {
