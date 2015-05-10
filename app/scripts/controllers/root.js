@@ -1,10 +1,42 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$sce', '$timeout', '$http', '$location', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $sce, $timeout, $http, $location, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
+
+      $http.get(Consts.api_root + 'authenticate').
+        success(function (data, status, headers, config) {
+          $scope.authenticated = true;
+          $scope.init();
+          console.log('authenticated', data);
+        }).
+        error(function (data, status, headers, config) {
+        });
+
+      $scope.init = function () {
+        $scope.updateBreadcrumbs();
+        $rootScope.elementTypes = ElementTypes.all();
+        $rootScope.materials = Materials.all();
+        $rootScope.providers = Providers.all();
+        $rootScope.coatings = Coatings.all();
+        $rootScope.elementFeatures = ElementFeatures.all();
+        $rootScope.currencies = Prices.all();
+      }
+
+      $scope.authenticated = false;
+      var pass = (localStorage['__id'] || "");
+
+      $scope.logout = function () {
+        localStorage['__id'] = "";
+        document.location.reload();
+      }
+
+      $scope.authenticate = function () {
+        localStorage['__id'] = $('input#password').val();
+        document.location.reload();
+      }
 
       $scope.alert = '';
       $scope.alertClass = '';
@@ -47,7 +79,6 @@ angular.module('adminApp')
           });
         }
       }
-      $scope.updateBreadcrumbs();
 
       $scope.goBack = function (delay) {
         $timeout(function () {
@@ -167,12 +198,6 @@ angular.module('adminApp')
       $rootScope.displayUploader = function (status) {
         $rootScope.showUploader = status;
       }
-      $rootScope.elementTypes = ElementTypes.all();
-      $rootScope.materials = Materials.all();
-      $rootScope.providers = Providers.all();
-      $rootScope.coatings = Coatings.all();
-      $rootScope.elementFeatures = ElementFeatures.all();
-      $rootScope.currencies = Prices.all();
 
       $rootScope.measureUnits = [
         {name: "גרם", _id: 'gram'},

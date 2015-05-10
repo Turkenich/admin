@@ -12,7 +12,9 @@ angular
     'ui.bootstrap.tpls',
     'ui.bootstrap.transition'
   ])
-  .config(['$routeProvider', function ($routeProvider) {
+  .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.headers.common.__id = md5(localStorage['__id']);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

@@ -3,10 +3,10 @@
 angular.module('adminApp')
     .factory('Prices', ['$resource', function ($resource) {
         return $resource(Consts.api_root + 'prices/:id', {}, {
-            all: { method: 'GET', params: {}, isArray: true },
-            query: { method: 'GET', params: {}, isArray: false },
-            create: { method: 'POST', params: {} },
-            update: { method: 'PUT', params: {id: '@_id'} },
-            remove: { method: 'DELETE', params: {id: '@_id'} }
+            all: { withCredentials: true, method: 'GET', params: {}, isArray: true },
+            query: { withCredentials: true, method: 'GET', params: {}, isArray: false },
+            create: { withCredentials: true, method: 'POST', params: {} },
+            update: { withCredentials: true, method: 'PUT', params: {id: '@_id'} },
+            remove: { withCredentials: true, method: 'DELETE', params: {id: '@_id'} }
         });
     }]);
