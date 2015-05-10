@@ -11,6 +11,7 @@ angular.module('adminApp')
       }
       $scope.updateItem = function (item) {
         $rootScope.updateItemImp($scope, ElementTypes, item);
+        $rootScope.init();
       }
       $scope.removeItem = function (item) {
         $rootScope.removeItemImp($scope, ElementTypes, item, function(){

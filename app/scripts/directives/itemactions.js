@@ -12,7 +12,7 @@ angular.module('adminApp')
       template: '  <div class="btn-group" role="group" aria-label="...">' +
       '<button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="updateItem(item);"><i class="fa fa-fw fa-save"></i> שמירה</button>' +
       '<button class="btn btn-{{isDirty() ? \'primary\' : \'disabled\' }}" ng-click="saving=true; updateItem(item); goBack(1000);"><i class="fa fa-fw fa-{{saving ? \'refresh fa-spin\' : \'check\'}}"></i> שמירה וסיום</button>' +
-      '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button>' +
+      '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="cancelChanges(); duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button>' +
       '<button class="btn btn-{{isDirty() ? \'warning\' : \'disabled\' }}" ng-click="cancelChanges(); goBack(0);"><i class="fa fa-fw fa-undo"></i> ביטול</button>' +
       '<button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-fw fa-trash"></i> מחיקה</button>' +
       '</div>' +

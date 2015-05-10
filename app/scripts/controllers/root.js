@@ -6,16 +6,19 @@ angular.module('adminApp')
 
       console.log('VERSION: ' + '1.0');
 
+      var pass = (localStorage['__id'] || "");
+
       $http.get(Consts.api_root + 'authenticate').
         success(function (data, status, headers, config) {
           $scope.authenticated = true;
-          $scope.init();
+          $rootScope.init();
           console.log('authenticated', data);
         }).
         error(function (data, status, headers, config) {
+          $scope.authenticated = false;
         });
 
-      $scope.init = function () {
+      $rootScope.init = function () {
         $scope.updateBreadcrumbs();
         $rootScope.elementTypes = ElementTypes.all();
         $rootScope.materials = Materials.all();
@@ -24,9 +27,6 @@ angular.module('adminApp')
         $rootScope.elementFeatures = ElementFeatures.all();
         $rootScope.currencies = Prices.all();
       }
-
-      $scope.authenticated = false;
-      var pass = (localStorage['__id'] || "");
 
       $scope.logout = function () {
         localStorage['__id'] = "";
