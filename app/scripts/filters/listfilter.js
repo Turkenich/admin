@@ -69,8 +69,8 @@ angular.module('adminApp')
             }
           }
           else if ((typeof(item[f]) == 'string') && (typeof(filter) == 'string')){
-            var patt = new RegExp(filter);
-            if (!patt.test(item[f])) return false;
+            var patt = new RegExp(filter.toLowerCase());
+            if (!patt.test(item[f].toLowerCase())) return false;
           }
         }
         return true;

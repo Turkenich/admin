@@ -68,10 +68,10 @@ angular.module('adminApp')
         return item;
       }
 
-      $scope.setmodelId = function(){
+      $scope.setmodelId = function () {
         //get the next recommended id
-        if ($routeParams['id'] && !$scope.item.modelId){
-          Models.maxId(function(item){
+        if ($routeParams['id'] && !$scope.item.modelId) {
+          Models.maxId(function (item) {
             $scope.item.modelId = parseInt(item.modelId) + 1;
           });
         }
@@ -120,7 +120,6 @@ angular.module('adminApp')
       });
 
 
-
       //private
       $scope.parseElementsFromDb = function () {
 
@@ -130,9 +129,14 @@ angular.module('adminApp')
         var eles = JSON.parse($scope.item.elements);
 
         if (addId) {
-          eles.push({
-            id: addId, amount: 1
-          });
+          var ele = eles.findIndexById(addId, 'id');
+          if ((ele>=0) && eles[ele]) {
+            eles[ele].amount += 1;
+          } else {
+            eles.push({
+              id: addId, amount: 1
+            });
+          }
         }
 
         $scope.elements = [];
@@ -242,6 +246,14 @@ angular.module('adminApp')
         if (!$scope.elements || !$scope.elements.length) return;
 
         return $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
+
+      }
+
+      $scope.modelWeight = function () {
+
+        if (!$scope.elements || !$scope.elements.length) return;
+
+        return $scope.elementsWeight($scope.elements);
 
       }
 

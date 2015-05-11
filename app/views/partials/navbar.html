@@ -29,20 +29,9 @@
             <li><a href="#/prices">מטבעות</a></li>
           </ul>
         </li>
-        <!--
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-        -->
+      </ul>
+      <ul class="nav navbar-nav navbar-left">
+        <li class=""><a ng-click="logout()">התנתק</a></li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
@@ -51,5 +40,6 @@
 </nav>
 
 <ol class="breadcrumb bottom">
-  <li ng-repeat="breadcrumb in breadcrumbs" ng-class="breadcrumb.class"><a ng-href="{{breadcrumb.link}}">{{breadcrumb.name}}</a></li>
+  <li ng-repeat="breadcrumb in breadcrumbs" ng-class="breadcrumb.class"><a ng-href="{{breadcrumb.link}}">{{breadcrumb.name}}</a>
+  </li>
 </ol>

@@ -88,9 +88,14 @@ angular.module('adminApp')
         var eles = JSON.parse($scope.item.models);
 
         if (addId) {
-          eles.push({
-            id: addId, amount: 1
-          });
+          var ele = eles.findIndexById(addId, 'id');
+          if ((ele>=0) && eles[ele]) {
+            eles[ele].amount += 1;
+          } else {
+            eles.push({
+              id: addId, amount: 1
+            });
+          }
         }
 
         $scope.models = [];

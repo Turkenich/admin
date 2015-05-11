@@ -31,21 +31,16 @@
                    desc="הערות שונות">
     </dynamic-input>
     <dynamic-input item="item"
-                   model="item.salePrice"
-                   type="number"
-                   options=""
-                   name="מחיר מכירה"
-                   desc="מחיר מכירה של ההזמנה כולה">
-    </dynamic-input>
-    <dynamic-input item="item"
                    model="item.createdAt"
                    type="date"
+                   locked="locked"
                    name="תאריך הקמה"
                    desc="תאריך הקמת ההזמנה בתוכנה">
     </dynamic-input>
     <dynamic-input item="item"
                    model="item.updatedAt"
                    type="date"
+                   locked="locked"
                    name="תאריך עדכון אחרון"
                    desc="תאריך העדכון האחרון של ההזמנה בתוכנה">
     </dynamic-input>
@@ -94,6 +89,14 @@
     </div>
   </div>
   <div class="col-sm-3">
+
+    <dynamic-input item="item"
+                   model="item.salePrice"
+                   type="number"
+                   options=""
+                   name="מחיר מכירה"
+                   desc="מחיר מכירה של ההזמנה כולה">
+    </dynamic-input>
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">

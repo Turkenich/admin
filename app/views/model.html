@@ -45,32 +45,16 @@
                    desc="הערות שונות">
     </dynamic-input>
     <dynamic-input item="item"
-                   model="item.requiredTime"
-                   type="number"
-                   name="זמן השחלה בדקות"
-                   desc="הזמן (בדקות) הנדרש להכנת הדגם">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.weight"
-                   type="number"
-                   name="משקל"
-                   desc="המשקל ברוטו (בגרם) של הדגם">
-    </dynamic-input>
-    <dynamic-input item="item"
-                   model="item.salePrice"
-                   type="number"
-                   name="מחיר מכירה"
-                   desc="המחיר בו הדגם נמכר">
-    </dynamic-input>
-    <dynamic-input item="item"
                    model="item.createdAt"
                    type="date"
+                   locked="locked"
                    name="תאריך הקמה"
                    desc="תאריך הקמת הדגם בתוכנה">
     </dynamic-input>
     <dynamic-input item="item"
                    model="item.updatedAt"
                    type="date"
+                   locked="locked"
                    name="תאריך עדכון אחרון"
                    desc="תאריך העדכון האחרון של הדגם בתוכנה">
     </dynamic-input>
@@ -120,6 +104,32 @@
   </div>
   <div class="col-sm-3">
 
+    <dynamic-input item="item"
+                   model="item.requiredTime"
+                   type="number"
+                   name="זמן השחלה בדקות"
+                   desc="הזמן (בדקות) הנדרש להכנת הדגם">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.weight"
+                   type="number"
+                   name="משקל ברוטו"
+                   desc="המשקל ברוטו (בגרם) של הדגם">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="modelWeight()"
+                   locked="locked"
+                   type="number"
+                   name="משקל נטו"
+                   desc="המשקל נטו של כל האלמנטים שבדגם">
+    </dynamic-input>
+
+    <dynamic-input item="item"
+                   model="item.salePrice"
+                   type="number"
+                   name="מחיר מכירה"
+                   desc="המחיר בו הדגם נמכר">
+    </dynamic-input>
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
         <span class="list-cost">{{modelCost()}} <i class="fa fa-ils"></i></span>

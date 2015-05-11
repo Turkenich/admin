@@ -196,6 +196,10 @@ ul.nav.nav-pills {
 .form-control {
   box-shadow: none !important;
 }
+span.form-control{
+  color: #666;
+  background: #eee;
+}
 
 .form-control.below, .btn.below, .input-group.below {
   margin-top: -6px;
@@ -236,6 +240,7 @@ ul.nav.nav-pills {
 
 .list-group {
   max-width: 600px;
+  margin: 20px -7px;
 }
 
 .list-cost {

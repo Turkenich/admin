@@ -8,15 +8,17 @@ angular.module('adminApp')
 
       var pass = (localStorage['__id'] || "");
 
-      $http.get(Consts.api_root + 'authenticate').
-        success(function (data, status, headers, config) {
-          $scope.authenticated = true;
-          $rootScope.init();
-          console.log('authenticated', data);
-        }).
-        error(function (data, status, headers, config) {
-          $scope.authenticated = false;
-        });
+      $scope.authenticate = function () {
+        $http.get(Consts.api_root + 'authenticate').
+          success(function (data, status, headers, config) {
+            $scope.authenticated = true;
+            $rootScope.init();
+            console.log('authenticated', data);
+          }).
+          error(function (data, status, headers, config) {
+            $scope.authenticated = false;
+          });
+      }
 
       $rootScope.init = function () {
         $scope.updateBreadcrumbs();
@@ -25,10 +27,10 @@ angular.module('adminApp')
         $rootScope.providers = Providers.all();
         $rootScope.coatings = Coatings.all();
         $rootScope.elementFeatures = ElementFeatures.all();
-        $rootScope.currencies = Prices.all(function(currencies){
+        $rootScope.currencies = Prices.all(function (currencies) {
           $rootScope.currencies = currencies;
           $rootScope.coins = [];
-          for (var i=0; i<currencies.length; i++){
+          for (var i = 0; i < currencies.length; i++) {
             if (currencies[i].code == 'TIME') continue;
             $rootScope.coins.push(currencies[i]);
           }
@@ -52,7 +54,7 @@ angular.module('adminApp')
         document.location.reload();
       }
 
-      $scope.authenticate = function () {
+      $scope.changePassword = function () {
         localStorage['__id'] = $('input#password').val();
         document.location.reload();
       }
@@ -76,13 +78,14 @@ angular.module('adminApp')
           success(function (data, status, headers, config) {
             $('.loader').css('opacity', 0);
             $interval.cancel($scope.waitForConnection);
+            $scope.authenticate();
             $timeout(function () {
               $('.loader').remove();
             }, 2000);
           }).
           error(function (data, status, headers, config) {
           });
-      }, 3000);
+      }, 2000);
 
 
       $scope.updateBreadcrumbs = function (name, path, item) {
@@ -219,10 +222,11 @@ angular.module('adminApp')
       }
 
 
-
       $scope.elementsCost = function (model, elements, prices) {
 
         if (!elements || !elements.length) return;
+
+        console.log('calculating cost...');
 
         var cost = 0;
         $scope.workCost = 0;
@@ -232,11 +236,11 @@ angular.module('adminApp')
         $scope.materialCost = 0;
 
         var currencies = [];
-        for (var c,i=0; c=$scope.currencies[i]; i++){
+        for (var c, i = 0; c = $scope.currencies[i]; i++) {
           currencies.push(c);
           override = (prices.findById(c._id || c));
-          if (override.newPrice){
-            currencies[currencies.length-1].conversion = parseInt(override.newPrice);
+          if (override.newPrice) {
+            currencies[currencies.length - 1].conversion = parseInt(override.newPrice);
           }
         }
 
@@ -244,7 +248,7 @@ angular.module('adminApp')
         for (var ele, e = 0; ele = elements[e]; e++) {
 
           //get ele weight in grams
-          var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste || 0));
+          var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste/100 || 0));
 
           //material cost
           if ($scope.materials) {
@@ -337,12 +341,14 @@ angular.module('adminApp')
 
         if (!elements || !elements.length) return;
 
+        console.log('calculating weight...');
+
         var weight = 0;
 
         //calc each element weight
         for (var ele, e = 0; ele = elements[e]; e++) {
           //get ele weight in grams
-          weight += (ele.measureUnitWeight || 0) / (1 - (ele.waste || 0));
+          weight += ele.amount * (ele.measureUnitWeight || 0) / (1 - (ele.waste/100 || 0));
         }
 
         return weight;
