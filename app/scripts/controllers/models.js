@@ -181,18 +181,24 @@ angular.module('adminApp')
 
         $scope.prices = [];
         for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          if (ele.code == 'ILS') continue; //ignore shekels
           ele.newPrice = null;
+          ele.icon = 'ils';
           $scope.prices.push(ele);
         }
         for (var ele, e = 0; ele = $scope.materials[e]; e++) {
           ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.name = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
           $scope.prices.push(ele);
         }
 
         var eles = JSON.parse($scope.item.prices);
         //format is: _id: newPrice
         for (var ele, e = 0; ele = eles[e]; e++) {
-          $scope.prices[$scope.prices.findIndexById(ele.id)].newPrice = ele.newPrice;
+          var id = $scope.prices.findIndexById(ele.id);
+          if (id < 0) continue;
+          $scope.prices[id].newPrice = ele.newPrice;
         }
 
       }

@@ -138,11 +138,14 @@ angular.module('adminApp')
 
         $scope.prices = [];
         for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          if (ele.code == 'ILS') continue; //ignore shekels
           ele.newPrice = null;
+          ele.icon = 'ils';
           $scope.prices.push(ele);
         }
         for (var ele, e = 0; ele = $scope.materials[e]; e++) {
           ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
           $scope.prices.push(ele);
         }
 

@@ -47,7 +47,7 @@
     <dynamic-input item="item"
                    model="item.requiredTime"
                    type="number"
-                   name="זמן השחלה"
+                   name="זמן השחלה בדקות"
                    desc="הזמן (בדקות) הנדרש להכנת הדגם">
     </dynamic-input>
     <dynamic-input item="item"
@@ -90,7 +90,7 @@
               <i class="fa fa-times fa-fw"></i>
             </div>
             <div class="media-left">
-              <a class="thumbnail" style="margin: 0;">
+              <a class="thumbnail" ng-href="#/elements/{{element._id}}" style="margin: 0;">
                 <img class="media-object" style="height: 64px" ng-src="{{element.image || noimage}}">
               </a>
             </div>
@@ -151,7 +151,7 @@
       <li class="list-group-item" ng-repeat="price in prices">
         <span class="list-cost">
           <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
-               <i class="fa fa-ils"></i>
+               <i class="fa fa-{{price.icon | lowercase}}"></i>
         </span>
         {{price.name}}
       </li>

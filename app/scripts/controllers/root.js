@@ -25,7 +25,14 @@ angular.module('adminApp')
         $rootScope.providers = Providers.all();
         $rootScope.coatings = Coatings.all();
         $rootScope.elementFeatures = ElementFeatures.all();
-        $rootScope.currencies = Prices.all();
+        $rootScope.currencies = Prices.all(function(currencies){
+          $rootScope.currencies = currencies;
+          $rootScope.coins = [];
+          for (var i=0; i<currencies.length; i++){
+            if (currencies[i].code == 'TIME') continue;
+            $rootScope.coins.push(currencies[i]);
+          }
+        });
       }
 
       $rootScope.measureUnits = [
