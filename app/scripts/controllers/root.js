@@ -231,6 +231,15 @@ angular.module('adminApp')
         $scope.coatingCost = 0;
         $scope.materialCost = 0;
 
+        var currencies = [];
+        for (var c,i=0; c=$scope.currencies[i]; i++){
+          currencies.push(c);
+          override = (prices.findById(c._id || c));
+          if (override.newPrice){
+            currencies[currencies.length-1].conversion = parseInt(override.newPrice);
+          }
+        }
+
         //calc each element costs (material, work, waste, currency)
         for (var ele, e = 0; ele = elements[e]; e++) {
 
@@ -241,45 +250,46 @@ angular.module('adminApp')
           if ($scope.materials) {
             var material = $scope.materials.findById(ele.material);
             //get material price for gram
-            var materialPrice = (material.price || 0) / Consts.OunceToGrams;
+            var materialPrice = (material.price || 0);
+            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 0;
+            var materialConversion = currencies.findById(material.currency).conversion || 0;
+
             var override = (prices.findById(material._id));
             if (override && override.newPrice) {
-              materialPrice = (override.newPrice) / Consts.OunceToGrams;
+              materialPrice = (override.newPrice);
             }
 
             //add to cost
-            $scope.materialCost += eleWeight * ele.amount * materialPrice;
+            $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
           }
           //coating cost
           if ($scope.coatings) {
             var coating = $scope.coatings.findById(ele.coating);
             //get measure unit of the coating
-            var measureUnit = coating.measureUnit;
-
-            //get coating price per measure unit
-            var coatingPrice = coating.price;
+            var coatingMeasureUnit = coating.measureUnit;
+            var coatingPrice = (coating.price || 0);
+            var coatingConversion = currencies.findById(coating.currency).conversion || 0;
 
             //add to cost
-            if (measureUnit == 'gram') {
-              $scope.coatingCost += eleWeight * ele.amount * coatingPrice;
+            if (coatingMeasureUnit == 'gram') {
+              $scope.coatingCost += eleWeight * ele.amount * coatingPrice * coatingConversion;
             } else {
-              $scope.coatingCost += ele.amount * coatingPrice || 0;
+              $scope.coatingCost += ele.amount * coatingPrice * coatingConversion;
             }
           }
           //elementFeatures cost
           if ($scope.elementFeatures) {
             var elementFeature = $scope.elementFeatures.findById(ele.elementFeature);
             //get measure unit of the elementFeature
-            var measureUnit = elementFeature.measureUnit;
-
-            //get elementFeature price per measure unit
-            var elementFeaturePrice = elementFeature.price || 0;
+            var elementFeatureMeasureUnit = elementFeature.measureUnit;
+            var elementFeaturePrice = (elementFeature.price || 0);
+            var elementFeatureConversion = currencies.findById(elementFeature.currency).conversion || 0;
 
             //add to cost
-            if (measureUnit == 'gram') {
-              $scope.elementFeatureCost += eleWeight * ele.amount * elementFeaturePrice;
+            if (elementFeatureMeasureUnit == 'gram') {
+              $scope.elementFeatureCost += eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
             } else {
-              $scope.elementFeatureCost += ele.amount * elementFeaturePrice;
+              $scope.elementFeatureCost += ele.amount * elementFeaturePrice * elementFeatureConversion;
             }
           }
           //work cost
@@ -321,6 +331,21 @@ angular.module('adminApp')
         cost = $scope.workCost + $scope.providerWorkCost + $scope.elementFeatureCost + $scope.coatingCost + $scope.materialCost;
 
         return cost;
+      }
+
+      $scope.elementsWeight = function (elements) {
+
+        if (!elements || !elements.length) return;
+
+        var weight = 0;
+
+        //calc each element weight
+        for (var ele, e = 0; ele = elements[e]; e++) {
+          //get ele weight in grams
+          weight += (ele.measureUnitWeight || 0) / (1 - (ele.waste || 0));
+        }
+
+        return weight;
       }
 
       $scope.$on('$locationChangeEnd', function (event) {

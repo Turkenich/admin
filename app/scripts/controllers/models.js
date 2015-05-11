@@ -10,6 +10,7 @@ angular.module('adminApp')
           $scope.parsePricesFromDb();
           $scope.setmodelId();
           $scope.updateBreadcrumbs('דגמים', 'models', $scope.item);
+          console.log('Item loaded', $scope.item);
         });
       }
       $scope.updateItem = function (item, asIs) {
@@ -184,12 +185,25 @@ angular.module('adminApp')
           if (ele.code == 'ILS') continue; //ignore shekels
           ele.newPrice = null;
           ele.icon = 'ils';
+          ele.fullname = ele.name;
           $scope.prices.push(ele);
         }
         for (var ele, e = 0; ele = $scope.materials[e]; e++) {
           ele.newPrice = null;
           ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
-          ele.name = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
+          ele.fullname = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.coatings[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.elementFeatures[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.fullname = ele.name;
           $scope.prices.push(ele);
         }
 

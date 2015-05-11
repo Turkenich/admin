@@ -26,7 +26,11 @@ angular.module('adminApp')
 
         switch (element.attr('type')) {
           case 'date':
-            tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>';
+            if (element.attr('locked')){
+              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>';
+            }else{
+              tmpl += '<textarea class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</textarea>';
+            }
             break;
           case 'select':
             tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-change="measureUnitsChanged()" ng-options="option.name  for option in options track by option._id " >' +
@@ -42,7 +46,11 @@ angular.module('adminApp')
             '<image-uploader ng-if="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
             break;
           default:
-            tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            if (element.attr('locked')){
+              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model}}</span>';
+            }else{
+              tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            }
             break;
         }
 

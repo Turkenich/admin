@@ -65,7 +65,7 @@
               <i class="fa fa-times fa-fw"></i>
             </div>
             <div class="media-left">
-              <a class="thumbnail" style="margin: 0;">
+              <a class="thumbnail" ng-href="#/models/{{model._id}}" style="margin: 0;">
                 <img class="media-object" style="height: 64px" ng-src="{{model.image || noimage}}">
               </a>
             </div>
@@ -96,7 +96,7 @@
   <div class="col-sm-3">
 
     <ul class="list-group">
-      <li class="list-group-item">
+      <li class="list-group-item list-group-item-warning">
         <span class="list-cost">{{orderCost()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>

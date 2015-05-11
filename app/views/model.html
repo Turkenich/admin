@@ -121,7 +121,7 @@
   <div class="col-sm-3">
 
     <ul class="list-group">
-      <li class="list-group-item">
+      <li class="list-group-item list-group-item-warning">
         <span class="list-cost">{{modelCost()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>
@@ -153,7 +153,7 @@
           <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
                <i class="fa fa-{{price.icon | lowercase}}"></i>
         </span>
-        {{price.name}}
+        {{price.fullname}}
       </li>
     </ul>
   </div>
