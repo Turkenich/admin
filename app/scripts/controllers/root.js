@@ -45,7 +45,7 @@ angular.module('adminApp')
       ]
 
       $rootScope.weightUnits = [
-        {name: "אונקייה", _id: 'ounce', grams: 28.35},
+        {name: "אונקייה", _id: 'ounce', grams: 32.15},
         {name: "גרם", _id: 'gram', grams: 1},
         {name: "קילוגרם", _id: 'kilo', grams: 1000},
       ]
@@ -360,7 +360,7 @@ angular.module('adminApp')
         //calc each element weight
         for (var ele, e = 0; ele = elements[e]; e++) {
           //get ele weight in grams
-          weight += ele.amount * (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+          weight += ele.amount * (ele.measureUnitWeight || 0);
         }
 
         return weight;
