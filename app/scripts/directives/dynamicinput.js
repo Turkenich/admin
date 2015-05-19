@@ -22,7 +22,8 @@ angular.module('adminApp')
       template: function (element) {
         var tmpl = '' +
           '<div class="form-group tile">' +
-          '<label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label>';
+          '<label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label>' +
+          '<i class="fa fa-info-circle tile-info" data-container="body" data-toggle="popover" data-placement="top" data-content="{{desc}}"></i>';
 
         switch (element.attr('type')) {
           case 'date':
@@ -83,6 +84,10 @@ angular.module('adminApp')
             }
           }
         });
+
+        $(function () {
+          $('[data-toggle="popover"]').popover()
+        })
 
         scope.measureUnitsChanged = function(){
           scope.$emit('measureUnitsChanged');
