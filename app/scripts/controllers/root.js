@@ -261,22 +261,32 @@ angular.module('adminApp')
 
           //get ele weight in grams
           var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+          yo('ele', ele);
+          yo('eleWeight', eleWeight);
 
           //material cost
           if ($rootScope.materials) {
             var material = $rootScope.materials.findById(ele.material);
+            yo('material', material);
             //get material price for gram
             var materialPrice = (material.price || 0);
-            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 0;
+            yo('materialPrice', materialPrice);
+            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 1;
+            yo('materialWeight', materialWeight);
             var materialConversion = currencies.findById(material.currency).conversion || 0;
+            yo('materialConversion', materialConversion);
 
             var override = (prices.findById(material._id));
+            yo('override', override);
             if (override && override.newPrice) {
-              materialPrice = (override.newPrice);
+              materialPrice = parseInt(override.newPrice);
             }
+            yo('materialPrice', materialPrice);
 
             //add to cost
             $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
+            yo('ele.amount', ele.amount);
+            yo('$scope.materialCost', $scope.materialCost);
           }
           //coating cost
           if ($rootScope.coatings) {
@@ -311,7 +321,7 @@ angular.module('adminApp')
           //work cost
 
           //get the work cost per unit in ILS
-          var workUnitCurrency = currencies.findById(ele.workUnitCurrency);
+          var workUnitCurrency = $rootScope.currencies.findById(ele.workUnitCurrency);
           var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
           override = (prices.findById(workUnitCurrency._id));
           if (override && override.newPrice) {
