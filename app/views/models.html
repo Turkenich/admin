@@ -77,7 +77,7 @@
           עדכון אחרון</a></li>
       </ul>
       <div class="media-list">
-        <div ng-repeat="item in items | listFilter | orderBy:sort track by $index">
+        <div ng-repeat="item in items | listFilter | orderBy:sort track by item._id">
           <list-item item="item" path="models" addto="addTo"></list-item>
         </div>
       </div>

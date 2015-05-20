@@ -194,19 +194,19 @@ angular.module('adminApp')
         }
         for (var ele, e = 0; ele = $scope.materials[e]; e++) {
           ele.newPrice = null;
-          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
           ele.fullname = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
           $scope.prices.push(ele);
         }
         for (var ele, e = 0; ele = $scope.coatings[e]; e++) {
           ele.newPrice = null;
-          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
           ele.fullname = ele.name;
           $scope.prices.push(ele);
         }
         for (var ele, e = 0; ele = $scope.elementFeatures[e]; e++) {
           ele.newPrice = null;
-          ele.icon = ($rootScope.currencies.findById(ele.currency._id || ele.currency) || {}).code;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
           ele.fullname = ele.name;
           $scope.prices.push(ele);
         }

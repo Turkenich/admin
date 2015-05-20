@@ -263,8 +263,8 @@ angular.module('adminApp')
           var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
 
           //material cost
-          if ($scope.materials) {
-            var material = $scope.materials.findById(ele.material);
+          if ($rootScope.materials) {
+            var material = $rootScope.materials.findById(ele.material);
             //get material price for gram
             var materialPrice = (material.price || 0);
             var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 0;
@@ -279,8 +279,8 @@ angular.module('adminApp')
             $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
           }
           //coating cost
-          if ($scope.coatings) {
-            var coating = $scope.coatings.findById(ele.coating);
+          if ($rootScope.coatings) {
+            var coating = $rootScope.coatings.findById(ele.coating);
             //get measure unit of the coating
             var coatingMeasureUnit = coating.measureUnit;
             var coatingPrice = (coating.price || 0);
@@ -294,8 +294,8 @@ angular.module('adminApp')
             }
           }
           //elementFeatures cost
-          if ($scope.elementFeatures) {
-            var elementFeature = $scope.elementFeatures.findById(ele.elementFeature);
+          if ($rootScope.elementFeatures) {
+            var elementFeature = $rootScope.elementFeatures.findById(ele.elementFeature);
             //get measure unit of the elementFeature
             var elementFeatureMeasureUnit = elementFeature.measureUnit;
             var elementFeaturePrice = (elementFeature.price || 0);
@@ -311,7 +311,7 @@ angular.module('adminApp')
           //work cost
 
           //get the work cost per unit in ILS
-          var workUnitCurrency = $scope.currencies.findById(ele.workUnitCurrency);
+          var workUnitCurrency = currencies.findById(ele.workUnitCurrency);
           var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
           override = (prices.findById(workUnitCurrency._id));
           if (override && override.newPrice) {
