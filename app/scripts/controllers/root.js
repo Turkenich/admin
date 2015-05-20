@@ -271,7 +271,7 @@ angular.module('adminApp')
             //get material price for gram
             var materialPrice = (material.price || 0);
             yo('materialPrice', materialPrice);
-            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 0;
+            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 1;
             yo('materialWeight', materialWeight);
             var materialConversion = currencies.findById(material.currency).conversion || 0;
             yo('materialConversion', materialConversion);
@@ -284,6 +284,7 @@ angular.module('adminApp')
             yo('materialPrice', materialPrice);
 
             //add to cost
+            debugger;
             $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
             yo('ele.amount', ele.amount);
             yo('$scope.materialCost', $scope.materialCost);
