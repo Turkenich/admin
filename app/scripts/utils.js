@@ -16,6 +16,10 @@ var Consts = {
   api_root: (Utils.isHeroku ? 'https://turkenich-api.herokuapp.com/' : 'http://localhost:3000/'),
 }
 
+function yo(title, data){
+  console.log(title, data);
+}
+
 Array.prototype.findById = function (idVal, idKey) {
   if (typeof idKey == 'undefined') idKey = '_id';
   for (var i = 0, a; a = this[i]; i++) {

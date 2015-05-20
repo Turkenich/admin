@@ -265,18 +265,26 @@ angular.module('adminApp')
           //material cost
           if ($rootScope.materials) {
             var material = $rootScope.materials.findById(ele.material);
+            yo('material', material);
             //get material price for gram
             var materialPrice = (material.price || 0);
+            yo('materialPrice', materialPrice);
             var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 0;
+            yo('materialWeight', materialWeight);
             var materialConversion = currencies.findById(material.currency).conversion || 0;
+            yo('materialConversion', materialConversion);
 
             var override = (prices.findById(material._id));
+            yo('override', override);
             if (override && override.newPrice) {
               materialPrice = (override.newPrice);
             }
+            yo('materialPrice', materialPrice);
 
             //add to cost
             $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
+            yo('ele.amount', ele.amount);
+            yo('$scope.materialCost', $scope.materialCost);
           }
           //coating cost
           if ($rootScope.coatings) {
