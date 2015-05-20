@@ -284,6 +284,7 @@ angular.module('adminApp')
             yo('materialPrice', materialPrice);
 
             //add to cost
+            debugger;
             $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
             yo('ele.amount', ele.amount);
             yo('$scope.materialCost', $scope.materialCost);
