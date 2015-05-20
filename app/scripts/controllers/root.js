@@ -261,6 +261,8 @@ angular.module('adminApp')
 
           //get ele weight in grams
           var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+          yo('ele', ele);
+          yo('eleWeight', eleWeight);
 
           //material cost
           if ($rootScope.materials) {
@@ -319,7 +321,7 @@ angular.module('adminApp')
           //work cost
 
           //get the work cost per unit in ILS
-          var workUnitCurrency = currencies.findById(ele.workUnitCurrency);
+          var workUnitCurrency = $rootScope.currencies.findById(ele.workUnitCurrency);
           var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
           override = (prices.findById(workUnitCurrency._id));
           if (override && override.newPrice) {
