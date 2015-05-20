@@ -277,7 +277,7 @@ angular.module('adminApp')
             var override = (prices.findById(material._id));
             yo('override', override);
             if (override && override.newPrice) {
-              materialPrice = (override.newPrice);
+              materialPrice = parseInt(override.newPrice);
             }
             yo('materialPrice', materialPrice);
 
