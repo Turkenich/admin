@@ -152,7 +152,7 @@ angular.module('adminApp')
             }
 
             if (($scope.elements.length == eles.length)) {
-              $scope.modelCost();
+              $scope.calcModelCost();
             }
 
           });
@@ -241,7 +241,7 @@ angular.module('adminApp')
 
       }
 
-      $scope.modelCost = function () {
+      $scope.calcModelCost = function () {
 
         if (!$scope.elements || !$scope.elements.length) return;
 
@@ -249,7 +249,7 @@ angular.module('adminApp')
 
       }
 
-      $scope.modelWeight = function () {
+      $scope.calcModelWeight = function () {
 
         if (!$scope.elements || !$scope.elements.length) return;
 

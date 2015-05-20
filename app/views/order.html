@@ -100,9 +100,19 @@
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{orderCost()}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{calcOrderCost()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>
+    </ul>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
+        <span class="list-cost">{{materialsCost[material._id]}} <i class="fa fa-ils"></i></span>
+        עלות {{material.name}}
+      </li>
+    </ul>
+
+
+    <ul class="list-group">
       <li class="list-group-item">
         <span class="list-cost">{{materialCost}} <i class="fa fa-ils"></i></span>
         עלות חומרים

@@ -216,7 +216,7 @@ angular.module('adminApp')
             $scope.elements.push(_element);
 
             if (($scope.elements.length == eles.length)) {
-              $scope.orderCost();
+              $scope.calcOrderCost();
             }
 
           });
@@ -246,7 +246,7 @@ angular.module('adminApp')
         }
       }
 
-      $scope.orderCost = function () {
+      $scope.calcOrderCost = function () {
 
         if (!$scope.elements || !$scope.elements.length>0) {
           return

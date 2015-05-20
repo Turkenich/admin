@@ -241,12 +241,14 @@ angular.module('adminApp')
         console.log('calculating cost...');
 
         var cost = 0;
-        $scope.workCost = 0;
-        $scope.providerWorkCost = 0;
-        $scope.elementFeatureCost = 0;
-        $scope.coatingCost = 0;
-        $scope.materialCost = 0;
+        $rootScope.workCost = 0;
+        $rootScope.providerWorkCost = 0;
+        $rootScope.elementFeatureCost = 0;
+        $rootScope.coatingCost = 0;
+        $rootScope.materialCost = 0;
+        $rootScope.materialsCost = {};
 
+        var override;
         var currencies = [];
         for (var c, i = 0; c = $scope.currencies[i]; i++) {
           currencies.push(c);
@@ -255,6 +257,8 @@ angular.module('adminApp')
             currencies[currencies.length - 1].conversion = parseInt(override.newPrice);
           }
         }
+
+        var materialsCost = {};
 
         //calc each element costs (material, work, waste, currency)
         for (var ele, e = 0; ele = elements[e]; e++) {
@@ -276,7 +280,7 @@ angular.module('adminApp')
             var materialConversion = currencies.findById(material.currency).conversion || 0;
             yo('materialConversion', materialConversion);
 
-            var override = (prices.findById(material._id));
+            override = (prices.findById(material._id));
             yo('override', override);
             if (override && override.newPrice) {
               materialPrice = parseInt(override.newPrice);
@@ -284,8 +288,14 @@ angular.module('adminApp')
             yo('materialPrice', materialPrice);
 
             //add to cost
-            debugger;
-            $scope.materialCost += eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
+            var materialCost = eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
+            materialCost = Math.round(materialCost * 100) / 100;
+            $rootScope.materialCost += materialCost;
+            if (!materialsCost[material._id]){
+              materialsCost[material._id] = materialCost;
+            }else{
+              materialsCost[material._id] += materialCost;
+            }
             yo('ele.amount', ele.amount);
             yo('$scope.materialCost', $scope.materialCost);
           }
@@ -297,11 +307,16 @@ angular.module('adminApp')
             var coatingPrice = (coating.price || 0);
             var coatingConversion = currencies.findById(coating.currency).conversion || 0;
 
+            override = (prices.findById(coating._id));
+            if (override && override.newPrice) {
+              coatingPrice = parseInt(override.newPrice);
+            }
+
             //add to cost
             if (coatingMeasureUnit == 'gram') {
-              $scope.coatingCost += eleWeight * ele.amount * coatingPrice * coatingConversion;
+              $rootScope.coatingCost += eleWeight * ele.amount * coatingPrice * coatingConversion;
             } else {
-              $scope.coatingCost += ele.amount * coatingPrice * coatingConversion;
+              $rootScope.coatingCost += ele.amount * coatingPrice * coatingConversion;
             }
           }
           //elementFeatures cost
@@ -312,11 +327,16 @@ angular.module('adminApp')
             var elementFeaturePrice = (elementFeature.price || 0);
             var elementFeatureConversion = currencies.findById(elementFeature.currency).conversion || 0;
 
+            override = (prices.findById(elementFeature._id));
+            if (override && override.newPrice) {
+              elementFeaturePrice = parseInt(override.newPrice);
+            }
+
             //add to cost
             if (elementFeatureMeasureUnit == 'gram') {
-              $scope.elementFeatureCost += eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
+              $rootScope.elementFeatureCost += eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
             } else {
-              $scope.elementFeatureCost += ele.amount * elementFeaturePrice * elementFeatureConversion;
+              $rootScope.elementFeatureCost += ele.amount * elementFeaturePrice * elementFeatureConversion;
             }
           }
           //work cost
@@ -330,9 +350,9 @@ angular.module('adminApp')
           }
           var workUnit = ele.workUnit;
           if (workUnit == 'gram') {
-            $scope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
+            $rootScope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
           } else {
-            $scope.providerWorkCost += ele.amount * workUnitPrice || 0;
+            $rootScope.providerWorkCost += ele.amount * workUnitPrice || 0;
           }
 
         }
@@ -344,18 +364,20 @@ angular.module('adminApp')
           minutePrice = (override.newPrice || 0);
         }
 
-        $scope.workCost = (minutePrice || 0) * workTime;
+        $rootScope.workCost = (minutePrice || 0) * workTime;
 
 
         //Calc Total Cost
 
-        $scope.workCost = Math.round($scope.workCost * 100) / 100;
-        $scope.providerWorkCost = Math.round($scope.providerWorkCost * 100) / 100;
-        $scope.elementFeatureCost = Math.round($scope.elementFeatureCost * 100) / 100;
-        $scope.coatingCost = Math.round($scope.coatingCost * 100) / 100;
-        $scope.materialCost = Math.round($scope.materialCost * 100) / 100;
+        $rootScope.workCost = Math.round($rootScope.workCost * 100) / 100;
+        $rootScope.providerWorkCost = Math.round($rootScope.providerWorkCost * 100) / 100;
+        $rootScope.elementFeatureCost = Math.round($rootScope.elementFeatureCost * 100) / 100;
+        $rootScope.coatingCost = Math.round($rootScope.coatingCost * 100) / 100;
+        $rootScope.materialCost = Math.round($rootScope.materialCost * 100) / 100;
+        $rootScope.materialsCost = materialsCost;
 
-        cost = $scope.workCost + $scope.providerWorkCost + $scope.elementFeatureCost + $scope.coatingCost + $scope.materialCost;
+        cost = $rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost;
+        $rootScope.modelCost = cost;
 
         return cost;
       }
