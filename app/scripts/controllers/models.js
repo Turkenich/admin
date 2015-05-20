@@ -4,6 +4,8 @@ angular.module('adminApp')
   .controller('ModelsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models', 'Orders',
     function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models, Orders) {
 
+      $rootScope.init();
+
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Models, item, function () {
           $scope.parseElementsFromDb();

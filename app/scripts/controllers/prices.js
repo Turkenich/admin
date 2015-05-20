@@ -10,8 +10,9 @@ angular.module('adminApp')
         });
       }
       $scope.updateItem = function (item) {
-        $rootScope.updateItemImp($scope, Prices, item);
-        $rootScope.init();
+        $rootScope.updateItemImp($scope, Prices, item, function(){
+          $rootScope.init();
+        });
       }
       $scope.removeItem = function (item) {
         $rootScope.removeItemImp($scope, Prices, item, function(){

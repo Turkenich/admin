@@ -4,6 +4,8 @@ angular.module('adminApp')
   .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Elements',
     function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements) {
 
+      $rootScope.init();
+
       $scope.reloadItem = function (item) {
         $rootScope.reloadItemImp($scope, Elements, item, function () {
           $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
@@ -11,7 +13,7 @@ angular.module('adminApp')
         });
       }
       $scope.updateItem = function (item) {
-        $rootScope.updateItemImp($scope, Elements, item, function () {
+        $rootScope.updateItemImp($scope, Elements, item, function(){
           $scope.setUnitsNames();
         });
       }

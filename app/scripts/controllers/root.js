@@ -22,6 +22,7 @@ angular.module('adminApp')
 
       $rootScope.init = function () {
         $scope.updateBreadcrumbs();
+        $rootScope.saving = false;
         $rootScope.elementTypes = ElementTypes.all();
         $rootScope.materials = Materials.all();
         $rootScope.providers = Providers.all();
@@ -103,6 +104,10 @@ angular.module('adminApp')
         }
       }
 
+      $scope.setSaving = function (val) {
+        $rootScope.saving = val;
+      }
+
       $scope.goBack = function (delay) {
         $timeout(function () {
           var path = $location.path().split('/');
@@ -134,6 +139,13 @@ angular.module('adminApp')
           $('.ng-dirty').removeClass('ng-dirty');
           $scope.showAlert('הפריט נשמר בהצלחה');
           if (angular.isFunction(callback)) callback(_item);
+          if ($rootScope.saving) {
+            $scope.setSaving('false');
+            window.history.back();
+          }
+        }, function () {
+          $scope.showAlert('אירעה שגיאה בשמירת הפריט - נא לנסות שנית');
+          $scope.setSaving('false');
         });
       }
       $rootScope.removeItemImp = function (scope, Model, item, callback) {
@@ -185,7 +197,7 @@ angular.module('adminApp')
         });
       }
 
-      $scope.exportToCsv = function(item, title){
+      $scope.exportToCsv = function (item, title) {
         $scope.exportJson(item, 'element', true);
         //$rootScope.getPopulatedItemImp($scope, Elements, item, function (item) {
         //});
@@ -291,9 +303,9 @@ angular.module('adminApp')
             var materialCost = eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
             materialCost = Math.round(materialCost * 100) / 100;
             $rootScope.materialCost += materialCost;
-            if (!materialsCost[material._id]){
+            if (!materialsCost[material._id]) {
               materialsCost[material._id] = materialCost;
-            }else{
+            } else {
               materialsCost[material._id] += materialCost;
             }
             yo('ele.amount', ele.amount);

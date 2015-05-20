@@ -22,7 +22,7 @@ angular.module('adminApp')
         var tmpl = '' +
           '<div class="form-group tile {{range}}">' +
           '<label for="{{id}}" class="control-label {{range}}" title="{{desc}}">{{name}}</label>' +
-          '<i class="fa fa-info-circle tile-info {{range}}" data-container="body" data-toggle="popover" data-placement="top" data-content="{{desc}}"></i>';
+          '<i class="fa fa-info-circle tile-info {{range}}" data-container="body" data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></i>';
 
         switch (element.attr('type')) {
           case 'select':

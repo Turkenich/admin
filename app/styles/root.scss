@@ -149,8 +149,12 @@ form.row {
   }
   .tile-info{
     margin: 0 7px;
-    color: #999;
+    color: rgba(0,0,0,0.1);
     cursor: pointer;
+    text-decoration: none;
+    &:hover{
+      color: rgba(0,0,0,0.6);
+    }
   }
 }
 

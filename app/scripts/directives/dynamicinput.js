@@ -23,13 +23,13 @@ angular.module('adminApp')
         var tmpl = '' +
           '<div class="form-group tile">' +
           '<label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label>' +
-          '<i class="fa fa-info-circle tile-info" data-container="body" data-toggle="popover" data-placement="top" data-content="{{desc}}"></i>';
+          '<a ng-show="name && desc" tabindex="0" role="button" class="fa fa-info-circle tile-info"  data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></a>'
 
         switch (element.attr('type')) {
           case 'date':
-            if (element.attr('locked')){
+            if (element.attr('locked')) {
               tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>';
-            }else{
+            } else {
               tmpl += '<textarea class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</textarea>';
             }
             break;
@@ -47,9 +47,9 @@ angular.module('adminApp')
             '<image-uploader ng-if="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
             break;
           default:
-            if (element.attr('locked')){
+            if (element.attr('locked')) {
               tmpl += '<span class="form-control" id="{{id}}" type="text">{{model}}</span>';
-            }else{
+            } else {
               tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
             }
             break;
@@ -89,7 +89,7 @@ angular.module('adminApp')
           $('[data-toggle="popover"]').popover()
         })
 
-        scope.measureUnitsChanged = function(){
+        scope.measureUnitsChanged = function () {
           scope.$emit('measureUnitsChanged');
         }
       }
