@@ -39,6 +39,7 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
+<div ng-include="'views/partials/export.html'"></div>
 <div class="loader"></div>
 <div class="authenticate" ng-if="!authenticated">
   <input type="password" id="password" ng-keyup="$event.keyCode == 13 && changePassword()" ng-model="pass" placeholder="Enter Your Password"/>

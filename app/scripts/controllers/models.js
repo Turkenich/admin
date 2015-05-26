@@ -247,6 +247,8 @@ angular.module('adminApp')
 
         if (!$scope.elements || !$scope.elements.length) return;
 
+        $scope.elementsWeight($scope.elements);
+
         return $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
 
       }

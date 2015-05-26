@@ -1,14 +1,4 @@
-<div ng-controller="exportCtrl">
+<div class="export-container">
   <a id="dlink" style="display:none;"></a>
-
-  <div class="modal-header">
-    <h3 class="modal-title">האם אתה בטוח שברצונך למחוק את הפריט?</h3>
-  </div>
-  <div class="modal-body">
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-default" ng-click="ok()">ברצוני למחוק את הפריט</button>
-    <button class="btn btn-warning" ng-click="cancel()">ביטול</button>
-  </div>
-
+  <div ng-include="exportFile"></div>
 </div>
