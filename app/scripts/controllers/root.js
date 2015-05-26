@@ -276,7 +276,9 @@ angular.module('adminApp')
         for (var ele, e = 0; ele = elements[e]; e++) {
 
           //get ele weight in grams
-          var eleWeight = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+          var eleWeight = (ele.measureUnitWeight || 0);
+          var eleWeightIncludingWaste = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+
           yo('ele', ele);
           yo('eleWeight', eleWeight);
 
@@ -300,7 +302,8 @@ angular.module('adminApp')
             yo('materialPrice', materialPrice);
 
             //add to cost
-            var materialCost = eleWeight * ele.amount * (materialPrice * materialConversion / materialWeight);
+            var materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
+
             materialCost = Math.round(materialCost * 100) / 100;
             $rootScope.materialCost += materialCost;
             if (!materialsCost[material._id]) {
