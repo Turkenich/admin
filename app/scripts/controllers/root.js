@@ -395,6 +395,7 @@ angular.module('adminApp')
         $rootScope.modelCost = cost;
 
         return cost;
+
       }
 
       $scope.elementsWeight = function (elements) {
