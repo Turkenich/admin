@@ -221,6 +221,7 @@ angular.module('adminApp')
           $scope.prices[id].newPrice = ele.newPrice;
         }
 
+        yo('prices', $scope.prices);
       }
 
 

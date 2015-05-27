@@ -48,7 +48,7 @@ angular.module('adminApp')
             break;
           default:
             if (element.attr('locked')) {
-              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model}}</span>';
+              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | number:2}}</span>';
             } else {
               tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
             }

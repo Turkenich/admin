@@ -116,13 +116,6 @@
                    name="משקל ברוטו"
                    desc="המשקל ברוטו (בגרם) של הדגם">
     </dynamic-input>
-    <dynamic-input item="item"
-                   model="calcModelWeight()"
-                   locked="locked"
-                   type="number"
-                   name="משקל נטו"
-                   desc="המשקל נטו של כל האלמנטים שבדגם">
-    </dynamic-input>
 
     <dynamic-input item="item"
                    model="item.salePrice"
@@ -130,51 +123,54 @@
                    name="מחיר מכירה"
                    desc="המחיר בו הדגם נמכר">
     </dynamic-input>
+
     <ul class="list-group">
-      <li class="list-group-item list-group-item-warning">
+      <li class="list-group-item list-group-item-danger">
         <span class="list-cost">{{calcModelCost()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>
     </ul>
 
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
-        <span class="list-cost">{{materialsCost[material._id]}} <i class="fa fa-ils"></i></span>
-        עלות {{material.name}}
-      </li>
-    </ul>
-
-    <ul class="list-group">
-      <li class="list-group-item">
-        <span class="list-cost">{{materialCost}} <i class="fa fa-ils"></i></span>
+      <li class="list-group-item list-group-item-warning">
+        <span class="list-cost">{{materialCost | number:2}} <i class="fa fa-ils"></i></span>
         עלות חומרים
       </li>
+      <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
+        <span class="list-cost">{{materialsCost[material._id] | number:2}} <i class="fa fa-ils"></i></span>
+        עלות {{material.name}}
+      </li>
       <li class="list-group-item">
-        <span class="list-cost">{{coatingCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{coatingCost | number:2}} <i class="fa fa-ils"></i></span>
         עלות ציפוי
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{elementFeatureCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{elementFeatureCost | number:2}} <i class="fa fa-ils"></i></span>
         עלות תכונות נוספות
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{providerWorkCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{providerWorkCost | number:2}} <i class="fa fa-ils"></i></span>
         עלות עבודת ספק
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{workCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{workCost | number:2}} <i class="fa fa-ils"></i></span>
         עלות השחלה
       </li>
     </ul>
 
+
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
-        <span class="list-cost">{{materialsCost[material._id]}} <i class="fa fa-ils"></i></span>
-        עלות {{material.name}}
+      <li class="list-group-item list-group-item-warning">
+        <span class="list-cost">{{calcModelWeight()}} גרם</span>
+        משקל כולל
+      </li>
+      <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsWeight[material._id]">
+        <span class="list-cost">{{materialsWeight[material._id]}} גרם</span>
+        משקל {{material.name}}
       </li>
     </ul>
 
-  <ul class="list-group">
+    <ul class="list-group">
       <li class="list-group-item" ng-repeat="price in prices">
         <span class="list-cost">
           <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>

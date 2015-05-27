@@ -306,7 +306,7 @@ angular.module('adminApp')
             //add to cost
             var materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
 
-            materialCost = Math.round(materialCost * 100) / 100;
+            materialCost = parseInt(materialCost * 100) / 100;
             $rootScope.materialCost += materialCost;
             if (!materialsCost[material._id]) {
               materialsCost[material._id] = materialCost;
@@ -386,11 +386,11 @@ angular.module('adminApp')
 
         //Calc Total Cost
 
-        $rootScope.workCost = Math.round($rootScope.workCost * 100) / 100;
-        $rootScope.providerWorkCost = Math.round($rootScope.providerWorkCost * 100) / 100;
-        $rootScope.elementFeatureCost = Math.round($rootScope.elementFeatureCost * 100) / 100;
-        $rootScope.coatingCost = Math.round($rootScope.coatingCost * 100) / 100;
-        $rootScope.materialCost = Math.round($rootScope.materialCost * 100) / 100;
+        $rootScope.workCost = parseInt($rootScope.workCost * 100) / 100;
+        $rootScope.providerWorkCost = parseInt($rootScope.providerWorkCost * 100) / 100;
+        $rootScope.elementFeatureCost = parseInt($rootScope.elementFeatureCost * 100) / 100;
+        $rootScope.coatingCost = parseInt($rootScope.coatingCost * 100) / 100;
+        $rootScope.materialCost = parseInt($rootScope.materialCost * 100) / 100;
         $rootScope.materialsCost = materialsCost;
 
         cost = $rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost;
@@ -404,17 +404,31 @@ angular.module('adminApp')
 
         if (!elements || !elements.length) return;
 
+        var materialsWeight = {};
+        $rootScope.materialsWeight = {};
+
         console.log('calculating weight...');
 
         var weight = 0;
+        var totWeight = 0;
 
         //calc each element weight
         for (var ele, e = 0; ele = elements[e]; e++) {
           //get ele weight in grams
-          weight += ele.amount * (ele.measureUnitWeight || 0);
+          weight = parseInt(ele.amount * (ele.measureUnitWeight || 0) * 100) / 100;
+
+          var material = $rootScope.materials.findById(ele.material);
+          if (!materialsWeight[material._id]) {
+            materialsWeight[material._id] = weight;
+          } else {
+            materialsWeight[material._id] += weight;
+          }
+          totWeight += weight;
         }
 
-        return weight;
+        $rootScope.materialsWeight = materialsWeight;
+
+        return totWeight;
       }
 
       $scope.$on('$locationChangeEnd', function (event) {
@@ -541,5 +555,7 @@ angular.module('adminApp')
           tableToExcel('exportTable', 'export', 'export_filename.xls');
         }, 1000);
       }
+
+      $rootScope.init();
 
     }]);

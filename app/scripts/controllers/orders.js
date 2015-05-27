@@ -259,5 +259,13 @@ angular.module('adminApp')
 
       }
 
+      $scope.calcOrderWeight = function () {
+
+        if (!$scope.elements || !$scope.elements.length>0) return;
+
+        return $scope.elementsWeight($scope.elements);
+
+      }
+
 
     }]);
