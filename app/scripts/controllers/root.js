@@ -48,7 +48,7 @@ angular.module('adminApp')
       ]
 
       $rootScope.weightUnits = [
-        {name: "אונקייה", _id: 'ounce', grams: 32.15},
+        {name: "אונקייה", _id: 'ounce', grams: 32.104},
         {name: "גרם", _id: 'gram', grams: 1},
         {name: "קילוגרם", _id: 'kilo', grams: 1000},
       ]
