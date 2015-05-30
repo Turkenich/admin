@@ -509,12 +509,30 @@ angular.module('adminApp')
         document.body.removeChild(link);
       }
 
-      $scope.newSpreadsheet = function(){
+      $rootScope.exportTables = [];
+      $rootScope.getExportTables = function () {
+        var res = [];
+        yo('getExportTables', res);
+        $.each($('.export-table'), function (i, table) {
+          res.push({
+            name: $(table).attr('title'),
+          })
+          yo('getExportTables', res);
+          $rootScope.exportTables = res;
+        })
+        yo('getExportTables', res);
+        $rootScope.exportTables = res;
+      }
+      $rootScope.newSpreadsheet = function () {
         $window.open('http://spreadsheets.google.com/ccc?new&hl=he');
       }
-      $scope.getHtmlToCopy = function () {
+      $rootScope.getHtmlToCopy = function () {
         var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
-        function $chk(obj){return!!(obj||obj===0)}
+
+        function $chk(obj) {
+          return !!(obj || obj === 0)
+        }
+
         var TableUtil = {
           nodeToString: function (table, rowSeperator, colSeperator) {
             var d = "";

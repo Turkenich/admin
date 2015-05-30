@@ -16,18 +16,9 @@ angular.module('adminApp')
       '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="cancelChanges(); duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button>' +
       '<button class="btn btn-{{isDirty() ? \'warning\' : \'disabled\' }}" ng-click="cancelChanges(); goBack(0);"><i class="fa fa-fw fa-undo"></i> ביטול</button>' +
       '<button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-fw fa-trash"></i> מחיקה</button>' +
+      '<button class="btn btn-default" ng-click="openModal(\'export\')"><i class="fa fa-fw fa-download"></i> ייצוא</button>' +
 
-      '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +
-      'ייצוא' +
-      '<span class="caret"></span>' +
-      '</button>' +
-      '<ul class="dropdown-menu" role="menu" style="right: auto;left: 0;">' +
-      '<li><a ng-click="exportTable(\'basic\')"> test</a></li>' +
-      '<li><a href="" clip-copy="getHtmlToCopy()" clip-copy-mime-type="text/plain" clip-click="newSpreadsheet()">Copy HTML</a></li>' +
-      '</ul>' +
-      '<div ng-include="\'views/partials/export.html\'" style="display:none;"></div>' +
-
-      '</div>' +
+      '</div>'+
       '<div style="clear:both;"></div>'
       ,
       restrict: 'E',

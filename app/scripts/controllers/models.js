@@ -187,6 +187,7 @@ angular.module('adminApp')
         if (!$scope.item.prices) $scope.item.prices = "[]";
 
         $scope.prices = [];
+        $scope.pricesByName = {};
         for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
           if (ele.code == 'ILS') continue; //ignore shekels
           ele.newPrice = null;
@@ -220,6 +221,12 @@ angular.module('adminApp')
           if (id < 0) continue;
           $scope.prices[id].newPrice = ele.newPrice;
         }
+
+        for (var price, e = 0; price = $scope.prices[e]; e++) {
+          $scope.pricesByName[price.name] = price.newPrice || price.price;
+        }
+
+        yo('pricesByName', $scope.pricesByName);
 
         yo('prices', $scope.prices);
       }
