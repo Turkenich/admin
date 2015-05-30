@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
-    function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+  .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$window', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $window, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
       console.log('VERSION: ' + '1.0');
 
@@ -281,27 +281,18 @@ angular.module('adminApp')
           var eleWeight = (ele.measureUnitWeight || 0);
           var eleWeightIncludingWaste = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
 
-          yo('ele', ele);
-          yo('eleWeight', eleWeight);
-
           //material cost
           if ($rootScope.materials) {
             var material = $rootScope.materials.findById(ele.material);
-            yo('material', material);
             //get material price for gram
             var materialPrice = (material.price || 0);
-            yo('materialPrice', materialPrice);
             var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 1;
-            yo('materialWeight', materialWeight);
             var materialConversion = currencies.findById(material.currency).conversion || 0;
-            yo('materialConversion', materialConversion);
 
             override = (prices.findById(material._id));
-            yo('override', override);
             if (override && override.newPrice) {
               materialPrice = parseInt(override.newPrice);
             }
-            yo('materialPrice', materialPrice);
 
             //add to cost
             var materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
@@ -313,8 +304,6 @@ angular.module('adminApp')
             } else {
               materialsCost[material._id] += materialCost;
             }
-            yo('ele.amount', ele.amount);
-            yo('$scope.materialCost', $scope.materialCost);
           }
           //coating cost
           if ($rootScope.coatings) {
@@ -520,8 +509,35 @@ angular.module('adminApp')
         document.body.removeChild(link);
       }
 
+      $scope.newSpreadsheet = function(){
+        $window.open('http://spreadsheets.google.com/ccc?new&hl=he');
+      }
+      $scope.getHtmlToCopy = function () {
+        var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
+        function $chk(obj){return!!(obj||obj===0)}
+        var TableUtil = {
+          nodeToString: function (table, rowSeperator, colSeperator) {
+            var d = "";
+            if (table.childNodes.length) {
+              if ("TD" == table.nodeName || "TH" == table.nodeName)colSeperator = rowSeperator = "";
+              for (table = table.firstChild; table;) {
+                d += TableUtil.nodeToString(table, rowSeperator, colSeperator);
+                if ("TR" == table.nodeName)d += rowSeperator; else if ("TD" == table.nodeName || "TH" == table.nodeName)d += colSeperator;
+                table = table.nextSibling
+              }
+            } else"#text" == table.nodeName && $chk(table.nodeValue) && "" !== table.nodeValue && (rowSeperator = table.nodeValue, colSeperator = RegExp("\\t", "g"), rowSeperator = rowSeperator.replace(RegExp("\\n", "g"), ""), rowSeperator = rowSeperator.replace(colSeperator, ""), d += rowSeperator.trim());
+            return d
+          }
+        }
+
+        var res = TableUtil.nodeToString($('table')[0], copyConst.rowSeperator, copyConst.colSeperator)
+
+        console.log('got html to copy', res);
+        return (res);
+      }
+
       $scope.setExportFile = function (filename) {
-        $scope.exportFile = 'views/exports/' + filename + '.html';
+        return $scope.exportFile = 'views/exports/' + filename + '.html';
       }
       $scope.exportTable = function (filename) {
 

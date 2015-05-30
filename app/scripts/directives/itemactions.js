@@ -22,10 +22,10 @@ angular.module('adminApp')
       '<span class="caret"></span>' +
       '</button>' +
       '<ul class="dropdown-menu" role="menu" style="right: auto;left: 0;">' +
-      '<li>' +
-      '<a ng-click="exportTable(\'basic\')"> test</a>' +
-      '</li>' +
+      '<li><a ng-click="exportTable(\'basic\')"> test</a></li>' +
+      '<li><a href="" clip-copy="getHtmlToCopy()" clip-copy-mime-type="text/plain" clip-click="newSpreadsheet()">Copy HTML</a></li>' +
       '</ul>' +
+      '<div ng-include="\'views/partials/export.html\'" style="display:none;"></div>' +
 
       '</div>' +
       '<div style="clear:both;"></div>'

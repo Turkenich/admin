@@ -10,11 +10,13 @@ angular
     'cloudinary',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
-    'ui.bootstrap.transition'
+    'ui.bootstrap.transition',
+    'ngClipboard'
   ])
-  .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+  .config(['$routeProvider', '$httpProvider', 'ngClipProvider', function ($routeProvider, $httpProvider, ngClipProvider) {
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.headers.common.__id = md5(localStorage['__id']);
+      ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
