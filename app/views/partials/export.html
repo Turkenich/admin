@@ -8,12 +8,12 @@
       בחר את סוג הייצוא אותו תרצה להעתיק
     </div>
     <br/>
-    
+
     <div class="btn-group-vertical" role="group" ng-init="getExportTables()">
       <a ng-repeat="exportBtn in exportTables"
          class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy()"
          clip-copy-mime-type="text/plain"
-         clip-click="copied=true;">{{exportBtn.name}}</a>
+         ng-click="copied=true;">{{exportBtn.name}} <i class="fa fa-check" ng-show="copied"></i></a>
     </div>
 
     <div class="alert alert-danger" role="alert" style="margin: 20px 0 0; text-align: center;">
