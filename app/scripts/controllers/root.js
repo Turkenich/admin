@@ -382,7 +382,7 @@ angular.module('adminApp')
         $rootScope.materialCost = parseInt($rootScope.materialCost * 100) / 100;
         $rootScope.materialsCost = materialsCost;
 
-        cost = $rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost;
+        cost = parseInt(($rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost)*100)/100;
         $rootScope.modelCost = cost;
 
         return cost;
