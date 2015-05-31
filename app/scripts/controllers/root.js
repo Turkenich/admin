@@ -516,8 +516,15 @@ angular.module('adminApp')
         document.body.removeChild(link);
       }
 
+      $rootScope.copiedTable = -1;
       $rootScope.exportTables = [];
+      $rootScope.setCopiedTable = function(i){
+        $rootScope.copiedTable = i;
+      }
       $rootScope.getExportTables = function () {
+
+        $rootScope.copiedTable = -1;
+
         var res = [];
         $.each($('.export-table'), function (i, table) {
           res.push({

@@ -1,4 +1,4 @@
-<div ng-init="copied=false;">
+<div>
   <div class="modal-header">
     <h3 class="modal-title"> בחר את סוג הייצוא אותו תרצה להעתיק
     </h3>
@@ -9,7 +9,7 @@
       <a ng-repeat="exportBtn in exportTables"
          class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.target)"
          clip-copy-mime-type="text/plain"
-         ng-click="copied=true;">{{exportBtn.name}} <i class="fa fa-check" ng-show="copied"></i></a>
+         ng-click="setCopiedTable($index);"><i class="fa fa-check" ng-show="copiedTable==$index"></i> {{exportBtn.name}} </a>
     </div>
 
     <div class="alert alert-danger" role="alert" style="margin: 20px 0 0; text-align: center;">
