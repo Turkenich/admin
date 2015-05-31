@@ -4,7 +4,8 @@ angular.module('adminApp')
   .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$window', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
     function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $window, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
-      console.log('VERSION: ' + '1.0');
+      $rootScope.version = '1';
+      console.log('VERSION: ' + $rootScope.version);
 
       var pass = (localStorage['__id'] || "");
 
@@ -232,7 +233,7 @@ angular.module('adminApp')
       $scope.openModal = function (template, ok, cancel) {
         var modalInstance = $modal.open({
           animation: true,
-          templateUrl: 'views/partials/' + template + '.html',
+          templateUrl: 'views/partials/' + template + '.html?v=' + $rootScope.version,
           controller: 'ModalInstanceCtrl',
           resolve: {
             ok: function () {
