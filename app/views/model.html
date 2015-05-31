@@ -168,11 +168,11 @@
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{calcModelWeight()}} גרם</span>
+        <span class="list-cost">{{calcModelWeight() | number:2}} גרם</span>
         משקל כולל
       </li>
       <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsWeight[material._id]">
-        <span class="list-cost">{{materialsWeight[material._id]}} גרם</span>
+        <span class="list-cost">{{materialsWeight[material._id] | number:2}} גרם</span>
         משקל {{material.name}}
       </li>
     </ul>
