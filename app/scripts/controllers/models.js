@@ -255,9 +255,14 @@ angular.module('adminApp')
 
         if (!$scope.elements || !$scope.elements.length) return;
 
-        $scope.elementsWeight($scope.elements);
+        var cost = $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
 
-        return $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
+        $scope.costs = {};
+        for (var c, i=0; c=$rootScope.currenciesWithOverride[i]; i++) {
+          $scope.costs[c.code] = cost * c.conversion;
+        }
+
+        $scope.item.costs = JSON.stringify($scope.costs);
 
       }
 
@@ -265,7 +270,23 @@ angular.module('adminApp')
 
         if (!$scope.elements || !$scope.elements.length) return;
 
-        return $scope.elementsWeight($scope.elements);
+        var totalWeight = $scope.elementsWeight($scope.elements);
+
+        $scope.weights = {
+          total: totalWeight
+        }
+        var metal = '';
+        var metals = [];
+        for (var i in $rootScope.materialsWeight){
+          metal = $rootScope.materials.findById(i).name;
+          $scope.weights[metal] = $rootScope.materialsWeight[i];
+          if (metals.indexOf(metal)==-1) metals.push(metal);
+        }
+
+        $scope.item.metals = metals.join(', ');
+        $scope.item.weights = JSON.stringify($scope.weights);
+
+        return totalWeight;
 
       }
 

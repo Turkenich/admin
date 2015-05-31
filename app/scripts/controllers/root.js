@@ -38,7 +38,6 @@ angular.module('adminApp')
             $rootScope.coins.push(currencies[i]);
           }
         });
-
       }
 
       $rootScope.measureUnits = [
@@ -120,6 +119,13 @@ angular.module('adminApp')
       }
       $scope.trustUrl = function (url) {
         return $sce.trustAsResourceUrl(url);
+      }
+
+      $scope.getFromJson = function(str, id){
+        if (!str) return '';
+        if (!str.isJson) return '';
+        var jsn = JSON.parse(str);
+        return jsn[id];
       }
 
       $rootScope.reloadItemImp = function (scope, Model, item, callback) {
@@ -271,6 +277,7 @@ angular.module('adminApp')
             currencies[currencies.length - 1].conversion = parseInt(override.newPrice);
           }
         }
+        $rootScope.currenciesWithOverride = currencies;
 
         var materialsCost = {};
 
@@ -512,7 +519,6 @@ angular.module('adminApp')
       $rootScope.exportTables = [];
       $rootScope.getExportTables = function () {
         var res = [];
-        yo('getExportTables', res);
         $.each($('.export-table'), function (i, table) {
           res.push({
             name: $(table).attr('title'),

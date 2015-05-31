@@ -11,7 +11,7 @@
 
     <div class="btn-group-vertical" role="group" ng-init="getExportTables()">
       <a ng-repeat="exportBtn in exportTables"
-         class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy()"
+         class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.id)"
          clip-copy-mime-type="text/plain"
          ng-click="copied=true;">{{exportBtn.name}} <i class="fa fa-check" ng-show="copied"></i></a>
     </div>

@@ -16,7 +16,7 @@ var Consts = {
   api_root: (Utils.isHeroku ? 'https://turkenich-api.herokuapp.com/' : 'http://localhost:3000/'),
 }
 
-function yo(title, data){
+function yo(title, data) {
   console.log(title, data);
 }
 
@@ -66,3 +66,17 @@ Array.prototype.findPrevById = function (idVal, idKey) {
   return res;
 }
 
+String.prototype.isJson = function (text) {
+  if (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').
+      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+      replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+    //the json is ok
+    return true;
+  } else {
+
+    //the json is not ok
+    return false;
+
+  }
+}
