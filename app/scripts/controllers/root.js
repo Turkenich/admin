@@ -522,6 +522,7 @@ angular.module('adminApp')
         $.each($('.export-table'), function (i, table) {
           res.push({
             name: $(table).attr('title'),
+            target: $(table).attr('data-target'),
           })
           yo('getExportTables', res);
           $rootScope.exportTables = res;
@@ -532,7 +533,7 @@ angular.module('adminApp')
       $rootScope.newSpreadsheet = function () {
         $window.open('http://spreadsheets.google.com/ccc?new&hl=he');
       }
-      $rootScope.getHtmlToCopy = function () {
+      $rootScope.getHtmlToCopy = function (target) {
         var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
 
         function $chk(obj) {
@@ -554,7 +555,7 @@ angular.module('adminApp')
           }
         }
 
-        var res = TableUtil.nodeToString($('table')[0], copyConst.rowSeperator, copyConst.colSeperator)
+        var res = TableUtil.nodeToString($('table#'+target)[0], copyConst.rowSeperator, copyConst.colSeperator)
 
         console.log('got html to copy', res);
         return (res);
