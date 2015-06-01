@@ -264,6 +264,8 @@ angular.module('adminApp')
 
         $scope.item.costs = JSON.stringify($scope.costs);
 
+        return cost;
+        
       }
 
       $scope.calcModelWeight = function () {
