@@ -16,7 +16,10 @@ angular.module('adminApp')
         });
       }
       $scope.updateItem = function (item, asIs) {
-        if (!asIs) item = $scope.setItemVars(item);
+        if (!asIs) {
+          item = $scope.setItemVars(item);
+          $scope.getElementsString();
+        }
         $rootScope.updateItemImp($scope, Models, item);
       }
       $scope.removeItem = function (item) {
@@ -179,6 +182,14 @@ angular.module('adminApp')
 
         return $scope.item.elements;
 
+      }
+
+      $scope.getElementsString = function (){
+        var arr = [];
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          arr.push(ele.name);
+        }
+        $scope.item.elementsStr = arr.join(', ');
       }
 
       $scope.parsePricesFromDb = function () {
