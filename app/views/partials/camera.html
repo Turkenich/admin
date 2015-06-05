@@ -19,6 +19,7 @@
   <div class="camera-controls" ng-hide="hideUI">
     <button class="ng-camera-take-btn" ng-hide="uploadedImage" ng-click="takePicture()"><i class="fa fa-camera"></i></button>
     <button class="ng-camera-take-btn" ng-show="uploadedImage" ng-click="retakePicture()"><i class="fa fa-undo"></i></button>
+    <button class="ng-camera-take-btn" ng-hide="uploadedImage" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files"><i class="fa fa-upload"></i></button>
   </div>
 </div>
 

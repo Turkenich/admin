@@ -21,6 +21,7 @@ angular.module('adminApp')
         overlaySrc: '=',
         countdown: '@',
         enabled: '=',
+        files: '=',
         captureMessage: '@'
       },
       link: function (scope, element, attrs, ngModel) {
@@ -160,6 +161,34 @@ angular.module('adminApp')
         });
 
 
+        scope.$watch('files', function() {
+          if (!scope.files) return;
+          scope.files.forEach(function(file){
+            scope.upload = $upload.upload({
+              url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+              data: {
+                upload_preset: $.cloudinary.config().upload_preset,
+              },
+              file: file
+            }).progress(function (e) {
+              file.progress = Math.round((e.loaded * 100.0) / e.total);
+              file.status = "Uploading... " + file.progress + "%";
+            }).success(function (data, status, headers, config) {
+              console.log('uploaded!!!', data);
+              scope.uploadedImage = data.secure_url;
+              scope.$parent.item.image = data.secure_url;
+              $('#imageUploader').addClass('ng-dirty');
+              $timeout(function(){
+                scope.close();
+              }, 1000);
+              //$rootScope.photos = $rootScope.photos || [];
+              //data.context = {custom: {photo: scope.title}};
+              //file.result = data;
+              //$rootScope.photos.push(data);
+            });
+          });
+        });
+
         function dataURItoBlob(dataURI) {
           // convert base64/URLEncoded data component to raw binary data held in a string
           var byteString;
@@ -181,7 +210,7 @@ angular.module('adminApp')
         }
 
         scope.uploading = {};
-        scope.uploadedImage = scope.$parent.item.image;
+        scope.uploadedImage = (scope.$parent && scope.$parent.item && scope.$parent.item.image) ? scope.$parent.item.image : "";
 
         scope.retakePicture = function(){
           scope.uploadedImage = '';
