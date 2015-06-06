@@ -15,7 +15,7 @@ angular
   ])
   .config(['$routeProvider', '$httpProvider', 'ngClipProvider', function ($routeProvider, $httpProvider, ngClipProvider) {
     //$httpProvider.defaults.headers.common.Authorization = md5(localStorage['Authorization']);
-    $httpProvider.interceptors.push(function($q, $cookies) {
+    $httpProvider.interceptors.push(function() {
       return {
         'request': function(config) {
 
