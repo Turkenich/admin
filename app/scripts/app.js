@@ -14,7 +14,18 @@ angular
     'ngClipboard'
   ])
   .config(['$routeProvider', '$httpProvider', 'ngClipProvider', function ($routeProvider, $httpProvider, ngClipProvider) {
-    $httpProvider.defaults.headers.common.__id = md5(localStorage['__id']);
+    //$httpProvider.defaults.headers.common.Authorization = md5(localStorage['Authorization']);
+    $httpProvider.interceptors.push(function($q, $cookies) {
+      return {
+        'request': function(config) {
+
+          if (config.url.indexOf('://turkenich') >= 0)
+          config.headers.Authorization = md5(localStorage['Authorization']);
+          return config;
+        }
+      };
+    });
+
     ngClipProvider.setPath("images/ZeroClipboard.swf");
     $routeProvider
       .when('/', {
