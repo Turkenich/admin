@@ -289,16 +289,18 @@ angular.module('adminApp')
         var metals = [];
         for (var i in $rootScope.materialsWeight){
           metal = $rootScope.materials.findById(i).name;
+          if (!metal) continue;
           $scope.weights[metal] = $rootScope.materialsWeight[i];
           if (metals.indexOf(metal)==-1) metals.push(metal);
         }
 
         var stones = [];
         var stone = '';
-        var patt = new RegExp("/אבן|אבנים/");
+        var patt = new RegExp(/(אבן|אבנים)/);
 
         for (var ele,e=0; ele=$scope.elements[e]; e++){
           stone = $rootScope.elementTypes.findById(ele.id).name;
+          if (!stone) continue;
           if (patt.test(stone)){
             if (stones.indexOf(stone)==-1) stones.push(stone);
           }
