@@ -19,8 +19,13 @@ angular
       return {
         'request': function(config) {
 
-          if (config.url.indexOf('://turkenich') >= 0)
-          config.headers.Authorization = md5(localStorage['Authorization']);
+          if (
+            (config.url.indexOf('://turkenich') >= 0) ||
+            (config.url.indexOf('://localhost') >= 0) ||
+            (config.url.indexOf('://127.0.0.1') >= 0)
+          ) {
+            config.headers.Authorization = md5(localStorage['Authorization']);
+          }
           return config;
         }
       };

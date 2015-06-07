@@ -237,9 +237,6 @@ angular.module('adminApp')
           $scope.pricesByName[price.name] = price.newPrice || price.price;
         }
 
-        yo('pricesByName', $scope.pricesByName);
-
-        yo('prices', $scope.prices);
       }
 
 
@@ -296,7 +293,19 @@ angular.module('adminApp')
           if (metals.indexOf(metal)==-1) metals.push(metal);
         }
 
+        var stones = [];
+        var stone = '';
+        var patt = new RegExp("/אבן|אבנים/");
+
+        for (var ele,e=0; ele=$scope.elements[e]; e++){
+          stone = $rootScope.elementTypes.findById(ele.id).name;
+          if (patt.test(stone)){
+            if (stones.indexOf(stone)==-1) stones.push(stone);
+          }
+        }
+
         $scope.item.metals = metals.join(', ');
+        $scope.item.stones = stones.join(', ');
         $scope.item.weights = JSON.stringify($scope.weights);
 
         return totalWeight;
