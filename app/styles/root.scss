@@ -15,10 +15,10 @@
   width: 100%;
   height: 100%;
   z-index: 999999;
-  background: radial-gradient(white 30%, #aaa);//rgba(255, 255, 255, 0.9));
+  background: radial-gradient(white 30%, #aaa); //rgba(255, 255, 255, 0.9));
   transition: all 2s ease;
   &:after {
-    content:'';
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
@@ -44,7 +44,7 @@
   text-align: center;
   padding-top: 200px;
   box-sizing: border-box;
-  input{
+  input {
     width: 90%;
     max-width: 320px;
     line-height: 42px;
@@ -118,7 +118,7 @@ h1 {
   .btn-group {
     float: left;
     margin-top: 4px;
-    &:after{
+    &:after {
       content: "";
       position: relative;
       clear: both;
@@ -147,13 +147,13 @@ form.row {
     margin-right: 5px;
     font-size: 13px;
   }
-  .tile-info{
+  .tile-info {
     margin: 0 7px;
-    color: rgba(0,0,0,0.1);
+    color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
     text-decoration: none;
-    &:hover{
-      color: rgba(0,0,0,0.6);
+    &:hover {
+      color: rgba(0, 0, 0, 0.6);
     }
   }
 }
@@ -172,17 +172,20 @@ form.row {
     text-decoration: none;
     margin-top: 4px;
   }
-  .media-object{
+  .media-object {
     max-width: none;
   }
 }
 
 .list-buttons {
-//  margin: 10px 0 0 0;
-//  padding-top: 5px;
-//  border-top: 1px solid #ddd;
-//  width: 100%;
-    float:left;
+  //  margin: 10px 0 0 0;
+  //  padding-top: 5px;
+  //  border-top: 1px solid #ddd;
+  //  width: 100%;
+  float: left;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
 
 ul.nav.nav-pills {
@@ -205,7 +208,8 @@ ul.nav.nav-pills {
 .form-control {
   box-shadow: none !important;
 }
-span.form-control{
+
+span.form-control {
   color: #666;
   background: #eee;
 }
@@ -267,14 +271,13 @@ input.list-cost {
   text-align: left;
 }
 
-
 .alert-container {
   position: fixed;
   width: 100%;
   text-align: center;
   transition: all 2s ease;
   bottom: -100px;
-  &.active{
+  &.active {
     bottom: 30px;
   }
   .alert {
@@ -282,6 +285,7 @@ input.list-cost {
     display: inline-block;
   }
 }
+
 .list-container {
   margin: 15px -6px;
   background: rgba(0, 0, 0, 0.3);
