@@ -7,9 +7,11 @@ angular.module('adminApp')
       $rootScope.init();
 
       $scope.reloadItem = function (item) {
+        $rootScope.anyDbloading = true;
         $rootScope.reloadItemImp($scope, Elements, item, function () {
           $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
           $scope.setUnitsNames();
+          $rootScope.anyDbloading = false;
         });
       }
       $scope.updateItem = function (item) {

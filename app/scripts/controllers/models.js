@@ -7,11 +7,13 @@ angular.module('adminApp')
       $rootScope.init();
 
       $scope.reloadItem = function (item) {
+        $rootScope.anyDbloading = true;
         $rootScope.reloadItemImp($scope, Models, item, function () {
           $scope.parseElementsFromDb();
           $scope.parsePricesFromDb();
           $scope.setmodelId();
           $scope.updateBreadcrumbs('דגמים', 'models', $scope.item);
+          $rootScope.anyDbloading = false;
           console.log('Item loaded', $scope.item);
         });
       }

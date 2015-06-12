@@ -23,6 +23,17 @@ angular.module('adminApp')
           });
       }
 
+      $rootScope.dbloading = function(){
+        if (!$rootScope.elementTypes || $rootScope.elementTypes.length == 0)        {yo('loading elementTypes', $rootScope.elementTypes); return true;}
+        if (!$rootScope.materials || $rootScope.materials.length == 0)              {yo('loading materials', $rootScope.materials); return true;}
+        if (!$rootScope.providers || $rootScope.providers.length == 0)              {yo('loading providers', $rootScope.providers); return true;}
+        if (!$rootScope.coatings || $rootScope.coatings.length == 0)                {yo('loading coatings', $rootScope.coatings); return true;}
+        if (!$rootScope.elementFeatures || $rootScope.elementFeatures.length == 0)  {yo('loading elementFeatures', $rootScope.elementFeatures); return true;}
+        if (!$rootScope.currencies || $rootScope.currencies.length == 0)            {yo('loading currencies', $rootScope.currencies); return true;}
+        if ($rootScope.anyDbloading)                                                {yo('anyDbloading', $rootScope.anyDbloading); return true;}
+        return false;
+      }
+
       $rootScope.init = function () {
         $scope.updateBreadcrumbs();
         $rootScope.saving = false;
