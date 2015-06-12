@@ -1,0 +1,213 @@
+#posterframe {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
+#logo {
+  height: 51px;
+  width: 241px; }
+
+.actions {
+  margin: 20px 0; }
+
+.upload_link {
+  color: #000;
+  border: 1px solid #aaa;
+  background-color: #e0e0e0;
+  font-size: 18px;
+  padding: 5px 10px;
+  width: 250px;
+  margin: 10px 0 20px 0;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px; }
+
+.photo {
+  margin: 10px;
+  padding: 10px;
+  border-top: 2px solid #ccc; }
+
+.photo .thumbnail {
+  margin-top: 10px;
+  display: block;
+  max-width: 200px;
+  border: none; }
+
+.toggle_info {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #e62401;
+  display: block; }
+
+.thumbnail_holder {
+  height: 182px;
+  margin-bottom: 5px;
+  margin-right: 10px; }
+
+.info td, .uploaded_info td {
+  font-size: 12px; }
+
+.note {
+  margin: 20px 0; }
+
+.inline {
+  display: inline-block; }
+
+td {
+  vertical-align: top;
+  padding-right: 5px; }
+
+#direct_upload_jquery, #direct_upload {
+  padding: 20px 20px;
+  margin: 20px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; }
+
+#direct_upload_jquery h1, #direct_upload h1 {
+  margin: 0 0 15px 0; }
+
+.back_link {
+  font-weight: bold;
+  display: block;
+  font-size: 16px;
+  margin: 10px 0; }
+
+#direct_upload, #direct_upload_jquery {
+  border: 4px dashed #ccc; }
+
+#direct_upload.dragover {
+  border-color: #0c0; }
+
+#direct_upload.dragover-err {
+  border-color: #c00; }
+
+.upload_details {
+  font-size: 12px;
+  margin: 20px;
+  border-top: 1px solid #ccc;
+  word-wrap: break-word; }
+
+.upload_button_holder {
+  position: relative;
+  overflow: hidden;
+  display: inline-block; }
+
+.upload_button {
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #0f61ac;
+  color: #fff;
+  padding: 5px 0;
+  border: 1px solid #000;
+  border-radius: 4px;
+  width: 100px;
+  height: 18px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer; }
+
+.upload_button_holder .upload_button {
+  display: block; }
+
+.upload_button:hover {
+  background-color: #1185f0; }
+
+.upload_button_holder .cloudinary_fileupload {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none; }
+
+.progress-bar {
+  width: 100px;
+  position: relative;
+  height: 4px; }
+
+.progress-bar .progress {
+  height: 4px;
+  background-color: #ff0000;
+  width: 0%; }
+
+.camera-container {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000; }
+
+.camera-wrapper {
+  margin: 100px auto 20px;
+  width: 640px;
+  max-width: 90%;
+  height: 480px;
+  max-height: 60%;
+  padding: 0px;
+  box-sizing: content-box;
+  position: relative; }
+
+.camera-messages {
+  text-align: center;
+  display: inline-block;
+  margin: auto; }
+
+.camera-overlay, .camera-feed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid #111;
+  border-radius: 10px;
+  background-color: #000; }
+
+.camera-controls {
+  margin: 0px auto;
+  height: 120px;
+  text-align: center; }
+
+.ng-camera-take-btn {
+  height: 80px;
+  width: 80px;
+  border-radius: 100px;
+  background: #ccc;
+  background: linear-gradient(to bottom, #f7f7f7, #aaa);
+  border: 1px solid #111;
+  font-size: 40px;
+  color: #111; }
+
+.camera-close {
+  position: absolute;
+  top: -28px;
+  right: -20px;
+  font-size: 32px;
+  z-index: 10;
+  color: #efefef;
+  cursor: pointer; }
+  .camera-close:hover {
+    color: white; }
+
+.input-uploader {
+  height: 200px;
+  background-color: #fff;
+  margin-top: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer; }
+
+/*# sourceMappingURL=upload.css.map */
