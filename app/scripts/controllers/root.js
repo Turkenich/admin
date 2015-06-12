@@ -23,15 +23,36 @@ angular.module('adminApp')
           });
       }
 
-      $rootScope.dbloading = function(){
-        if (!$rootScope.elementTypes || $rootScope.elementTypes.length == 0)        {yo('loading elementTypes', $rootScope.elementTypes); return true;}
-        if (!$rootScope.materials || $rootScope.materials.length == 0)              {yo('loading materials', $rootScope.materials); return true;}
-        if (!$rootScope.providers || $rootScope.providers.length == 0)              {yo('loading providers', $rootScope.providers); return true;}
-        if (!$rootScope.coatings || $rootScope.coatings.length == 0)                {yo('loading coatings', $rootScope.coatings); return true;}
-        if (!$rootScope.elementFeatures || $rootScope.elementFeatures.length == 0)  {yo('loading elementFeatures', $rootScope.elementFeatures); return true;}
-        if (!$rootScope.currencies || $rootScope.currencies.length == 0)            {yo('loading currencies', $rootScope.currencies); return true;}
-        if ($rootScope.anyDbloading)                                                {yo('anyDbloading', $rootScope.anyDbloading); return true;}
-        return false;
+      $rootScope.dbloading = false;
+      $rootScope.checkDdbloading = function () {
+        $rootScope.elementTypes.$promise.then(function () {
+          yo('loading elementTypes', $rootScope.elementTypes);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.materials.$promise.then(function () {
+          yo('loading materials', $rootScope.materials);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.providers.$promise.then(function () {
+          yo('loading providers', $rootScope.providers);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.coatings.$promise.then(function () {
+          yo('loading coatings', $rootScope.coatings);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.elementFeatures.$promise.then(function () {
+          yo('loading elementFeatures', $rootScope.elementFeatures);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.currencies.$promise.then(function () {
+          yo('loading currencies', $rootScope.currencies);
+          $rootScope.dbloading = false;
+        });
+        if ($rootScope.anyDbloading) {
+          $rootScope.dbloading = false;
+        }
+        $rootScope.dbloading = true;
       }
 
       $rootScope.init = function () {
@@ -50,6 +71,7 @@ angular.module('adminApp')
             $rootScope.coins.push(currencies[i]);
           }
         });
+        $rootScope.checkDdbloading();
       }
 
       $rootScope.measureUnits = [
@@ -133,7 +155,7 @@ angular.module('adminApp')
         return $sce.trustAsResourceUrl(url);
       }
 
-      $scope.getFromJson = function(str, id){
+      $scope.getFromJson = function (str, id) {
         if (!str) return '';
         if (!str.isJson) return '';
         var jsn = JSON.parse(str);
@@ -401,7 +423,7 @@ angular.module('adminApp')
         $rootScope.materialCost = parseInt($rootScope.materialCost * 100) / 100;
         $rootScope.materialsCost = materialsCost;
 
-        cost = parseInt(($rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost)*100)/100;
+        cost = parseInt(($rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost) * 100) / 100;
         $rootScope.modelCost = cost;
 
         return cost;
@@ -530,7 +552,7 @@ angular.module('adminApp')
 
       $rootScope.copiedTable = -1;
       $rootScope.exportTables = [];
-      $rootScope.setCopiedTable = function(i){
+      $rootScope.setCopiedTable = function (i) {
         $rootScope.copiedTable = i;
       }
       $rootScope.getExportTables = function () {
@@ -574,7 +596,7 @@ angular.module('adminApp')
           }
         }
 
-        var res = TableUtil.nodeToString($('table#'+target)[0], copyConst.rowSeperator, copyConst.colSeperator)
+        var res = TableUtil.nodeToString($('table#' + target)[0], copyConst.rowSeperator, copyConst.colSeperator)
 
         console.log('got html to copy', res);
         return (res);

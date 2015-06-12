@@ -44,7 +44,7 @@
   <input type="password" id="password" ng-keyup="$event.keyCode == 13 && changePassword()" ng-model="pass" placeholder="Enter Your Password"/>
 </div>
 <div ng-if="authenticated">
-  <div class="dbload" ng-show="dbloading()"><i class="fa fa-refresh fa-spin"></i></div>
+  <div class="dbload" ng-show="dbloading"><i class="fa fa-refresh fa-spin"></i></div>
   <div ng-include="'views/partials/navbar.html'"></div>
   <div class="container-fluid" ng-view=""></div>
   <div class="alert-container" ng-class="{active: alertIsShown}">
