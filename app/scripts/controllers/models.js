@@ -301,10 +301,10 @@ angular.module('adminApp')
         var patt = new RegExp(/(אבן|אבנים)/);
 
         for (var ele,e=0; ele=$scope.elements[e]; e++){
-          stone = $rootScope.elementTypes.findById(ele.id).name;
+          stone = $rootScope.elementTypes.findById(ele.elementType._id || ele.elementType).name;
           if (!stone) continue;
           if (patt.test(stone)){
-            if (stones.indexOf(stone)==-1) stones.push(stone);
+            if (stones.indexOf(ele.name)==-1) stones.push(ele.name);
           }
         }
 
