@@ -7,8 +7,6 @@ angular.module('adminApp')
       $rootScope.version = '1';
       console.log('VERSION: ' + $rootScope.version);
 
-      var pass = (localStorage['Authorization'] || "");
-
       $rootScope.exportType = '';
 
       $scope.authenticate = function () {
@@ -92,7 +90,7 @@ angular.module('adminApp')
       }
 
       $scope.changePassword = function () {
-        localStorage['Authorization'] = $('input#password').val();
+        localStorage['Authorization'] = md5($('input#password').val());
         document.location.reload();
       }
 

@@ -14,7 +14,6 @@ angular
     'ngClipboard'
   ])
   .config(['$routeProvider', '$httpProvider', 'ngClipProvider', function ($routeProvider, $httpProvider, ngClipProvider) {
-    //$httpProvider.defaults.headers.common.Authorization = md5(localStorage['Authorization']);
     $httpProvider.interceptors.push(function() {
       return {
         'request': function(config) {
@@ -24,7 +23,7 @@ angular
             (config.url.indexOf('://localhost') >= 0) ||
             (config.url.indexOf('://127.0.0.1') >= 0)
           ) {
-            config.headers.Authorization = md5(localStorage['Authorization']);
+            config.headers.Authorization = (localStorage['Authorization']);
           }
           return config;
         }
