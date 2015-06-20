@@ -18,6 +18,13 @@
                    desc="שם האלמנט">
     </dynamic-input>
     <dynamic-input item="item"
+                   model="item.code"
+                   type="text"
+                   options=""
+                   name="קוד"
+                   desc="קוד (שלנו) של האלמנט">
+    </dynamic-input>
+    <dynamic-input item="item"
                    model="item.desc"
                    type="textarea"
                    options=""
@@ -175,3 +182,7 @@
   </div>
 
 </form>
+
+<div ng-include="'views/exports/supplier_order.html?v={{version}}'" class="export-table" title="Supplier Order" data-target="supplier_order" style="display: none"></div>
+<div ng-include="'views/exports/price_quote.html?v={{version}}'" class="export-table" title="Price Quote" data-target="price_quote" style="display: none"></div>
+<div ng-include="'views/exports/element_line.html?v={{version}}'" class="export-table" title="Element Line" data-target="element_line" style="display: none"></div>

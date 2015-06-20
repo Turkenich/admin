@@ -142,6 +142,18 @@ angular.module('adminApp')
         }
       };
 
+      $scope.calcElementCost = function () {
+
+        debugger;
+        if (!$scope.item) return;
+
+        var item = $scope.item;
+        item.amount = 1;
+        return $scope.elementsCost({requiredTime: 0}, [item], []);
+
+      }
+
+
 
     }])
 ;

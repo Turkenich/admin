@@ -321,8 +321,8 @@ angular.module('adminApp')
           var eleWeightIncludingWaste = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
 
           //material cost
-          if ($rootScope.materials) {
-            var material = $rootScope.materials.findById(ele.material);
+          if ($rootScope.materials && ele.material) {
+            var material = $rootScope.materials.findById(ele.material._id || ele.material);
             //get material price for gram
             var materialPrice = (material.price || 0);
             var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 1;
@@ -345,8 +345,8 @@ angular.module('adminApp')
             }
           }
           //coating cost
-          if ($rootScope.coatings) {
-            var coating = $rootScope.coatings.findById(ele.coating);
+          if ($rootScope.coatings && ele.coating) {
+            var coating = $rootScope.coatings.findById(ele.coating._id || ele.coating);
             //get measure unit of the coating
             var coatingMeasureUnit = coating.measureUnit;
             var coatingPrice = (coating.price || 0);
@@ -365,8 +365,8 @@ angular.module('adminApp')
             }
           }
           //elementFeatures cost
-          if ($rootScope.elementFeatures) {
-            var elementFeature = $rootScope.elementFeatures.findById(ele.elementFeature);
+          if ($rootScope.elementFeatures && ele.elementFeature) {
+            var elementFeature = $rootScope.elementFeatures.findById(ele.elementFeature._id || ele.elementFeature);
             //get measure unit of the elementFeature
             var elementFeatureMeasureUnit = elementFeature.measureUnit;
             var elementFeaturePrice = (elementFeature.price || 0);
@@ -387,17 +387,19 @@ angular.module('adminApp')
           //work cost
 
           //get the work cost per unit in ILS
-          var workUnitCurrency = $rootScope.currencies.findById(ele.workUnitCurrency);
-          var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
-          override = (prices.findById(workUnitCurrency._id));
-          if (override && override.newPrice) {
-            workUnitPrice = ele.workUnitPrice * (override.newPrice || 0);
-          }
-          var workUnit = ele.workUnit;
-          if (workUnit == 'gram') {
-            $rootScope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
-          } else {
-            $rootScope.providerWorkCost += ele.amount * workUnitPrice || 0;
+          if ($rootScope.currencies && ele.workUnitCurrency) {
+            var workUnitCurrency = $rootScope.currencies.findById(ele.workUnitCurrency._id || ele.workUnitCurrency);
+            var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
+            override = (prices.findById(workUnitCurrency._id));
+            if (override && override.newPrice) {
+              workUnitPrice = ele.workUnitPrice * (override.newPrice || 0);
+            }
+            var workUnit = ele.workUnit;
+            if (workUnit == 'gram') {
+              $rootScope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
+            } else {
+              $rootScope.providerWorkCost += ele.amount * workUnitPrice || 0;
+            }
           }
 
         }
@@ -422,7 +424,6 @@ angular.module('adminApp')
         $rootScope.materialsCost = materialsCost;
 
         cost = parseInt(($rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost) * 100) / 100;
-        $rootScope.modelCost = cost;
 
         return cost;
 
