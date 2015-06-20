@@ -269,7 +269,7 @@ angular.module('adminApp')
 
         $scope.costs = {};
         for (var c, i=0; c=$rootScope.currenciesWithOverride[i]; i++) {
-          $scope.costs[c.code] = cost * c.conversion;
+          $scope.costs[c.code] = cost / c.conversion;
         }
 
         $scope.item.costs = JSON.stringify($scope.costs);
