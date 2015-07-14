@@ -277,7 +277,6 @@ angular.module('ngFlowGrid', [])
 					});
 				}
 				// you can watch $last as well;
-        debugger;
 				$scope.$watch(element.children(),newGrid);
 
 				$scope.$on('$destroy',function(){

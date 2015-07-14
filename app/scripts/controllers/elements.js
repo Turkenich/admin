@@ -144,7 +144,6 @@ angular.module('adminApp')
 
       $scope.calcElementCost = function () {
 
-        debugger;
         if (!$scope.item) return;
 
         var item = $scope.item;

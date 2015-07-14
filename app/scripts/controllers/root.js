@@ -160,8 +160,18 @@ angular.module('adminApp')
         if (!str || !str.isJson) {
           return '';
         }
+        if (id === 'גולדפילד'){
+          debugger;
+        }
+        var tot = 0;
         var jsn = JSON.parse(str);
-        return jsn[id];
+        for (var i in jsn){
+          if (!jsn.hasOwnProperty(i)) return;
+          if (i.indexOf(id) >= 0){
+            tot += Number(jsn[id]);
+          }
+        }
+        return tot;
       }
 
       $rootScope.reloadItemImp = function (scope, Model, item, callback) {
@@ -421,11 +431,13 @@ angular.module('adminApp')
           //save cost by elementType
           eleCost = parseInt((providerWorkCost + elementFeatureCost + coatingCost + materialCost) * 100) / 100;
 
-          var elementType = ($rootScope.elementTypes.findById(ele.elementType._id || ele.elementType) || {}).name;
-          if (!model.eTypesCosts[elementType]){
-            model.eTypesCosts[elementType] = eleCost;
-          }else{
-            model.eTypesCosts[elementType] += eleCost;
+          if (ele.elementType) {
+            var elementType = ($rootScope.elementTypes.findById(ele.elementType._id || ele.elementType) || {}).name;
+            if (!model.eTypesCosts[elementType]) {
+              model.eTypesCosts[elementType] = eleCost;
+            } else {
+              model.eTypesCosts[elementType] += eleCost;
+            }
           }
 
         }
@@ -578,7 +590,7 @@ angular.module('adminApp')
       $rootScope.copiedTable = -1;
       $rootScope.exportTables = [];
       $rootScope.setCopiedTable = function (i) {
-        $rootScope.copiedTable = i;
+        $rootScope.watingTable = i;
       }
       $rootScope.getExportTables = function () {
 
