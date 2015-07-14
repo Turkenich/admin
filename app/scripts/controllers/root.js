@@ -160,9 +160,6 @@ angular.module('adminApp')
         if (!str || !str.isJson) {
           return '';
         }
-        if (id === 'גולדפילד'){
-          debugger;
-        }
         var tot = 0;
         var jsn = JSON.parse(str);
         for (var i in jsn){
