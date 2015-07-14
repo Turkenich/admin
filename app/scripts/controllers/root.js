@@ -54,6 +54,9 @@ angular.module('adminApp')
       }
 
       $rootScope.init = function () {
+
+        console.log('rootScope init');
+
         $scope.updateBreadcrumbs();
         $rootScope.saving = false;
         $rootScope.elementTypes = ElementTypes.all();
@@ -154,8 +157,9 @@ angular.module('adminApp')
       }
 
       $scope.getFromJson = function (str, id) {
-        if (!str) return '';
-        if (!str.isJson) return '';
+        if (!str || !str.isJson) {
+          return '';
+        }
         var jsn = JSON.parse(str);
         return jsn[id];
       }
@@ -290,9 +294,16 @@ angular.module('adminApp')
 
         if (!elements || !elements.length) return;
 
-        console.log('calculating cost...');
+        //console.log('calculating cost...');
 
         var cost = 0;
+        var eleCost = 0;
+
+        var providerWorkCost = 0;
+        var elementFeatureCost = 0;
+        var coatingCost = 0;
+        var materialCost = 0;
+
         $rootScope.workCost = 0;
         $rootScope.providerWorkCost = 0;
         $rootScope.elementFeatureCost = 0;
@@ -312,6 +323,7 @@ angular.module('adminApp')
         $rootScope.currenciesWithOverride = currencies;
 
         var materialsCost = {};
+        model.eTypesCosts = {};
 
         //calc each element costs (material, work, waste, currency)
         for (var ele, e = 0; ele = elements[e]; e++) {
@@ -334,7 +346,7 @@ angular.module('adminApp')
             }
 
             //add to cost
-            var materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
+            materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
 
             materialCost = parseInt(materialCost * 100) / 100;
             $rootScope.materialCost += materialCost;
@@ -359,10 +371,11 @@ angular.module('adminApp')
 
             //add to cost
             if (coatingMeasureUnit == 'gram') {
-              $rootScope.coatingCost += eleWeight * ele.amount * coatingPrice * coatingConversion;
+              coatingCost = eleWeight * ele.amount * coatingPrice * coatingConversion;
             } else {
-              $rootScope.coatingCost += ele.amount * coatingPrice * coatingConversion;
+              coatingCost = ele.amount * coatingPrice * coatingConversion;
             }
+            $rootScope.coatingCost += coatingCost;
           }
           //elementFeatures cost
           if ($rootScope.elementFeatures && ele.elementFeature) {
@@ -379,10 +392,11 @@ angular.module('adminApp')
 
             //add to cost
             if (elementFeatureMeasureUnit == 'gram') {
-              $rootScope.elementFeatureCost += eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
+              elementFeatureCost = eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
             } else {
-              $rootScope.elementFeatureCost += ele.amount * elementFeaturePrice * elementFeatureConversion;
+              elementFeatureCost = ele.amount * elementFeaturePrice * elementFeatureConversion;
             }
+            $rootScope.elementFeatureCost += elementFeatureCost;
           }
           //work cost
 
@@ -396,13 +410,26 @@ angular.module('adminApp')
             }
             var workUnit = ele.workUnit;
             if (workUnit == 'gram') {
-              $rootScope.providerWorkCost += eleWeight * ele.amount * workUnitPrice;
+              providerWorkCost = eleWeight * ele.amount * workUnitPrice;
             } else {
-              $rootScope.providerWorkCost += ele.amount * workUnitPrice || 0;
+              providerWorkCost = ele.amount * workUnitPrice || 0;
             }
+            $rootScope.providerWorkCost += providerWorkCost;
+
+          }
+
+          //save cost by elementType
+          eleCost = parseInt((providerWorkCost + elementFeatureCost + coatingCost + materialCost) * 100) / 100;
+
+          var elementType = ($rootScope.elementTypes.findById(ele.elementType._id || ele.elementType) || {}).name;
+          if (!model.eTypesCosts[elementType]){
+            model.eTypesCosts[elementType] = eleCost;
+          }else{
+            model.eTypesCosts[elementType] += eleCost;
           }
 
         }
+
         //add work time
         var workTime = model.requiredTime || 0;
         var minutePrice = ($scope.currencies.findById('TIME', 'code').conversion || 0);
@@ -415,7 +442,6 @@ angular.module('adminApp')
 
 
         //Calc Total Cost
-
         $rootScope.workCost = parseInt($rootScope.workCost * 100) / 100;
         $rootScope.providerWorkCost = parseInt($rootScope.providerWorkCost * 100) / 100;
         $rootScope.elementFeatureCost = parseInt($rootScope.elementFeatureCost * 100) / 100;
@@ -436,7 +462,7 @@ angular.module('adminApp')
         var materialsWeight = {};
         $rootScope.materialsWeight = {};
 
-        console.log('calculating weight...');
+        //console.log('calculating weight...');
 
         var weight = 0;
         var totWeight = 0;
@@ -564,40 +590,62 @@ angular.module('adminApp')
             name: $(table).attr('title'),
             target: $(table).attr('data-target'),
           })
-          yo('getExportTables', res);
           $rootScope.exportTables = res;
         })
-        yo('getExportTables', res);
         $rootScope.exportTables = res;
       }
       $rootScope.newSpreadsheet = function () {
         $window.open('http://spreadsheets.google.com/ccc?new&hl=he');
       }
-      $rootScope.getHtmlToCopy = function (target) {
-        var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
+
+      $rootScope.getHtmlToCopy = function (target, idx) {
+
+        $rootScope.copiedTable = -1;
+        $rootScope.waitingTable = idx;
+
 
         function $chk(obj) {
           return !!(obj || obj === 0)
         }
 
+        var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
+
         var TableUtil = {
           nodeToString: function (table, rowSeperator, colSeperator) {
             var d = "";
-            if (table.childNodes.length) {
-              if ("TD" == table.nodeName || "TH" == table.nodeName)colSeperator = rowSeperator = "";
-              for (table = table.firstChild; table;) {
-                d += TableUtil.nodeToString(table, rowSeperator, colSeperator);
-                if ("TR" == table.nodeName)d += rowSeperator; else if ("TD" == table.nodeName || "TH" == table.nodeName)d += colSeperator;
-                table = table.nextSibling
+            try {
+              if (table.childNodes.length) {
+                if ("TD" == table.nodeName || "TH" == table.nodeName) {
+                  colSeperator = rowSeperator = "";
+                }
+                for (table = table.firstChild; table;) {
+                  d += TableUtil.nodeToString(table, rowSeperator, colSeperator);
+                  if ("TR" == table.nodeName) {
+                    d += rowSeperator;
+                  } else if ("TD" == table.nodeName || "TH" == table.nodeName) {
+                    d += colSeperator;
+                  }
+                  table = table.nextSibling
+                }
+              } else {
+                "#text" == table.nodeName && $chk(table.nodeValue) && "" !== table.nodeValue && (rowSeperator = table.nodeValue, colSeperator = RegExp("\\t", "g"), rowSeperator = rowSeperator.replace(RegExp("\\n", "g"), ""), rowSeperator = rowSeperator.replace(colSeperator, ""), d += rowSeperator.trim());
               }
-            } else"#text" == table.nodeName && $chk(table.nodeValue) && "" !== table.nodeValue && (rowSeperator = table.nodeValue, colSeperator = RegExp("\\t", "g"), rowSeperator = rowSeperator.replace(RegExp("\\n", "g"), ""), rowSeperator = rowSeperator.replace(colSeperator, ""), d += rowSeperator.trim());
-            return d
+            } catch (e) {
+              $rootScope.copiedTable = -1;
+              $rootScope.waitingTable = -1;
+              console.log("getting html error", e);
+            }
+            return d;
           }
-        }
+        };
 
-        var res = TableUtil.nodeToString($('table#' + target)[0], copyConst.rowSeperator, copyConst.colSeperator)
-
+        console.log('getting html to copy');
+        var res = TableUtil.nodeToString($('table#' + target)[0], copyConst.rowSeperator, copyConst.colSeperator);
         console.log('got html to copy', res);
+
+        $rootScope.copiedTable = idx;
+        $rootScope.waitingTable = -1;
+
         return (res);
       }
 

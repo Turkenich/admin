@@ -7,9 +7,8 @@
 
     <div class="btn-group-vertical" role="group" ng-init="getExportTables()">
       <a ng-repeat="exportBtn in exportTables"
-         class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.target)"
-         clip-copy-mime-type="text/plain"
-         ng-click="setCopiedTable($index);"><i class="fa fa-check" ng-show="copiedTable==$index"></i> {{exportBtn.name}} </a>
+         class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.target, $index)"
+         clip-copy-mime-type="text/plain"><i class="fa fa-check" ng-show="copiedTable==$index"></i><i class="fa fa-refresh fa-spin" ng-show="waitingTable==$index"></i> {{exportBtn.name}} </a>
     </div>
 
     <div class="alert alert-danger" role="alert" style="margin: 20px 0 0; text-align: center;">

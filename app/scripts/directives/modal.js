@@ -10,12 +10,12 @@ angular.module('adminApp').controller('ModalInstanceCtrl', function ($scope, $mo
 
   $scope.ok = function () {
     $modalInstance.close('ok');
-    ok();
+    if (typeof ok == "function") ok();
   };
 
   $scope.cancel = function () {
     $modalInstance.close('cancel');
-    cancel();
+    if (typeof cancel == "function") cancel();
   };
 });
 

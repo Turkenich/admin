@@ -273,6 +273,7 @@ angular.module('adminApp')
         }
 
         $scope.item.costs = JSON.stringify($scope.costs);
+        $scope.item.eTypesCosts = JSON.stringify($scope.item.eTypesCosts);
 
         return cost;
 
@@ -297,6 +298,7 @@ angular.module('adminApp')
         }
 
         var stones = [];
+        var stonesCost = 0;
         var stone = '';
         var patt = new RegExp(/(אבן|אבנים)/);
 
@@ -305,6 +307,7 @@ angular.module('adminApp')
           if (!stone) continue;
           if (patt.test(stone)){
             if (stones.indexOf(ele.name)==-1) stones.push(ele.name);
+            stonesCost += ele.cost;
           }
         }
 
