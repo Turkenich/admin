@@ -4,7 +4,7 @@ angular.module('adminApp')
   .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$window', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
     function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $window, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
 
-      $rootScope.version = '1';
+      $rootScope.version = '1_1';
       console.log('VERSION: ' + $rootScope.version);
 
       $rootScope.exportType = '';
