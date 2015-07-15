@@ -79,7 +79,7 @@ angular.module('adminApp')
         //get the next recommended id
         if ($routeParams['id'] && !$scope.item.modelId) {
           Models.maxId(function (item) {
-            $scope.item.modelId = parseInt(item.modelId) + 1;
+            $scope.item.modelId = parseInt(Number(item.modelId.replace( /^\D+/g, ''))) + 1;
           });
         }
       }

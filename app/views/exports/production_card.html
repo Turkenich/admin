@@ -283,7 +283,7 @@
     <td style="text-align:left;width:1.3756in; " class="ce32"><p>הערות</p></td>
     <td style="text-align:left;width:0.7291in; " class="ce32"><p>כמות</p></td>
   </tr>
-  <tr class="ro2" ng-repeat="i in elements | orderBy:'elementType' ">
+  <tr class="ro2" ng-repeat="i in elements | orderBy:['elementType','name'] ">
     <td style="text-align:left;width:1.5453in; " class="ce167"><p>{{elementTypes.findById(i.elementType).name}}</p></td>
     <td style="text-align:left;width:1.5453in; " class="ce167"><p>{{i.name}}</p></td>
     <td style="text-align:left;width:1.5236in; " class="ce170"><p>{{i.desc}}</p></td>
