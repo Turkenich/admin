@@ -112,19 +112,22 @@
     </dynamic-input>
   </div>
   <div class="col-sm-3">
-    <dynamic-input item="item"
+    <div ng-show="measureUnitName != 'גרם'">
+      <dynamic-input item="item"
                    model="item.measureUnitWeight"
                    type="number"
                    options=""
                    name="משקל ליחידת מדידה (בגרם)"
+                   <!--name="measureUnitName"-->
                    desc="משקל יחידת מדידה של האלמנט בגרמים">
-    </dynamic-input>
+      </dynamic-input>
+    </div>
     <dynamic-input item="item"
                    model="item.workUnit"
                    type="select"
                    options="measureUnits"
                    name="איך הספק מתמחר עבודה"
-                   desc="היחידה על פיה הספק מתמחר את העבודה על האלמנט. למשל, שרשרת מתומחרת לפי סנטימטר">
+                   desc="היחידה על פיה הספק מתמחר את העבודה על האלמנט.">
     </dynamic-input>
     <dynamic-input item="item"
                    model="item.workUnitPrice"

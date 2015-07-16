@@ -55,7 +55,6 @@ angular.module('adminApp')
       //when this page is opened to choose and element to add to a model
       $scope.addTo = $location.search()['addTo'];
 
-
       $rootScope.filter = {};
 
       if (!$routeParams['id']) {
@@ -151,8 +150,6 @@ angular.module('adminApp')
         return $scope.elementsCost({requiredTime: 0}, [item], []);
 
       }
-
-
 
     }])
 ;
