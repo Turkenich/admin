@@ -74,7 +74,7 @@
   <div class="col-sm-6">
     <div class="list-container row">
       <div class="media-list">
-        <div ng-repeat="element in elements track by $index">
+        <div ng-repeat="element in elements | orderBy:'pos' track by element._id ">
           <div class="media list-item">
             <div class="media-left">
               <input type="number" ng-model="element.amount"/>
@@ -96,9 +96,11 @@
 
             </div>
             <div class="list-buttons btn-group" role="group">
+              <a class="btn btn-default fa fa-arrow-up" ng-show="(element.pos > 0)" ng-click="moveItem(element, -1)"></a>
+              <a class="btn btn-default fa fa-arrow-down" ng-show="(element.pos < (elements.length-1))" ng-click="moveItem(element, 1)"></a>
               <a class="btn btn-default fa fa-trash" ng-click="removeElement(element)"></a>
               <a class="btn btn-default fa fa-times" ng-click="zeroElement(element)"></a>
-              <a class="btn btn-default fa fa-chevron-circle-left" ng-href="#/elements/{{element._id}}"></a>
+              <a class="btn btn-default fa fa-search" ng-href="#/elements/{{element._id}}"></a>
             </div>
           </div>
 

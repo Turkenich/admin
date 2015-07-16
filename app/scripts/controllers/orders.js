@@ -83,6 +83,22 @@ angular.module('adminApp')
         $scope.updateItem($scope.item);
       }
 
+      $scope.moveItem = function(model, dir){
+
+        var model1;
+        if (dir > 0) model1 = $scope.models.findNextById(model.pos, 'pos');
+        else if (dir < 0) model1 = $scope.models.findPrevById(model.pos, 'pos');
+
+
+        if (model && model1 && model1.pos>=0) {
+          var tmp = model.pos;
+          model.pos = model1.pos;
+          model1.pos = tmp;
+        }
+
+        $scope.updateItem($scope.item);
+
+      }
       //private
       $scope.parseModelsFromDb = function () {
 
@@ -97,7 +113,7 @@ angular.module('adminApp')
             eles[ele].amount += 1;
           } else {
             eles.push({
-              id: addId, amount: 1
+              id: addId, amount: 1, pos: eles.length
             });
           }
         }
@@ -106,6 +122,7 @@ angular.module('adminApp')
         for (var ele, e = 0; ele = eles[e]; e++) {
           Models.query({'id': ele['id']}, function (_model) {
             _model.amount = eles.findById(_model._id, 'id').amount || 0;
+            _model.pos = eles.findById(_model._id, 'id').pos || 0;
             $scope.models.push(_model);
 
             if (addId && ($scope.models.length == eles.length)) {
@@ -128,12 +145,25 @@ angular.module('adminApp')
 
         if (!$scope.item || !$scope.item.models || !$scope.models) return;
 
+        //fix position if needed
+        var poss = [];
+        var min_pos = 99999999;
+        for (var ele, e = 0; ele = $scope.models[e]; e++) {
+          if (!(ele.pos>=0)) ele.pos = 0;
+          while (poss[ele.pos]){//this position already exist
+            ele.pos++;
+          }
+          if (ele.pos < min_pos) min_pos = ele.pos;
+          poss[ele.pos] = true;
+        }
+
         var eles = [];
         for (var ele, e = 0; ele = $scope.models[e]; e++) {
           eles.push({
-            id: ele._id, amount: ele.amount
+            id: ele._id, amount: ele.amount, pos: (ele.pos - min_pos)
           });
         }
+
 
         $scope.item.models = JSON.stringify(eles);
         return $scope.item.models;

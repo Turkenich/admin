@@ -63,6 +63,7 @@ Array.prototype.findPrevById = function (idVal, idKey) {
       }
     }
   }
+
   return res;
 }
 

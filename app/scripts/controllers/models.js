@@ -79,7 +79,7 @@ angular.module('adminApp')
         //get the next recommended id
         if ($routeParams['id'] && !$scope.item.modelId) {
           Models.maxId(function (item) {
-            $scope.item.modelId = parseInt(Number(item.modelId.replace( /^\D+/g, ''))) + 1;
+            $scope.item.modelId = parseInt(Number(item.modelId.replace(/^\D+/g, ''))) + 1;
           });
         }
       }
@@ -127,7 +127,22 @@ angular.module('adminApp')
       });
 
 
-      //private
+      $scope.moveItem = function (ele, dir) {
+        var ele1;
+        if (dir > 0) ele1 = $scope.elements.findNextById(ele.pos, 'pos');
+        else if (dir < 0) ele1 = $scope.elements.findPrevById(ele.pos, 'pos');
+
+
+        if (ele && ele1 && ele1.pos >= 0) {
+          var tmp = ele.pos;
+          ele.pos = ele1.pos;
+          ele1.pos = tmp;
+        }
+
+        $scope.updateItem($scope.item);
+
+      }
+
       $scope.parseElementsFromDb = function () {
 
         if (!$scope.item) return;
@@ -137,11 +152,11 @@ angular.module('adminApp')
 
         if (addId) {
           var ele = eles.findIndexById(addId, 'id');
-          if ((ele>=0) && eles[ele]) {
+          if ((ele >= 0) && eles[ele]) {
             eles[ele].amount += 1;
           } else {
             eles.push({
-              id: addId, amount: 1
+              id: addId, amount: 1, pos: eles.length
             });
           }
         }
@@ -150,6 +165,7 @@ angular.module('adminApp')
         for (var ele, e = 0; ele = eles[e]; e++) {
           Elements.query({'id': ele['id']}, function (_element) {
             _element.amount = eles.findById(_element._id, 'id').amount || 0;
+            _element.pos = eles.findById(_element._id, 'id').pos || 0;
             $scope.elements.push(_element);
 
             if (addId && ($scope.elements.length == eles.length)) {
@@ -173,10 +189,22 @@ angular.module('adminApp')
 
         if (!$scope.item || !$scope.item.elements || !$scope.elements) return;
 
+        //fix position if needed
+        var poss = [];
+        var min_pos = 99999999;
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          if (!(ele.pos>=0)) ele.pos = 0;
+          while (poss[ele.pos]){//this position already exist
+            ele.pos++;
+          }
+          if (ele.pos < min_pos) min_pos = ele.pos;
+          poss[ele.pos] = true;
+        }
+
         var eles = [];
         for (var ele, e = 0; ele = $scope.elements[e]; e++) {
           eles.push({
-            id: ele._id, amount: ele.amount
+            id: ele._id, amount: ele.amount, pos: (ele.pos - min_pos)
           });
         }
 
@@ -186,7 +214,7 @@ angular.module('adminApp')
 
       }
 
-      $scope.getElementsString = function (){
+      $scope.getElementsString = function () {
         var arr = [];
         for (var ele, e = 0; ele = $scope.elements[e]; e++) {
           arr.push(ele.name);
@@ -268,7 +296,7 @@ angular.module('adminApp')
         var cost = $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
 
         $scope.costs = {};
-        for (var c, i=0; c=$rootScope.currenciesWithOverride[i]; i++) {
+        for (var c, i = 0; c = $rootScope.currenciesWithOverride[i]; i++) {
           $scope.costs[c.code] = cost / c.conversion;
         }
 
@@ -290,11 +318,11 @@ angular.module('adminApp')
         }
         var metal = '';
         var metals = [];
-        for (var i in $rootScope.materialsWeight){
+        for (var i in $rootScope.materialsWeight) {
           metal = $rootScope.materials.findById(i).name;
           if (!metal) continue;
           $scope.weights[metal] = $rootScope.materialsWeight[i];
-          if (metals.indexOf(metal)==-1) metals.push(metal);
+          if (metals.indexOf(metal) == -1) metals.push(metal);
         }
 
         var stones = [];
@@ -302,11 +330,11 @@ angular.module('adminApp')
         var stone = '';
         var patt = new RegExp(/(אבן|אבנים)/);
 
-        for (var ele,e=0; ele=$scope.elements[e]; e++){
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
           stone = $rootScope.elementTypes.findById(ele.elementType._id || ele.elementType).name;
           if (!stone) continue;
-          if (patt.test(stone)){
-            if (stones.indexOf(ele.name)==-1) stones.push(ele.name);
+          if (patt.test(stone)) {
+            if (stones.indexOf(ele.name) == -1) stones.push(ele.name);
             stonesCost += ele.cost;
           }
         }
