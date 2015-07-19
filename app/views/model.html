@@ -72,6 +72,9 @@
   <div class="col-sm-4">
     <div class="list-container row">
       <div class="media-list">
+        <a class="btn btn-success" ng-if="elements.length > 3" style="width: 100%;" href="#/elements?addTo={{item._id}}">
+          <i class="fa fa-plus fa-fw"></i>
+          הוסף אלמנט</a>
         <div ng-repeat="element in elements | orderBy:'pos' track by element._id ">
           <div class="media list-item">
             <div class="media-left">

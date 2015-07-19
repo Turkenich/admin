@@ -53,6 +53,9 @@
   <div class="col-sm-5">
     <div class="list-container row">
       <div class="media-list">
+        <a class="btn btn-success" ng-if="models.length > 3" style="width: 100%;" href="#/models?addTo={{item._id}}">
+          <i class="fa fa-plus fa-fw"></i>
+          הוסף דגם</a>
         <div ng-repeat="model in models | orderBy:'pos' track by model._id ">
           <div class="media list-item">
             <div class="media-left">
