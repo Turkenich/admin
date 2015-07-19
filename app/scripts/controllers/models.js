@@ -77,6 +77,7 @@ angular.module('adminApp')
 
       $scope.setmodelId = function () {
         //get the next recommended id
+        if (!$scope.item) return;
         if (!$scope.item.modelType || $scope.item.modelId) {
           $scope.item.recModelId = '0';
           return;

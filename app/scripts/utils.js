@@ -81,3 +81,13 @@ String.prototype.isJson = function (text) {
 
   }
 }
+
+Number.prototype.two = function () {
+  var n = parseInt(this * 100) / 100;
+  var arr = String(n).split('.');
+  if (!arr[1] || arr[1]==='00') {
+    return arr[0];
+  } else {
+    return arr[0] + '.' + arr[1].slice(0,2);
+  }
+}

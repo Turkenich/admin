@@ -115,45 +115,45 @@
   <div class="col-sm-2">
     <ul class="list-group">
       <li class="list-group-item list-group-item-danger">
-        <span class="list-cost">{{calcOrderCost()}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{calcOrderCost().two()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>
     </ul>
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{materialCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{materialCost.two()}} <i class="fa fa-ils"></i></span>
         עלות חומרים
       </li>
       <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
-        <span class="list-cost">{{materialsCost[material._id]}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{materialsCost[material._id].two()}} <i class="fa fa-ils"></i></span>
         עלות {{material.name}}
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{coatingCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{coatingCost.two()}} <i class="fa fa-ils"></i></span>
         עלות ציפוי
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{elementFeatureCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{elementFeatureCost.two()}} <i class="fa fa-ils"></i></span>
         עלות תכונות נוספות
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{providerWorkCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{providerWorkCost.two()}} <i class="fa fa-ils"></i></span>
         עלות עבודת ספק
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{workCost}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{workCost.two()}} <i class="fa fa-ils"></i></span>
         עלות השחלה
       </li>
     </ul>
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{calcOrderWeight()}} גרם</span>
+        <span class="list-cost">{{calcOrderWeight().two()}} גרם</span>
         משקל כולל
       </li>
       <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsWeight[material._id]">
-        <span class="list-cost">{{materialsWeight[material._id]}} גרם</span>
+        <span class="list-cost">{{materialsWeight[material._id].two()}} גרם</span>
         משקל {{material.name}}
       </li>
     </ul>

@@ -67,9 +67,6 @@
                    desc="תאריך העדכון האחרון של הדגם בתוכנה">
     </dynamic-input>
 
-    <!--<input type="hidden" ng-model="item.name" value="{{item.modelType}}{{item.modelId}}"/>-->
-
-    <!--image: { type: String, default:' ', required: false },-->
 
   </div>
   <div class="col-sm-4">
@@ -139,7 +136,7 @@
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="price in prices">
         <span class="list-cost">
-          <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
+          <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price.two() || price.conversion}}"/>
                <i class="fa fa-{{price.icon | lowercase}}"></i>
         </span>
         {{price.fullname}}
@@ -151,34 +148,34 @@
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-danger">
-        <span class="list-cost">{{calcModelCost()}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{calcModelCost().two()}} <i class="fa fa-ils"></i></span>
         עלות כוללת
       </li>
     </ul>
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{materialCost | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{materialCost.two()}} <i class="fa fa-ils"></i></span>
         עלות חומרים
       </li>
       <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsCost[material._id]">
-        <span class="list-cost">{{materialsCost[material._id] | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{materialsCost[material._id].two()}} <i class="fa fa-ils"></i></span>
         עלות {{material.name}}
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{coatingCost | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{coatingCost.two()}} <i class="fa fa-ils"></i></span>
         עלות ציפוי
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{elementFeatureCost | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{elementFeatureCost.two()}} <i class="fa fa-ils"></i></span>
         עלות תכונות נוספות
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{providerWorkCost | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{providerWorkCost.two()}} <i class="fa fa-ils"></i></span>
         עלות עבודת ספק
       </li>
       <li class="list-group-item">
-        <span class="list-cost">{{workCost | number:2}} <i class="fa fa-ils"></i></span>
+        <span class="list-cost">{{workCost.two()}} <i class="fa fa-ils"></i></span>
         עלות השחלה
       </li>
     </ul>
@@ -186,11 +183,11 @@
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning">
-        <span class="list-cost">{{calcModelWeight() | number:2}} גרם</span>
+        <span class="list-cost">{{calcModelWeight().two()}} גרם</span>
         משקל כולל
       </li>
       <li class="list-group-item" ng-repeat="material in materials" ng-if="materialsWeight[material._id]">
-        <span class="list-cost">{{materialsWeight[material._id] | number:2}} גרם</span>
+        <span class="list-cost">{{materialsWeight[material._id].two()}} גרם</span>
         משקל {{material.name}}
       </li>
     </ul>
