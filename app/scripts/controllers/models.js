@@ -77,9 +77,14 @@ angular.module('adminApp')
 
       $scope.setmodelId = function () {
         //get the next recommended id
+        if (!$scope.item.modelType || $scope.item.modelId) {
+          $scope.item.recModelId = '0';
+          return;
+        }
+
         if ($routeParams['id'] && !$scope.item.modelId) {
-          Models.maxId(function (item) {
-            $scope.item.modelId = parseInt(Number(item.modelId.replace(/^\D+/g, ''))) + 1;
+          Models.maxId($scope.item, function (item) {
+            $scope.item.recModelId = parseInt(Number(item.modelId.replace(/^\D+/g, ''))) + 1;
           });
         }
       }
@@ -126,6 +131,11 @@ angular.module('adminApp')
         }
       });
 
+      $scope.$watch('item.modelType', function(newVal, oldVal){
+        if (newVal && (oldVal != newVal)){
+          $scope.setmodelId();
+        }
+      });
 
       $scope.moveItem = function (ele, dir) {
         var ele1;

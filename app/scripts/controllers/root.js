@@ -260,8 +260,10 @@ angular.module('adminApp')
       }
 
       $rootScope.sort = 'name';
+      $rootScope.desc = false;
       $rootScope.sortBy = function (name) {
         $rootScope.sort = name;
+        $rootScope.desc = !(name == 'name');
       }
       $rootScope.isSortedBy = function (name) {
         return $rootScope.sort == name;
