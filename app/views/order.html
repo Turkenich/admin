@@ -50,7 +50,7 @@
   </div>
 
 
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <div class="list-container row">
       <div class="media-list">
         <div ng-repeat="model in models | orderBy:'pos' track by model._id ">
@@ -76,7 +76,8 @@
             </div>
             <div class="list-buttons btn-group" role="group">
               <a class="btn btn-default fa fa-arrow-up" ng-show="(model.pos > 0)" ng-click="moveItem(model, -1)"></a>
-              <a class="btn btn-default fa fa-arrow-down" ng-show="(model.pos < (models.length-1))" ng-click="moveItem(model, 1)"></a>
+              <a class="btn btn-default fa fa-arrow-down" ng-show="(model.pos < (models.length-1))"
+                 ng-click="moveItem(model, 1)"></a>
               <a class="btn btn-default fa fa-trash" ng-click="removeModel(model)"></a>
               <a class="btn btn-default fa fa-times" ng-click="zeroModel(model)"></a>
               <a class="btn btn-default fa fa-search" ng-href="#/models/{{model._id}}"></a>
@@ -90,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-2">
 
     <dynamic-input item="item"
                    model="item.salePrice"
@@ -100,6 +101,18 @@
                    desc="מחיר מכירה של ההזמנה כולה">
     </dynamic-input>
 
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="price in prices">
+        <span class="list-cost">
+          <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
+               <i class="fa fa-ils"></i>
+        </span>
+        {{price.name}}
+      </li>
+    </ul>
+
+  </div>
+  <div class="col-sm-2">
     <ul class="list-group">
       <li class="list-group-item list-group-item-danger">
         <span class="list-cost">{{calcOrderCost()}} <i class="fa fa-ils"></i></span>
@@ -135,7 +148,7 @@
     </ul>
 
     <ul class="list-group">
-      <li class="list-group-item list-group-item-warning" >
+      <li class="list-group-item list-group-item-warning">
         <span class="list-cost">{{calcOrderWeight()}} גרם</span>
         משקל כולל
       </li>
@@ -145,26 +158,23 @@
       </li>
     </ul>
 
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="price in prices">
-        <span class="list-cost">
-          <input class="list-cost" ng-model="price.newPrice" placeholder="{{price.price || price.conversion}}"/>
-               <i class="fa fa-ils"></i>
-        </span>
-        {{price.name}}
-      </li>
-    </ul>
-
   </div>
 
 </form>
 
-<div ng-include="'views/exports/quotation.html?v={{version}}'"          class="export-table" title="הצעת מחיר"          data-target="quotation" style="display: none"></div>
-<div ng-include="'views/exports/order_confirmation.html?v={{version}}'" class="export-table" title="אישור הזמנה"          data-target="order_confirmation" style="display: none"></div>
-<div ng-include="'views/exports/invoice.html?v={{version}}'"            class="export-table" title="חשבונית"            data-target="invoice" style="display: none"></div>
-<div ng-include="'views/exports/order_elements.html?v={{version}}'"     class="export-table" title="פירוק לחומרי גלם"     data-target="order_elements" style="display: none"></div>
-<div ng-include="'views/exports/production_order.html?v={{version}}'"   class="export-table" title="הזמנה למחלקת ייצור"  data-target="production_order" style="display: none"></div>
-<div ng-include="'views/exports/catalog.html?v={{version}}'"            class="export-table" title="קטלוג ללקוח"        data-target="catalog" style="display: none"></div>
-<div ng-include="'views/exports/price_list.html?v={{version}}'"         class="export-table" title="מחירון"        data-target="price_list" style="display: none"></div>
+<div ng-include="'views/exports/quotation.html?v={{version}}'" class="export-table" title="הצעת מחיר"
+     data-target="quotation" style="display: none"></div>
+<div ng-include="'views/exports/order_confirmation.html?v={{version}}'" class="export-table" title="אישור הזמנה"
+     data-target="order_confirmation" style="display: none"></div>
+<div ng-include="'views/exports/invoice.html?v={{version}}'" class="export-table" title="חשבונית" data-target="invoice"
+     style="display: none"></div>
+<div ng-include="'views/exports/order_elements.html?v={{version}}'" class="export-table" title="פירוק לחומרי גלם"
+     data-target="order_elements" style="display: none"></div>
+<div ng-include="'views/exports/production_order.html?v={{version}}'" class="export-table" title="הזמנה למחלקת ייצור"
+     data-target="production_order" style="display: none"></div>
+<div ng-include="'views/exports/catalog.html?v={{version}}'" class="export-table" title="קטלוג ללקוח"
+     data-target="catalog" style="display: none"></div>
+<div ng-include="'views/exports/price_list.html?v={{version}}'" class="export-table" title="מחירון"
+     data-target="price_list" style="display: none"></div>
 
 

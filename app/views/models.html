@@ -10,88 +10,88 @@
   <div style="clear:both;"></div>
 </h1>
 <form class="row">
-  <div class="col-sm-4">
-    <div class="row">
-      <dynamic-filter
-        model="modelType"
-        type="text"
-        name="סוג המודל"
-        desc="אות המייצגת את סוג המודל">
-      </dynamic-filter>
-      <dynamic-filter
-        model="modelId"
-        type="text"
-        name="קוד המודל"
-        desc="מספר המייצג את קוד המודל">
-      </dynamic-filter>
-      <dynamic-filter
-        model="desc"
-        type="textarea"
-        name="תיאור"
-        desc="תיאור המודל">
-      </dynamic-filter>
-      <dynamic-filter
-        model="engDesc"
-        type="textarea"
-        name="תיאור באנגלית"
-        desc="תיאור באנגלית">
-      </dynamic-filter>
-      <dynamic-filter
-        model="comments"
-        type="textarea"
-        name="הערות"
-        desc="הערות שונות">
-      </dynamic-filter>
-      <dynamic-filter
-        model="sets"
-        type="textarea"
-        name="סטים"
-        desc="פירוט הסטים של הדגם">
-      </dynamic-filter>
-      <dynamic-filter
-        model="metals"
-        type="textarea"
-        name="חומרים"
-        desc="פירוט החומרים של הדגם">
-      </dynamic-filter>
-      <dynamic-filter
-        model="stones"
-        type="textarea"
-        name="אבנים"
-        desc="פירוט האבנים בדגם">
-      </dynamic-filter>
-      <dynamic-filter
-        model="elementsStr"
-        type="textarea"
-        name="רשימת אלמנטים"
-        desc="שמות האלמנטים שנמצאים בדגם">
-      </dynamic-filter>
-      <dynamic-filter
-        model="createdAt"
-        range="above"
-        type="date"
-        name="תאריך הקמה"
-        desc="תאריך הקמת המודל המינימאלי">
-      </dynamic-filter>
-      <dynamic-filter
-        model="createdAt"
-        range="below"
-        type="date"
-        name="תאריך הקמה"
-        desc="תאריך הקמת המודל המקסימאלי">
-      </dynamic-filter>
-      <dynamic-filter
-        model="order"
-        type="parent"
-        options="orders"
-        name="מופיע בהזמנה"
-        desc="שם ההזמנה בה מופיע הדגם">
-      </dynamic-filter>
-    </div>
+  <div class="col-sm-3">
+    <dynamic-filter
+      model="modelType"
+      type="text"
+      name="סוג המודל"
+      desc="אות המייצגת את סוג המודל">
+    </dynamic-filter>
+    <dynamic-filter
+      model="modelId"
+      type="text"
+      name="קוד המודל"
+      desc="מספר המייצג את קוד המודל">
+    </dynamic-filter>
+    <dynamic-filter
+      model="desc"
+      type="textarea"
+      name="תיאור"
+      desc="תיאור המודל">
+    </dynamic-filter>
+    <dynamic-filter
+      model="engDesc"
+      type="textarea"
+      name="תיאור באנגלית"
+      desc="תיאור באנגלית">
+    </dynamic-filter>
+  </div>
+  <div class="col-sm-3">
+    <dynamic-filter
+      model="comments"
+      type="textarea"
+      name="הערות"
+      desc="הערות שונות">
+    </dynamic-filter>
+    <dynamic-filter
+      model="sets"
+      type="textarea"
+      name="סטים"
+      desc="פירוט הסטים של הדגם">
+    </dynamic-filter>
+    <dynamic-filter
+      model="metals"
+      type="textarea"
+      name="חומרים"
+      desc="פירוט החומרים של הדגם">
+    </dynamic-filter>
+    <dynamic-filter
+      model="stones"
+      type="textarea"
+      name="אבנים"
+      desc="פירוט האבנים בדגם">
+    </dynamic-filter>
+    <dynamic-filter
+      model="elementsStr"
+      type="textarea"
+      name="רשימת אלמנטים"
+      desc="שמות האלמנטים שנמצאים בדגם">
+    </dynamic-filter>
+    <dynamic-filter
+      model="createdAt"
+      range="above"
+      type="date"
+      name="תאריך הקמה"
+      desc="תאריך הקמת המודל המינימאלי">
+    </dynamic-filter>
+    <dynamic-filter
+      model="createdAt"
+      range="below"
+      type="date"
+      name="תאריך הקמה"
+      desc="תאריך הקמת המודל המקסימאלי">
+    </dynamic-filter>
+    <dynamic-filter
+      model="order"
+      type="parent"
+      options="orders"
+      name="מופיע בהזמנה"
+      desc="שם ההזמנה בה מופיע הדגם">
+    </dynamic-filter>
   </div>
   <div class="col-sm-1">
   </div>
-  <div class="col-sm-7">
+  <div class="col-sm-5">
     <div class="list-container row">
       <ul class="nav nav-pills">
         <li role="presentation" ng-class="{active: isSortedBy('name')}"><a ng-click="sortBy('name')">שם</a></li>

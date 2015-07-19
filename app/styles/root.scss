@@ -129,7 +129,7 @@ h1 {
 form.row {
   margin: 10px auto;
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1800px;
 }
 
 .form-group.tile {
@@ -165,7 +165,7 @@ form.row {
   border-radius: 4px;
   padding: 10px;
   position: relative;
-  max-width: 600px;
+  max-width: 900px;
   min-height: 60px;
   a {
     color: #333;
@@ -236,8 +236,8 @@ span.form-control {
 .media-left {
   input {
     border: none;
-    width: 50px;
-    font-size: 28px;
+    width: 70px;
+    font-size: 21px;
     line-height: 70px;
     text-align: center;
     margin: 2px 0px -5px;
@@ -247,13 +247,13 @@ span.form-control {
   i {
     position: absolute;
     top: 40px;
-    right: 60px;
+    right: 80px;
   }
 }
 
 .list-group {
   max-width: 600px;
-  margin: 20px -7px;
+  margin: 13px -7px;
 }
 
 .list-cost {
