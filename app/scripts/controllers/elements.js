@@ -15,7 +15,7 @@ angular.module('adminApp')
         });
       }
       $scope.updateItem = function (item) {
-        $rootScope.updateItemImp($scope, Elements, item, function(){
+        $rootScope.updateItemImp($scope, Elements, item, function () {
           $scope.setUnitsNames();
         });
       }
@@ -27,6 +27,17 @@ angular.module('adminApp')
       $scope.addItem = function (item) {
         $rootScope.addItemImp($scope, Elements, null, function (item) {
           $location.path('/elements/' + item._id);
+        });
+      }
+      $scope.deleteUnnamedItems = function () {
+        $scope.openModal('confirmDeleteUnnamed', function () {
+          var items = angular.copy($scope.items);
+          for (var item, i = 0; item = items[i]; i++) {
+            if (!item.name) {
+              $scope.items.splice(i, 1);
+              Elements.remove({id: item._id});
+            }
+          }
         });
       }
 

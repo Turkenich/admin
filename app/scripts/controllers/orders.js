@@ -30,6 +30,18 @@ angular.module('adminApp')
         });
       }
 
+      $scope.deleteUnnamedItems = function () {
+        $scope.openModal('confirmDeleteUnnamed', function () {
+          var items = angular.copy($scope.items);
+          for (var item, i = 0; item = items[i]; i++) {
+            if (!item.name) {
+              $scope.items.splice(i, 1);
+              Orders.remove({id: item._id});
+            }
+          }
+        });
+      }
+
       $scope.duplicateItem = function (item) {
         item = $scope.setItemVars(item);
         $rootScope.tempItem = item;
