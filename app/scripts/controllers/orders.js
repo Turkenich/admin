@@ -32,11 +32,13 @@ angular.module('adminApp')
 
       $scope.deleteUnnamedItems = function () {
         $scope.openModal('confirmDeleteUnnamed', function () {
-          var items = angular.copy($scope.items);
-          for (var item, i = 0; item = items[i]; i++) {
-            if (!item.name) {
-              $scope.items.splice(i, 1);
-              Orders.remove({id: item._id});
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?')) {
+            var items = angular.copy($scope.items);
+            for (var item, i = 0; item = items[i]; i++) {
+              if (!item.name) {
+                $scope.items.splice(i, 1);
+                Orders.remove({id: item._id});
+              }
             }
           }
         });
@@ -53,15 +55,15 @@ angular.module('adminApp')
 
       //piece of code for item duplication
       if ($rootScope.tempItem) {
-          $scope.item = $rootScope.tempItem;
-          $scope.item['_id'] = $routeParams['id'];
+        $scope.item = $rootScope.tempItem;
+        $scope.item['_id'] = $routeParams['id'];
 
-          $rootScope.tempItem = null;
-          $timeout(function () {
-            $scope.updateItem($scope.item, true);
-            $scope.parseModelsFromDb();
-            $scope.parsePricesFromDb();
-          })
+        $rootScope.tempItem = null;
+        $timeout(function () {
+          $scope.updateItem($scope.item, true);
+          $scope.parseModelsFromDb();
+          $scope.parsePricesFromDb();
+        })
       } else {
         $scope.reloadItem({_id: $routeParams['id']});
       }
@@ -95,14 +97,14 @@ angular.module('adminApp')
         $scope.updateItem($scope.item);
       }
 
-      $scope.moveItem = function(model, dir){
+      $scope.moveItem = function (model, dir) {
 
         var model1;
         if (dir > 0) model1 = $scope.models.findNextById(model.pos, 'pos');
         else if (dir < 0) model1 = $scope.models.findPrevById(model.pos, 'pos');
 
 
-        if (model && model1 && model1.pos>=0) {
+        if (model && model1 && model1.pos >= 0) {
           var tmp = model.pos;
           model.pos = model1.pos;
           model1.pos = tmp;
@@ -121,7 +123,7 @@ angular.module('adminApp')
 
         if (addId) {
           var ele = eles.findIndexById(addId, 'id');
-          if ((ele>=0) && eles[ele]) {
+          if ((ele >= 0) && eles[ele]) {
             eles[ele].amount += 1;
           } else {
             eles.push({
@@ -161,8 +163,8 @@ angular.module('adminApp')
         var poss = [];
         var min_pos = 99999999;
         for (var ele, e = 0; ele = $scope.models[e]; e++) {
-          if (!(ele.pos>=0)) ele.pos = 0;
-          while (poss[ele.pos]){//this position already exist
+          if (!(ele.pos >= 0)) ele.pos = 0;
+          while (poss[ele.pos]) {//this position already exist
             ele.pos++;
           }
           if (ele.pos < min_pos) min_pos = ele.pos;
@@ -231,7 +233,7 @@ angular.module('adminApp')
 
         var eles = [];
         for (var ele, e = 0; ele = $scope.prices[e]; e++) {
-          if (ele.newPrice){
+          if (ele.newPrice) {
             eles.push({
               id: ele._id, newPrice: ele.newPrice
             });
@@ -294,7 +296,7 @@ angular.module('adminApp')
 
       $scope.calcOrderCost = function () {
 
-        if (!$scope.elements || !$scope.elements.length>0) {
+        if (!$scope.elements || !$scope.elements.length > 0) {
           return
         }
 
@@ -305,7 +307,7 @@ angular.module('adminApp')
 
       $scope.calcOrderWeight = function () {
 
-        if (!$scope.elements || !$scope.elements.length>0) return;
+        if (!$scope.elements || !$scope.elements.length > 0) return;
 
         return $scope.elementsWeight($scope.elements);
 

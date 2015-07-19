@@ -37,11 +37,13 @@ angular.module('adminApp')
 
       $scope.deleteUnnamedItems = function () {
         $scope.openModal('confirmDeleteUnnamed', function () {
-          var items = angular.copy($scope.items);
-          for (var item, i = 0; item = items[i]; i++) {
-            if (!item.name) {
-              $scope.items.splice(i, 1);
-              Models.remove({id: item._id});
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?')) {
+            var items = angular.copy($scope.items);
+            for (var item, i = 0; item = items[i]; i++) {
+              if (!item.name) {
+                $scope.items.splice(i, 1);
+                Models.remove({id: item._id});
+              }
             }
           }
         });
@@ -144,8 +146,8 @@ angular.module('adminApp')
         }
       });
 
-      $scope.$watch('item.modelType', function(newVal, oldVal){
-        if (newVal && (oldVal != newVal)){
+      $scope.$watch('item.modelType', function (newVal, oldVal) {
+        if (newVal && (oldVal != newVal)) {
           $scope.setmodelId();
         }
       });
@@ -216,8 +218,8 @@ angular.module('adminApp')
         var poss = [];
         var min_pos = 99999999;
         for (var ele, e = 0; ele = $scope.elements[e]; e++) {
-          if (!(ele.pos>=0)) ele.pos = 0;
-          while (poss[ele.pos]){//this position already exist
+          if (!(ele.pos >= 0)) ele.pos = 0;
+          while (poss[ele.pos]) {//this position already exist
             ele.pos++;
           }
           if (ele.pos < min_pos) min_pos = ele.pos;
