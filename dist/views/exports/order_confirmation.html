@@ -287,7 +287,7 @@
   </tr>
   <tr class="ro2">
     <td style="text-align:left;width:0.9098in; " class="Default"> </td>
-    <td style="text-align:left;width:0.8992in; " class="Default"><p>Adress</p></td>
+    <td style="text-align:left;width:0.8992in; " class="Default"><p>Address</p></td>
     <td style="text-align:left;width:1.1535in; " class="ce23"> </td>
     <td style="text-align:left;width:1.1535in; " class="Default"> </td>
     <td style="text-align:left;width:1.4709in; " class="Default"> </td>
@@ -300,7 +300,7 @@
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
-    <td style="text-align:left;width:0.6346in; " class="Default"><p>Costomer Po No.</p></td>
+    <td style="text-align:left;width:0.6346in; " class="Default"><p>Costumer Po No.</p></td>
     <td style="text-align:left;width:0.6346in; " class="Default"> </td>
     <td style="text-align:left;width:1.048in; " class="Default"> </td>
     <td style="text-align:left;width:1.048in; " class="Default"> </td>
@@ -352,7 +352,7 @@
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
   </tr>
   <tr class="ro2">
-    <td style="text-align:left;width:0.9098in; " class="Default"><p>Shipping adress</p></td>
+    <td style="text-align:left;width:0.9098in; " class="Default"><p>Shipping address</p></td>
     <td style="text-align:left;width:0.8992in; " class="Default"> </td>
     <td style="text-align:left;width:1.1535in; " class="ce23"> </td>
     <td style="text-align:left;width:1.1535in; " class="Default"> </td>
@@ -463,20 +463,18 @@
   </tr>
   <tr class="ro11">
     <td style="text-align:left;width:0.9098in; " class="Default"><p>No</p></td>
-    <td style="text-align:left;width:0.8992in; " class="ce21"><p>PICTURE</p></td>
-    <td style="text-align:left;width:1.1535in; " class="ce21">supplior Item No.</td>
+    <td style="text-align:left;width:0.8992in; " class="ce21"><p>Picture</p></td>
+    <td style="text-align:left;width:1.1535in; " class="ce21">Supplier Item No.</td>
     <td style="text-align:left;width:1.1535in; " class="ce21"><p>תיאור </p></td>
-    <td style="text-align:left;width:1.4709in; " class="ce21"><p>Descripitione</p></td>
+    <td style="text-align:left;width:1.4709in; " class="ce21"><p>Description</p></td>
     <td style="text-align:left;width:2.211in; " class="ce21"><p>Metal</p></td>
-    <td style="text-align:left;width:1.5866in; " class="ce21"><p>LENGHT/SIZE</p></td>
-    <td style="text-align:left;width:0.7291in; " class="ce21"><p>QUANTITY</p></td>
-    <td style="text-align:left;width:0.9634in; " class="ce27"><p>Net silevr </p></td>
-    <td style="text-align:left;width:0.952in; " class="ce28"><p>Net Brass</p></td>
-    <td style="text-align:left;width:1.2374in; " class="ce28"><p>Net gold- filled</p></td>
+    <td style="text-align:left;width:1.5866in; " class="ce21"><p>Length/Size</p></td>
+    <td style="text-align:left;width:0.7291in; " class="ce21"><p>Quantity</p></td>
+    <td style="text-align:left;width:1.6047in; " class="ce4" ng-repeat="field in spreadJsons(models, 'weights')" ng-if="field!='total'"><p>משקל {{field}}</p></td>
     <td style="text-align:left;width:0.7291in; " class="ce28"><p>Item Price (USD)</td>
     <td style="text-align:left;width:0.7291in; " class="ce28"><p>Item Price (ILS)</td>
     <td style="text-align:left;width:0.7291in; " class="ce28"><p>Trade mark</p></td>
-    <td style="text-align:left;width:0.6346in; " class="ce28"><p>currency</p></td>
+    <td style="text-align:left;width:0.6346in; " class="ce28"><p>Currency</p></td>
     <td style="text-align:left;width:0.6346in; " class="ce28"><p>Disc %</p></td>
     <td style="text-align:left;width:1.048in; " class="ce28"><p>Note</p></td>
     <td style="text-align:left;width:1.048in; " class="ce28"><p>Total</p></td>
@@ -484,24 +482,22 @@
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
   </tr>
   <tr class="ro10" ng-repeat="i in models">
-    <td style="text-align:right; width:0.9098in; " class="Default"><p>{{$index}}</p></td>
+    <td style="text-align:right; width:0.9098in; " class="Default"><p>{{$index + 1}}</p></td>
     <td style="text-align:left;width:0.8992in; " class="ce22">=image("{{i.image}}",1)</td>
-    <td style="text-align:left;width:1.1535in; " class="ce1"><p>{{i.providerCatalog}}</p></td>
+    <td style="text-align:left;width:1.1535in; " class="ce1"><p>{{i.name}}</p></td>
     <td style="text-align:left;width:1.1535in; " class="ce1"><p>{{i.desc}}</p></td>
     <td style="text-align:left;width:1.4709in; " class="ce1"><p>{{i.endDesc}}</p></td>
     <td style="text-align:left;width:2.211in; " class="ce26"><p>{{i.metals}}</p></td>
     <td style="text-align:left;width:0.889in; " class="ce2"><p></p></td>
-    <td style="text-align:left;width:0.7291in; " class="ce2"><p></p></td>
-    <td style="text-align:left;width:0.9634in; " class="ce8"><p>{{getFromJson(i.weights, 'כסף')}}</p></td>
-    <td style="text-align:left;width:0.952in; " class="ce8"><p>{{getFromJson(i.weights, 'פליז')}}</p></td>
-    <td style="text-align:left;width:1.2374in; " class="ce8"><p>{{getFromJson(i.weights, 'גולדפילד')}}</p></td>
-    <td style="text-align:left;width:0.7291in; " class="ce29">{{getFromJson(i.costs, 'USD')}}</td>
-    <td style="text-align:left;width:0.7291in; " class="ce1"><p>{{getFromJson(i.costs, 'ILS')}}</p></td>
+    <td style="text-align:left;width:0.7291in; " class="ce2">{{i.amount}}</td>
+    <td style="text-align:left;width:1.6047in; " class="ce3" ng-repeat="field in spreadJsons(models, 'weights')" ng-if="field!='total'"><p>{{getFromJson(i.weights, field)}}</p></td>
+    <td style="text-align:left;width:0.7291in; " class="ce29">{{i.salePriceUSD}}</td>
+    <td style="text-align:left;width:0.7291in; " class="ce1"><p>{{i.salePrice}}</p></td>
     <td style="text-align:left;width:0.7291in; " class="ce2"><p></p></td>
     <td style="text-align:left;width:0.6346in; " class="ce2"><p></p></td>
     <td style="text-align:left;width:0.6346in; " class="ce2"><p></p></td>
     <td style="text-align:left;width:1.048in; " class="ce2"><p></p></td>
-    <td style="text-align:left;width:1.048in; " class="ce2"><p></p></td>
+    <td style="text-align:left;width:1.048in; " class="ce2"><p>{{i.salePriceUSD *  i.amount}}</p></td>
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
   </tr>
@@ -546,7 +542,7 @@
     <td style="text-align:left;width:0.6346in; " class="Default"> </td>
     <td style="text-align:left;width:1.048in; " class="Default"> </td>
     <td style="text-align:left;width:1.048in; " class="ce20"><p>Total weight</p></td>
-    <td style="text-align:left;width:0.6346in; " class="Default">{{calcOrderWeight()}}</td>
+    <td style="text-align:left;width:0.6346in; " class="Default">{{calcOrderGross()}}</td>
     <td style="text-align:left;width:0.7291in; " class="Default"> </td>
   </tr>
   <tr class="ro2">
