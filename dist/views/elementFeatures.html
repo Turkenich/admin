@@ -1,1 +1,15 @@
-<h1>תכונות אלמנטים<div class="btn-group" role="group" aria-label="..."><button class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus fa-fw"></i> הוסף תכונה חדשה</button></div><div style="clear:both"></div></h1><form class="row"><ul class="media-list"><li ng-repeat="item in items | orderBy:'pos'"><list-item item="item" path="elementFeatures"></list-item></li></ul></form>
+<h1>תכונות אלמנטים
+  <div class="btn-group" role="group" aria-label="...">
+    <button class="btn btn-success" ng-click="addItem()"><i
+      class="fa fa-plus fa-fw"></i> הוסף תכונה חדשה
+    </button>
+  </div>
+  <div style="clear:both;"></div>
+</h1>
+<form class="row">
+  <ul class="media-list">
+    <li ng-repeat="item in items | orderBy:'pos'">
+      <list-item item="item" path="elementFeatures"></list-item>
+    </li>
+  </ul>
+</form>

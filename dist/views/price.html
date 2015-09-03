@@ -1,1 +1,28 @@
-<h1 xmlns="http://www.w3.org/1999/html">{{item.name || 'מטבע'}}<item-actions></item-actions></h1><form role="form" class="row"><div class="col-sm-3"><dynamic-input item="item" model="item.name" type="text" options="" name="שם" desc="שם המטבע"></dynamic-input><dynamic-input item="item" model="item.code" type="text" options="" name="קוד" desc="קוד המטבע (בשלוש ספרות)"></dynamic-input><dynamic-input item="item" model="item.conversion" type="number" options="" name="ערך בשקלים" desc="יחס המרה לשקל"></dynamic-input></div></form>
+<h1 xmlns="http://www.w3.org/1999/html">{{item.name || 'מטבע'}} <item-actions></item-actions></h1>
+<form role="form" class="row">
+  <div class="col-sm-3">
+    <dynamic-input item="item"
+                   model="item.name"
+                   type="text"
+                   options=""
+                   name="שם"
+                   desc="שם המטבע">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.code"
+                   type="text"
+                   options=""
+                   name="קוד"
+                   desc="קוד המטבע (בשלוש ספרות)">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.conversion"
+                   type="number"
+                   options=""
+                   name="ערך בשקלים"
+                   desc="יחס המרה לשקל">
+    </dynamic-input>
+  </div>
+
+
+</form>

@@ -1,2 +1,3475 @@
-function yo(a,b){console.log(a,b)}var Utils={isHeroku:document.location.host.search("herokuapp.com")>-1,findIdInArray:function(a,b,c){"undefined"==typeof c&&(c="_id");for(var d,e=0;d=a[e];e++)if(d[c]==b)return d;return!1}},Consts={OunceToGrams:28.3495,api_root:Utils.isHeroku?"https://turkenich-api.herokuapp.com/":"http://localhost:3000/"};Array.prototype.findById=function(a,b){"undefined"==typeof b&&(b="_id");for(var c,d=0;c=this[d];d++)if(c[b]==a)return c;return{}},Array.prototype.findIndexById=function(a,b){"undefined"==typeof b&&(b="_id");for(var c,d=0;c=this[d];d++)if(c[b]==a)return d;return-1},Array.prototype.findNextById=function(a,b){"undefined"==typeof b&&(b="_id");for(var c,d={},e=0;c=this[e];e++)c[b]>a&&(!d[b]||c[b]<d[b])&&(d=c);return d},Array.prototype.findPrevById=function(a,b){"undefined"==typeof b&&(b="_id");for(var c,d={},e=0;c=this[e];e++)c[b]<a&&(!d[b]||c[b]>d[b])&&(d=c);return d},String.prototype.isJson=function(a){return/^[\],:{}\s]*$/.test(a.replace(/\\["\\\/bfnrtu]/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))?!0:!1},Number.prototype.two=function(){var a=parseInt(100*this)/100,b=String(a).split(".");return b[1]&&"00"!==b[1]?b[0]+"."+b[1].slice(0,2):b[0]},angular.module("adminApp",["ngCookies","ngResource","ngSanitize","ngRoute","angularFileUpload","cloudinary","ui.bootstrap","ui.bootstrap.tpls","ui.bootstrap.transition","ngClipboard"]).config(["$routeProvider","$httpProvider","ngClipProvider",function(a,b,c){b.interceptors.push(function(){return{request:function(a){return(a.url.indexOf("://turkenich")>=0||a.url.indexOf("://localhost")>=0||a.url.indexOf("://127.0.0.1")>=0)&&(a.headers.Authorization=localStorage.Authorization),a}}}),c.setPath("images/ZeroClipboard.swf"),a.when("/",{templateUrl:"views/main.html",controller:"MainCtrl"}).when("/upload",{templateUrl:"views/partials/photo-upload.html",controller:"photoUploadCtrl"}).when("/settings",{templateUrl:"views/settings.html",controller:"SettingsCtrl",reloadOnSearch:!1}).when("/orders",{templateUrl:"views/orders.html",controller:"OrdersCtrl",reloadOnSearch:!1}).when("/orders/:id",{templateUrl:"views/order.html",controller:"OrdersCtrl",reloadOnSearch:!1}).when("/models",{templateUrl:"views/models.html",controller:"ModelsCtrl",reloadOnSearch:!1}).when("/models/:id",{templateUrl:"views/model.html",controller:"ModelsCtrl",reloadOnSearch:!1}).when("/elements",{templateUrl:"views/elements.html",controller:"ElementsCtrl",reloadOnSearch:!1}).when("/elements/:id",{templateUrl:"views/element.html",controller:"ElementsCtrl",reloadOnSearch:!1}).when("/prices",{templateUrl:"views/prices.html",controller:"PricesCtrl",reloadOnSearch:!1}).when("/prices/:id",{templateUrl:"views/price.html",controller:"PricesCtrl",reloadOnSearch:!1}).when("/coatings",{templateUrl:"views/coatings.html",controller:"CoatingsCtrl"}).when("/coatings/:id",{templateUrl:"views/coating.html",controller:"CoatingsCtrl"}).when("/materials",{templateUrl:"views/materials.html",controller:"MaterialsCtrl"}).when("/materials/:id",{templateUrl:"views/material.html",controller:"MaterialsCtrl"}).when("/providers",{templateUrl:"views/providers.html",controller:"ProvidersCtrl"}).when("/providers/:id",{templateUrl:"views/provider.html",controller:"ProvidersCtrl"}).when("/elementFeatures",{templateUrl:"views/elementFeatures.html",controller:"ElementFeaturesCtrl"}).when("/elementFeatures/:id",{templateUrl:"views/elementFeature.html",controller:"ElementFeaturesCtrl"}).when("/elementTypes",{templateUrl:"views/elementTypes.html",controller:"ElementTypesCtrl"}).when("/elementTypes/:id",{templateUrl:"views/elementType.html",controller:"ElementTypesCtrl"}).otherwise({redirectTo:"/"})}]),angular.module("adminApp").directive("jsonExplorer",["$http",function(a){return{restrict:"E",scope:{jsonData:"@"},link:function(a,b,c){c.$observe("jsonData",function(a){function c(a){var b=a.target,c=b.parentNode.getElementsByClassName("collapsible");if(c.length)if(c=c[0],"none"==c.style.display){var d=c.parentNode.getElementsByClassName("ellipsis")[0];c.parentNode.removeChild(d),c.style.display="",b.innerHTML="-"}else{c.style.display="none";var d=document.createElement("span");d.className="ellipsis",d.innerHTML=" &hellip; ",c.parentNode.insertBefore(d,c),b.innerHTML="+"}}var d={};d.jsString=function(a){var b,c={"\b":"b","\f":"f","\r":"r","\n":"n","	":"t"};for(b in c)-1===a.indexOf(b)&&delete c[b];a=JSON.stringify({a:a}),a=a.slice(6,-2);for(b in c)a=a.replace(new RegExp("\\\\u000"+b.charCodeAt().toString(16),"ig"),"\\"+c[b]);return this.htmlEncode(a)},d.htmlEncode=function(a){return null==a?"":a.toString().replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")},d.decorateWithSpan=function(a,b){return'<span class="'+b+'">'+this.htmlEncode(a)+"</span>"},d.arrayToHtml=function(a){var b=!1,c="",d=0;for(var e in a)d++;for(var e in a)b=!0,c+="<li>"+this.valueToHtml(a[e]),d>1&&(c+=","),c+="</li>",d--;return c=b?'[<ul class="array collapsible">'+c+"</ul>]":"[ ]"},d.objectToHtml=function(a){var b=!1,c="",d=0;for(var e in a)d++;for(var e in a)b=!0,c+='<li><span class="prop"><span class="q">"</span>'+this.jsString(e)+'<span class="q">"</span></span>: '+this.valueToHtml(a[e]),d>1&&(c+=","),c+="</li>",d--;return c=b?'{<ul class="obj collapsible">'+c+"</ul>}":"{ }"},d.valueToHtml=function(a){var b=a&&a.constructor,c="";return null==a&&(c+=this.decorateWithSpan("null","null")),a&&b==Array&&(c+=this.arrayToHtml(a)),a&&b==Object&&(c+=this.objectToHtml(a)),b==Number&&(c+=this.decorateWithSpan(a,"num")),b==String&&(c+=/^(http|https|file):\/\/[^\s]+$/i.test(a)?'<a href="'+a+'"><span class="q">"</span>'+this.jsString(a)+'<span class="q">"</span></a>':'<span class="string">"'+this.jsString(a)+'"</span>'),b==Boolean&&(c+=this.decorateWithSpan(a,"bool")),c},d.jsonToHtml=function(a){return'<div class="gd-ui-json-explorer">'+this.valueToHtml(a)+"</div>"};var e=JSON.parse(a||"{}"),f=d.jsonToHtml(e);b.html(f);for(var g=angular.element(b)[0].getElementsByTagName("ul"),h=0;h<g.length;h++){var i=g[h];if(-1!=i.className.indexOf("collapsible")&&"LI"==i.parentNode.nodeName){var j=document.createElement("div");j.className="collapser",j.innerHTML="-",j.addEventListener("click",c,!1),i.parentNode.insertBefore(j,i.parentNode.firstChild)}}})}}}]),angular.module("adminApp").directive("dynamicInput",["$rootScope","$timeout",function(a,b){return{restrict:"E",scope:{type:"@",model:"=",placeholder:"=",item:"=",name:"@",desc:"@",options:"="},template:function(a){var b='<div class="form-group tile"><label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label><a ng-show="name && desc" tabindex="0" role="button" class="fa fa-info-circle tile-info"  data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></a>';switch(a.attr("type")){case"date":b+=a.attr("locked")?'<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>':'<textarea class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</textarea>';break;case"select":b+='<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-change="measureUnitsChanged()" ng-options="option.name  for option in options track by option._id " ><option value="" selected>--------</option></select>';break;case"textarea":b+='<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';break;case"image":b+='<input class="form-control" id="{{id}}" type="text" ng-model="model" placeholder="{{placeholder}}" style="height:0px; padding:0px; visibility: hidden;"/><a  ng-click="displayUploader(true);" id="imageUploader" class="thumbnail" style="malrgin: -15px 0 0 0;"><img ng-src="{{model || \'/images/default_image.png\'}}" alt="..."></a><image-uploader ng-if="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>';break;default:b+=a.attr("locked")?'<span class="form-control" id="{{id}}" type="text">{{model | number:2}}</span>':'<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>'}return b},link:function(c,d,e){c.id=e.type+"_"+e.name.replace(/'/g,""),c.placeholder=c.placeholder?c.placeholder:c.desc,c.showUploader=a.showUploader,c.displayUploader=function(b){a.showUploader=b,c.showUploader=a.showUploader},c.$watch("model",function(a,e){a&&"select"==d.attr("type")&&b(function(){angular.isObject(c.model)?c.model=c.options.findById(c.model._id):c.model=c.options.findById(c.model)})}),$(function(){$('[data-toggle="popover"]').popover()}),c.measureUnitsChanged=function(){c.$emit("measureUnitsChanged")}}}}]),angular.module("adminApp").directive("dynamicFilter",["$rootScope","$timeout",function(a,b){return{restrict:"E",scope:{type:"@",model:"@",name:"@",desc:"@",options:"=",range:"@"},template:function(a){var b='<div class="form-group tile {{range}}"><label for="{{id}}" class="control-label {{range}}" title="{{desc}}">{{name}}</label><i class="fa fa-info-circle tile-info {{range}}" data-container="body" data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></i>';switch(a.attr("type")){case"select":b+='<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " ><option value="" selected>--------</option></select>';break;case"parent":b+='<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " ><option value="" selected>--------</option></select>';break;case"textarea":b+='<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';break;case"date":b+='<p class="input-group {{range}}"><input type="text" class="form-control ltr-datepicker {{range}}" datepicker-popup="dd/MM/yy" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" /><span class="input-group-btn"><button type="button" class="btn btn-default {{range}}" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button></span></p>';break;default:b+='<input class="form-control {{range}}" id="{{id}}" type="{{type}}" placeholder="{{desc}}" ng-model="filter" ng-change="updateFilter()"/>'}return b},link:function(b,c,d){b.id=d.model.replace(/'/g,""),b.updateFilter=function(){if("parent"==b.type){if(!b.filter)return void(a.filter._id=null);a.filter._id=JSON.parse(b.filter._id)}else{var c="";c=angular.isUndefined(b.range)?"":"_"+b.range,b.filter?a.filter[b.id+c]=b.filter:delete a.filter[b.id+c]}console.log("filter updated",a.filter)},b.open=function(a){a.preventDefault(),a.stopPropagation(),b.opened=!0},b.$watch("options",function(a,d){a&&"select"==c.attr("type")&&angular.isDefined(b.options)&&b.options[0]&&!b.model&&(b.model=b.options[0])})}}}]),angular.module("adminApp").directive("listItem",["$rootScope","$location",function(a,b){return{restrict:"E",scope:{index:"=",item:"=",path:"@",addto:"="},templateUrl:"views/partials/listItem.html",link:function(a,b,c){if(a.removeItem=a.$parent.removeItem,a.moveItemUp=a.$parent.moveItemUp,a.moveItemDown=a.$parent.moveItemDown,a.item.image){var d=a.item.image.split("/");d[d.length-2]="c_fill,g_center,h_120,w_160",a.item.small_image=d.join("/")}else angular.isDefined(a.item.image)&&(a.item.small_image="images/placeholder.png");switch(a.path){case"elements":a.parentPath="models";break;case"models":a.parentPath="orders";break;default:a.parentPath=!1}a.addto?a.link="#/"+a.parentPath+"/"+a.addto+"?addId="+a.item._id:a.link="#/"+a.path+"/"+a.item._id}}}]),angular.module("adminApp").directive("imageUploader",["$rootScope","$upload","$timeout","$sce",function(a,b,c,d){return{templateUrl:"views/partials/camera.html",replace:!1,transclude:!0,restrict:"E",scope:{type:"@",width:"@",model:"@",height:"@",overlaySrc:"=",countdown:"@",enabled:"=",files:"=",captureMessage:"@"},link:function(a,e,f,g){function h(a){var b;b=a.split(",")[0].indexOf("base64")>=0?atob(a.split(",")[1]):unescape(a.split(",")[1]);for(var c=a.split(",")[0].split(":")[1].split(";")[0],d=new Uint8Array(b.length),e=0;e<b.length;e++)d[e]=b.charCodeAt(e);return new Blob([d],{type:c})}return a.activeCountdown=!1,navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia,window.URL=window.URL||window.webkitURL||window.mozURL||window.msURL,a.$on("$destroy",function(){a.stream&&"function"==typeof a.stream.stop&&a.stream.stop()}),a.enableCamera=function(){return navigator.getUserMedia({audio:!1,video:!0},function(b){return a.$apply(function(){return a.stream=b,a.isLoaded=!0,a.videoStream=d.trustAsResourceUrl(window.URL.createObjectURL(b))})},function(b){return a.$apply(function(){return a.isLoaded=!0,a.noCamera=!0})})},a.disableCamera=function(){return navigator.getUserMedia({audio:!1,video:!0},function(b){return a.$apply(function(){return a.videoStream=""})})},a.takePicture=function(){var b,d,e,f;return b=window.document.getElementById("ng-photo-canvas"),f=null!=a.countdown?1e3*parseInt(a.countdown):0,null!=b&&(f>0&&(a.activeCountdown=!0,a.hideUI=!0),d=b.getContext("2d"),a.countdownTimer&&c.cancel(a.countdownTimer),a.countdownTimer=c(function(){var c;return a.activeCountdown=!1,c=window.document.getElementById("ng-camera-feed"),d.drawImage(c,0,0,a.width,a.height),null!=a.overlaySrc?a.addFrame(d,a.overlaySrc,function(c){return a.$apply(function(){return a.media=b.toDataURL("image/jpeg")}),null!=a.captureCallback?a.captureCallback(a.media):void 0}):(a.media=b.toDataURL("image/jpeg"),null!=a.captureCallback&&a.captureCallback(a.media)),a.hideUI=!1},f+1e3),a.countdownText=parseInt(a.countdown),e=setInterval(function(){return a.$apply(function(){var b;return b=parseInt(a.countdownText)-1,0===b?(a.countdownText=null!=a.captureMessage?a.captureMessage:"GO!",clearInterval(e)):a.countdownText=b})},1e3)),!1},a.addFrame=function(b,c,d){var e;return null==d&&(d=!1),e=new Image,e.onload=function(){return b.drawImage(e,0,0,a.width,a.height),d?d(b):void 0},e.crossOrigin="",e.src=c},a.$watch("media",function(b){return null!=b?a.packagedMedia=a.media.replace(/^data:image\/\w+;base64,/,""):void 0}),a.$watch("overlaySrc",function(b,c){var d;return null!=a.overlaySrc?(a.isLoaded=!1,d=new Image,d.crossOrigin="",d.src=b,d.onload=function(){return a.$apply(function(){return a.isLoaded=!0})}):a.isLoaded=!0}),a.$watch("enabled",function(b,c){if(b){if(!c)return a.enableCamera()}else if(null!=c)return a.disableCamera()}),a.$watch("files",function(){a.files&&a.files.forEach(function(d){a.upload=b.upload({url:"https://api.cloudinary.com/v1_1/"+$.cloudinary.config().cloud_name+"/upload",data:{upload_preset:$.cloudinary.config().upload_preset},file:d}).progress(function(a){d.progress=Math.round(100*a.loaded/a.total),d.status="Uploading... "+d.progress+"%"}).success(function(b,d,e,f){console.log("uploaded!!!",b),a.uploadedImage=b.secure_url,a.$parent.item.image=b.secure_url,$("#imageUploader").addClass("ng-dirty"),c(function(){a.close()},1e3)})})}),a.uploading={},a.uploadedImage=a.$parent&&a.$parent.item&&a.$parent.item.image?a.$parent.item.image:"",a.retakePicture=function(){a.uploadedImage=""},a.captureCallback=function(d){if(d){var e=h(d);a.upload=b.upload({url:"https://api.cloudinary.com/v1_1/"+$.cloudinary.config().cloud_name+"/upload",data:{upload_preset:$.cloudinary.config().upload_preset},file:e}).progress(function(b){a.uploading.progress=Math.round(100*b.loaded/b.total),a.uploading.status="Uploading... "+e.progress+"%"}).success(function(b,d,e,f){console.log("uploaded!!!",b),a.uploadedImage=b.secure_url,a.$parent.item.image=b.secure_url,$("#imageUploader").addClass("ng-dirty"),c(function(){a.close()},1e3)})}},a.close=function(){a.$parent.displayUploader(!1)},a.$watch("type",function(){switch(a.type){case"photo":if(a.enabled)return a.enableCamera();break;default:if(a.enabled)return a.enableCamera()}})}}}]),angular.module("adminApp").controller("ModalInstanceCtrl",["$scope","$modalInstance","ok","cancel",function(a,b,c,d){a.ok=function(){b.close("ok"),"function"==typeof c&&c()},a.cancel=function(){b.close("cancel"),"function"==typeof d&&d()}}]),angular.module("adminApp").controller("RootCtrl",["$rootScope","$scope","$cookies","$sce","$timeout","$http","$location","$window","$interval","$modal","ElementTypes","Materials","Coatings","ElementFeatures","Providers","Prices",function(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p){a.version="GRUNT_VERSION",console.log("VERSION: "+a.version),a.exportType="",b.authenticate=function(){f.get(Consts.api_root+"authenticate").success(function(c,d,e,f){b.authenticated=!0,a.init(),console.log("authenticated",c)}).error(function(a,c,d,e){b.authenticated=!1})},a.dbloading=!1,a.checkDdbloading=function(){a.elementTypes.$promise.then(function(){yo("loading elementTypes",a.elementTypes),a.dbloading=!1}),a.materials.$promise.then(function(){yo("loading materials",a.materials),a.dbloading=!1}),a.providers.$promise.then(function(){yo("loading providers",a.providers),a.dbloading=!1}),a.coatings.$promise.then(function(){yo("loading coatings",a.coatings),a.dbloading=!1}),a.elementFeatures.$promise.then(function(){yo("loading elementFeatures",a.elementFeatures),a.dbloading=!1}),a.currencies.$promise.then(function(){yo("loading currencies",a.currencies),a.dbloading=!1}),a.anyDbloading&&(a.dbloading=!1),a.dbloading=!0},a.init=function(){console.log("rootScope init"),b.updateBreadcrumbs(),a.saving=!1,a.elementTypes=k.all(),a.materials=l.all(),a.providers=o.all(),a.coatings=m.all(),a.elementFeatures=n.all(),a.currencies=p.all(function(b){a.currencies=b,a.coins=[];for(var c=0;c<b.length;c++)"TIME"!=b[c].code&&a.coins.push(b[c])}),a.checkDdbloading()},a.measureUnits=[{name:"גרם",_id:"gram"},{name:"סנטימטר",_id:"centimeter"},{name:"יחידה",_id:"unit"}],a.weightUnits=[{name:"אונקייה",_id:"ounce",grams:31.104},{name:"גרם",_id:"gram",grams:1},{name:"קילוגרם",_id:"kilo",grams:1e3}],b.logout=function(){localStorage.Authorization="",document.location.reload()},b.changePassword=function(){localStorage.Authorization=md5($("input#password").val()),document.location.reload()},b.alert="",b.alertClass="",b.showAlert=function(a,c){e(function(){b.alertClass=c||"warning",b.alert=a,b.alertIsShown=!0}),e(function(){b.alertIsShown=!1},3e3)},b.connected=!1,b.waitForConnection=i(function(){f.get(Consts.api_root+"ping").success(function(a,c,d,f){$(".loader").css("opacity",0),i.cancel(b.waitForConnection),b.authenticate(),e(function(){$(".loader").remove()},2e3)}).error(function(a,b,c,d){})},2e3),b.updateBreadcrumbs=function(b,c,d){a.location=c,a.breadcrumbs=[{name:"ראשי",link:"#/"}],b&&c&&(a.breadcrumbs.push({name:b,link:"#/"+c}),d&&a.breadcrumbs.push({name:d.code||d.name||d.desc,link:"#/"+c+"/"+d._id}))},b.setSaving=function(b){a.saving=b},b.goBack=function(a){e(function(){var a=g.path().split("/");a.splice(a.length-1,1),g.path(a.join("/"))},a||0)},b.trustUrl=function(a){return d.trustAsResourceUrl(a)},b.getFromJson=function(a,b){if(!a||!a.isJson)return"";var c=0,d=JSON.parse(a);for(var e in d){if(!d.hasOwnProperty(e))return;e.indexOf(b)>=0&&(c+=Number(d[b]))}return c},b.spreadJson=function(a){if(!a||!a.isJson)return"";var b={},c=JSON.parse(a);for(var d in c){if(!c.hasOwnProperty(d))return;b[d]=!0}var e=[];for(var d in b){if(!b.hasOwnProperty(d))return;e.push(d)}return console.log("spread",e),e},b.spreadJsons=function(a,b){for(var c,d={},e=0;c=a[e];e++){var f=c[b];if(f&&f.isJson){var g=JSON.parse(f);for(var h in g){if(!g.hasOwnProperty(h))return;d[h]=!0}}}var i=[];for(var h in d){if(!d.hasOwnProperty(h))return;i.push(h)}return console.log("spreads",i),i},a.reloadItemImp=function(a,b,c,d){c&&c._id?a.item=b.query({id:c._id},function(){angular.isFunction(d)&&d(a.item)}):a.items=b.all({},function(){angular.isFunction(d)&&d(a.items)})},a.updateItemImp=function(c,d,e,f){console.log("updating",e),d.update(e,function(c){console.log("updated",c),$(".ng-dirty").removeClass("ng-dirty"),b.showAlert("הפריט נשמר בהצלחה"),angular.isFunction(f)&&f(c),a.saving&&(b.setSaving("false"),window.history.back())},function(){b.showAlert("אירעה שגיאה בשמירת הפריט - נא לנסות שנית"),b.setSaving("false")})},a.removeItemImp=function(a,c,d,e){b.openModal("confirmDelete",function(){if(confirm("האם אתה בטוח שברצונך למחוק את הפריט?")&&(console.log("deleting",d),c.remove({id:d._id},function(){b.showAlert("הפריט נמחק בהצלחה"),angular.isFunction(e)&&e(d)}),a.items&&a.items.length>0)){var f=a.items.findIndexById(d._id);a.items.splice(f,1)}},function(){console.log("CANCELED")})},a.addItemImp=function(a,b,c,d){c?b.create(c,function(a){angular.isFunction(d)&&d(a)}):b.create(function(a){angular.isFunction(d)&&d(a)})},a.moveItemImp=function(b,c,d,e,f,g){if(f>0)var h=d.findNextById(e.pos,"pos");else if(0>f)var h=d.findPrevById(e.pos,"pos");if(e&&h){var i=e.pos;e.pos=h.pos,h.pos=i,a.updateItemImp(b,c,e,g),a.updateItemImp(b,c,h,g)}},a.getPopulatedItemImp=function(a,b,c,d){b.query({id:c._id},function(a){angular.isFunction(d)&&d(a)})},b.exportToCsv=function(a,c){b.exportJson(a,"element",!0)},b.clearForm=function(){$(".form-control").val("").text(""),a.filter={}},a.sort="name",a.desc=!1,a.sortBy=function(b){a.sort=b,a.desc=!("name"==b)},a.isSortedBy=function(b){return a.sort==b},a.location="main",a.locationIs=function(b){return a.location==b},b.openModal=function(b,c,d){j.open({animation:!0,templateUrl:"views/partials/"+b+".html?v="+a.version,controller:"ModalInstanceCtrl",resolve:{ok:function(){return c},cancel:function(){return d}}})},b.noimage="images/noimage.jpg",a.showUploader=!1,a.displayUploader=function(b){a.showUploader=b},b.elementsCost=function(c,d,e){if(d&&d.length){var f=0,g=0,h=0,i=0,j=0,k=0;a.workCost=0,a.providerWorkCost=0,a.elementFeatureCost=0,a.coatingCost=0,a.materialCost=0,a.materialsCost={};for(var l,m,n=[],o=0;m=b.currencies[o];o++)n.push(m),l=e.findById(m._id||m),l.newPrice&&(n[n.length-1].conversion=parseInt(l.newPrice));a.currenciesWithOverride=n;var p={};c.eTypesCosts={};for(var q,r=0;q=d[r];r++){var s=q.measureUnitWeight||0,t=(q.measureUnitWeight||0)/(1-(q.waste/100||0));if(a.materials&&q.material){var u=a.materials.findById(q.material._id||q.material),v=u.price||0,w=(a.weightUnits.findById(u.weightUnit)||{}).grams||1,x=n.findById(u.currency).conversion||0;l=e.findById(u._id),l&&l.newPrice&&(v=parseInt(l.newPrice)),k=t*q.amount*(v*x/w),k=parseInt(100*k)/100,a.materialCost+=k,p[u._id]?p[u._id]+=k:p[u._id]=k}if(a.coatings&&q.coating){var y=a.coatings.findById(q.coating._id||q.coating),z=y.measureUnit,A=y.price||0,B=n.findById(y.currency).conversion||0;l=e.findById(y._id),l&&l.newPrice&&(A=parseInt(l.newPrice)),j="gram"==z?s*q.amount*A*B:q.amount*A*B,a.coatingCost+=j}if(a.elementFeatures&&q.elementFeature){var C=a.elementFeatures.findById(q.elementFeature._id||q.elementFeature),D=C.measureUnit,E=C.price||0,F=n.findById(C.currency).conversion||0;l=e.findById(C._id),l&&l.newPrice&&(E=parseInt(l.newPrice)),i="gram"==D?s*q.amount*E*F:q.amount*E*F,a.elementFeatureCost+=i}if(a.currencies&&q.workUnitCurrency){var G=a.currencies.findById(q.workUnitCurrency._id||q.workUnitCurrency),H=q.workUnitPrice*(G.conversion||0);l=e.findById(G._id),l&&l.newPrice&&(H=q.workUnitPrice*(l.newPrice||0));var I=q.workUnit;h="gram"==I?s*q.amount*H:q.amount*H||0,a.providerWorkCost+=h}if(g=parseInt(100*(h+i+j+k))/100,q.elementType){var J=(a.elementTypes.findById(q.elementType._id||q.elementType)||{}).name;c.eTypesCosts[J]?c.eTypesCosts[J]+=g:c.eTypesCosts[J]=g}}var K=c.requiredTime||0,L=b.currencies.findById("TIME","code").conversion||0;return l=e.findById("TIME","code"),l&&l.newPrice&&(L=l.newPrice||0),a.workCost=(L||0)*K,a.workCost=parseInt(100*a.workCost)/100,a.providerWorkCost=parseInt(100*a.providerWorkCost)/100,a.elementFeatureCost=parseInt(100*a.elementFeatureCost)/100,a.coatingCost=parseInt(100*a.coatingCost)/100,a.materialCost=parseInt(100*a.materialCost)/100,a.materialsCost=p,f=parseInt(100*(a.workCost+a.providerWorkCost+a.elementFeatureCost+a.coatingCost+a.materialCost))/100}},b.elementsWeight=function(b){if(b&&b.length){var c={};a.materialsWeight={};for(var d,e=0,f=0,g=0;d=b[g];g++){e=parseInt(d.amount*(d.measureUnitWeight||0)*100)/100;var h=a.materials.findById(d.material);c[h._id]?c[h._id]+=e:c[h._id]=e,f+=e}return a.materialsWeight=c,f}},b.$on("$locationChangeEnd",function(a){$(".navbar-collapse.collapse").removeClass("in")}),b.exportJson=function(a,b,c){var d="object"!=typeof a?JSON.parse(a):a;d="Array"!=typeof d?[d]:d;var e="";if(e+=b+"\r\n\n",c){var f="";for(var g in d[0])"_"!=g.charAt(0)&&"$"!=g.charAt(0)&&(f+=g+",");f=f.slice(0,-1),e+=f+"\r\n"}for(var h,i=0;i<d.length;i++){var f="";for(var g in d[i])h=d[i][g],angular.isFunction(h)||"_"!=g.charAt(0)&&"$"!=g.charAt(0)&&(angular.isObject(h)&&(h=h.name||h.desc),f+='"'+h+'",');f.slice(0,f.length-1),e+=f+"\r\n"}if(""==e)return void alert("Invalid data");var j="MyReport_";j+=b.replace(/ /g,"_");var k="data:text/csv;charset=utf-8,"+encodeURIComponent(e),l=document.createElement("a");l.href=k,l.style="visibility:hidden",l.download=j+".csv",document.body.appendChild(l),l.click(),document.body.removeChild(l)},a.copiedTable=-1,a.exportTables=[],a.setCopiedTable=function(b){a.watingTable=b},a.getExportTables=function(){a.copiedTable=-1;var b=[];$.each($(".export-table"),function(c,d){b.push({name:$(d).attr("title"),target:$(d).attr("data-target")}),a.exportTables=b}),a.exportTables=b},a.newSpreadsheet=function(){h.open("http://spreadsheets.google.com/ccc?new&hl=he")},a.getHtmlToCopy=function(b,c){function d(a){return!(!a&&0!==a)}a.copiedTable=-1,a.waitingTable=c;var e={rowSeperator:"\r\n",colSeperator:"	"},f={nodeToString:function(b,c,e){var g="";try{if(b.childNodes.length)for(("TD"==b.nodeName||"TH"==b.nodeName)&&(e=c=""),b=b.firstChild;b;)g+=f.nodeToString(b,c,e),"TR"==b.nodeName?g+=c:("TD"==b.nodeName||"TH"==b.nodeName)&&(g+=e),b=b.nextSibling;else"#text"==b.nodeName&&d(b.nodeValue)&&""!==b.nodeValue&&(c=b.nodeValue,e=RegExp("\\t","g"),c=c.replace(RegExp("\\n","g"),""),c=c.replace(e,""),g+=c.trim())}catch(h){a.copiedTable=-1,a.waitingTable=-1,console.log("getting html error",h)}return g}};console.log("getting html to copy");var g=f.nodeToString($("table#"+b)[0],e.rowSeperator,e.colSeperator);return console.log("got html to copy",g),a.copiedTable=c,a.waitingTable=-1,g},b.setExportFile=function(a){return b.exportFile="views/exports/"+a+".html"},b.exportTable=function(a){e(function(){b.setExportFile(a)}),e(function(){var a=function(){var a="data:application/vnd.ms-excel;base64,",b='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',c=function(a){return window.btoa(unescape(encodeURIComponent(a)))},d=function(a,b){return a.replace(/{(\w+)}/g,function(a,c){return b[c]})};return function(e,f,g){e.nodeType||(e=document.getElementById(e));var h={worksheet:f||"Worksheet",table:e.innerHTML};document.getElementById("dlink").href=a+c(d(b,h)),document.getElementById("dlink").download=g,document.getElementById("dlink").click()}}();a("exportTable","export","export_filename.xls")},1e3)},a.init()}]),angular.module("adminApp").controller("MainCtrl",["$scope",function(a){a.awesomeThings=["HTML5 Boilerplate","AngularJS","Karma"]}]),angular.module("adminApp").controller("PricesCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Prices",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("מטבעות","prices",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/prices")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/prices/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/prices/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("SettingsCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Settings",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c)},a.updateItem=function(c){b.updateItemImp(a,f,c)},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/settings")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/settings/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/settings/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("OrdersCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Elements","Models","Orders",function(a,b,c,d,e,f,g,h){b.init(),a.reloadItem=function(c){b.anyDbloading=!0,b.reloadItemImp(a,h,c,function(){a.parseModelsFromDb(),a.parsePricesFromDb(),a.updateBreadcrumbs("הזמנות","orders",a.item),b.anyDbloading=!1})},a.updateItem=function(c,d){d||(c=a.setItemVars(c)),b.updateItemImp(a,h,c)},a.removeItem=function(c){b.removeItemImp(a,h,c,function(){d.path("/orders")})},a.addItem=function(c){b.addItemImp(a,h,null,function(a){d.path("/orders/"+a._id)})},a.deleteUnnamedItems=function(){a.openModal("confirmDeleteUnnamed",function(){if(confirm("האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?"))for(var b,c=angular.copy(a.items),d=0;b=c[d];d++)b.name||(a.items.splice(d,1),h.remove({id:b._id}))})},a.duplicateItem=function(c){c=a.setItemVars(c),b.tempItem=c,b.addItemImp(a,h,null,function(a){d.path("/orders/"+a._id)})},b.tempItem?(a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item,!0),a.parseModelsFromDb(),a.parsePricesFromDb()})):a.reloadItem({_id:c.id});var i=d.search().addId;b.filter={},a.setItemVars=function(b){return b.models=a.parseModelsToDb(),b.prices=a.parsePricesToDb(),b},a.removeModel=function(b){if(console.log("deleting",b),a.models&&a.models.length>0){var c=a.models.findIndexById(b._id);a.models.splice(c,1)}a.updateItem(a.item)},a.zeroModel=function(b){if(a.models&&a.models.length>0){var c=a.models.findIndexById(b._id);a.models[c].amount=0}a.updateItem(a.item)},a.moveItem=function(b,c){var d;if(c>0?d=a.models.findNextById(b.pos,"pos"):0>c&&(d=a.models.findPrevById(b.pos,"pos")),b&&d&&d.pos>=0){var e=b.pos;b.pos=d.pos,d.pos=e}a.updateItem(a.item)},a.parseModelsFromDb=function(){if(a.item){a.item.models||(a.item.models="[]");var b=JSON.parse(a.item.models);if(i){var c=b.findIndexById(i,"id");c>=0&&b[c]?b[c].amount+=1:b.push({id:i,amount:1,pos:b.length})}a.models=[];for(var c,e=0;c=b[e];e++)g.query({id:c.id},function(c){c.amount=b.findById(c._id,"id").amount||0,c.pos=b.findById(c._id,"id").pos||0,a.models.push(c),i&&a.models.length==b.length&&(a.updateItem(a.item),i=!1,d.search({addId:null})),a.models.length==b.length&&a.getOrderElements()})}},a.parseModelsToDb=function(){if(a.item&&a.item.models&&a.models){for(var b,c=[],d=99999999,e=0;b=a.models[e];e++){for(b.pos>=0||(b.pos=0);c[b.pos];)b.pos++;b.pos<d&&(d=b.pos),c[b.pos]=!0}for(var b,f=[],e=0;b=a.models[e];e++)f.push({id:b._id,amount:b.amount,pos:b.pos-d});return a.item.models=JSON.stringify(f),a.item.models}},a.parsePricesFromDb=function(){if(a.item){a.item.prices||(a.item.prices="[]"),a.prices=[];for(var c,d=0;c=a.currencies[d];d++)"ILS"!=c.code&&(c.newPrice=null,
-c.icon="ils",c.fullname=c.name,a.prices.push(c));for(var c,d=0;c=a.materials[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name+" ("+(b.weightUnits.findById(c.weightUnit._id||c.weightUnit)||{}).name+")",a.prices.push(c);for(var c,d=0;c=a.coatings[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name,a.prices.push(c);for(var c,d=0;c=a.elementFeatures[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name,a.prices.push(c);for(var c,e=JSON.parse(a.item.prices),d=0;c=e[d];d++){var f=a.prices.findIndexById(c.id);0>f||(a.prices[f].newPrice=c.newPrice)}}},a.parsePricesToDb=function(){if(a.item&&a.item.prices&&a.prices){for(var b,c=[],d=0;b=a.prices[d];d++)b.newPrice&&c.push({id:b._id,newPrice:b.newPrice});return a.item.prices=JSON.stringify(c),a.item.prices}},a.getOrderElements=function(){if(a.models&&a.models.length){for(var b,c={},d=0;b=a.models[d];d++)for(var e,g=JSON.parse(b.elements),h=0;e=g[h];h++)c[e.id]||(c[e.id]=0),c[e.id]+=1;a.elements=[];for(var i in c)f.query({id:i},function(b){a.elements.push(b),a.elements.length==g.length&&a.calcOrderCost()})}},a.updateOrderQuantities=function(){a.totalWorkTime=0;for(var b,c={},d=0;b=a.models[d];d++){a.totalWorkTime+=b.amount*(b.requiredTime||0);for(var e,f=JSON.parse(b.elements),g=0;e=f[g];g++)c[e.id]||(c[e.id]=0),c[e.id]+=b.amount*e.amount}for(var h in c){var e=a.elements.findIndexById(h);e>=0&&(a.elements[e].amount=c[h]||0)}},a.calcOrderCost=function(){return!a.elements||!a.elements.length>0?void 0:(a.updateOrderQuantities(),a.elementsCost({requiredTime:a.totalWorkTime},a.elements,a.prices))},a.calcOrderWeight=function(){return!a.elements||!a.elements.length>0?void 0:a.elementsWeight(a.elements)}}]),angular.module("adminApp").controller("ModelsCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Elements","Models","Orders",function(a,b,c,d,e,f,g,h){b.init(),a.reloadItem=function(c){b.anyDbloading=!0,b.reloadItemImp(a,g,c,function(){a.parseElementsFromDb(),a.parsePricesFromDb(),a.setmodelId(),a.updateBreadcrumbs("דגמים","models",a.item),b.anyDbloading=!1,console.log("Item loaded",a.item)})},a.updateItem=function(c,d){d||(c=a.setItemVars(c),a.getElementsString()),b.updateItemImp(a,g,c)},a.removeItem=function(c){b.removeItemImp(a,g,c,function(){d.path("/models")})},a.addItem=function(c){b.addItemImp(a,g,null,function(a){d.path("/models/"+a._id)})},a.deleteUnnamedItems=function(){a.openModal("confirmDeleteUnnamed",function(){if(confirm("האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?"))for(var b,c=angular.copy(a.items),d=0;b=c[d];d++)b.name||(a.items.splice(d,1),g.remove({id:b._id}))})},a.duplicateItem=function(c){c=a.setItemVars(c),b.tempItem=c,b.addItemImp(a,g,null,function(a){d.path("/models/"+a._id)})},b.tempItem?(a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item,!0),a.parseElementsFromDb(),a.parsePricesFromDb(),a.setmodelId()})):a.reloadItem({_id:c.id});var i=d.search().addId;a.addTo=d.search().addTo,b.filter={},a.setItemVars=function(b){return b.name=(a.item.modelType||"")+(a.item.modelId||""),b.elements=a.parseElementsToDb(),b.prices=a.parsePricesToDb(),b},a.setmodelId=function(){return a.item?!a.item.modelType||a.item.modelId?void(a.item.recModelId="0"):void(c.id&&!a.item.modelId&&g.maxId(a.item,function(b){a.item.recModelId=parseInt(Number(b.modelId.replace(/^\D+/g,"")))+1})):void 0},a.removeElement=function(b){if(console.log("deleting",b),a.elements&&a.elements.length>0){var c=a.elements.findIndexById(b._id);a.elements.splice(c,1)}a.updateItem(a.item)},a.zeroElement=function(b){if(a.elements&&a.elements.length>0){var c=a.elements.findIndexById(b._id);a.elements[c].amount=0}a.updateItem(a.item)},h.all(function(b){function c(a){for(var b,c=JSON.parse(a),d=[],e=0;b=c[e];e++)d.push(b.id);return d}a.orders=[];for(var d,e=0;d=b[e];e++)if(d.models){var f={name:d.name||d.desc},g=c(d.models);g.unshift(d._id),f._id=JSON.stringify(g),a.orders.push(f)}}),a.$watch("item.modelType",function(b,c){b&&c!=b&&a.setmodelId()}),a.moveItem=function(b,c){var d;if(c>0?d=a.elements.findNextById(b.pos,"pos"):0>c&&(d=a.elements.findPrevById(b.pos,"pos")),b&&d&&d.pos>=0){var e=b.pos;b.pos=d.pos,d.pos=e}a.updateItem(a.item)},a.parseElementsFromDb=function(){if(a.item){a.item.elements||(a.item.elements="[]");var b=JSON.parse(a.item.elements);if(i){var c=b.findIndexById(i,"id");c>=0&&b[c]?b[c].amount+=1:b.push({id:i,amount:1,pos:b.length})}a.elements=[];for(var c,e=0;c=b[e];e++)f.query({id:c.id},function(c){c.amount=b.findById(c._id,"id").amount||0,c.pos=b.findById(c._id,"id").pos||0,a.elements.push(c),i&&a.elements.length==b.length&&(a.updateItem(a.item),i=!1,d.search({addId:null})),a.elements.length==b.length&&a.calcModelCost()})}},a.parseElementsToDb=function(){if(a.item&&a.item.elements&&a.elements){for(var b,c=[],d=99999999,e=0;b=a.elements[e];e++){for(b.pos>=0||(b.pos=0);c[b.pos];)b.pos++;b.pos<d&&(d=b.pos),c[b.pos]=!0}for(var b,f=[],e=0;b=a.elements[e];e++)f.push({id:b._id,amount:b.amount,pos:b.pos-d});return a.item.elements=JSON.stringify(f),a.item.elements}},a.getElementsString=function(){for(var b,c=[],d=0;b=a.elements[d];d++)c.push(b.name);a.item.elementsStr=c.join(", ")},a.parsePricesFromDb=function(){if(a.item){a.item.prices||(a.item.prices="[]"),a.prices=[],a.pricesByName={};for(var c,d=0;c=a.currencies[d];d++)"ILS"!=c.code&&(c.newPrice=null,c.icon="ils",c.fullname=c.name,a.prices.push(c));for(var c,d=0;c=a.materials[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name+" ("+(b.weightUnits.findById(c.weightUnit._id||c.weightUnit)||{}).name+")",a.prices.push(c);for(var c,d=0;c=a.coatings[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name,a.prices.push(c);for(var c,d=0;c=a.elementFeatures[d];d++)c.newPrice=null,c.icon=(b.currencies.findById(c.currency)||{}).code,c.fullname=c.name,a.prices.push(c);for(var c,e=JSON.parse(a.item.prices),d=0;c=e[d];d++){var f=a.prices.findIndexById(c.id);0>f||(a.prices[f].newPrice=c.newPrice)}for(var g,d=0;g=a.prices[d];d++)a.pricesByName[g.name]=g.newPrice||g.price}},a.parsePricesToDb=function(){if(a.item&&a.item.prices&&a.prices){for(var b,c=[],d=0;b=a.prices[d];d++)b.newPrice&&c.push({id:b._id,newPrice:b.newPrice});return a.item.prices=JSON.stringify(c),a.item.prices}},a.calcModelCost=function(){if(a.elements&&a.elements.length){var c=a.elementsCost(a.item,a.elements,a.prices);a.costs={};for(var d,e=0;d=b.currenciesWithOverride[e];e++)a.costs[d.code]=c/d.conversion;return a.item.costs=JSON.stringify(a.costs),a.item.eTypesCosts=JSON.stringify(a.item.eTypesCosts),c}},a.calcModelWeight=function(){if(a.elements&&a.elements.length){var c=a.elementsWeight(a.elements);a.weights={total:c};var d="",e=[];for(var f in b.materialsWeight)d=b.materials.findById(f).name,d&&(a.weights[d]=b.materialsWeight[f],-1==e.indexOf(d)&&e.push(d));for(var g,h=[],i=0,j="",k=new RegExp(/(אבן|אבנים)/),l=0;g=a.elements[l];l++)j=b.elementTypes.findById(g.elementType._id||g.elementType).name,j&&k.test(j)&&(-1==h.indexOf(g.name)&&h.push(g.name),i+=g.cost);return a.item.metals=e.join(", "),a.item.stones=h.join(", "),a.item.weights=JSON.stringify(a.weights),c}}}]),angular.module("adminApp").controller("ElementsCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Models","Elements",function(a,b,c,d,e,f,g){b.init(),a.reloadItem=function(c){b.anyDbloading=!0,b.reloadItemImp(a,g,c,function(){a.updateBreadcrumbs("אלמנטים","elements",a.item),a.setUnitsNames(),b.anyDbloading=!1})},a.updateItem=function(c){b.updateItemImp(a,g,c,function(){a.setUnitsNames()})},a.removeItem=function(c){b.removeItemImp(a,g,c,function(){d.path("/elements")})},a.addItem=function(c){b.addItemImp(a,g,null,function(a){d.path("/elements/"+a._id)})},a.deleteUnnamedItems=function(){a.openModal("confirmDeleteUnnamed",function(){if(confirm("האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?"))for(var b,c=angular.copy(a.items),d=0;b=c[d];d++)b.name||(a.items.splice(d,1),g.remove({id:b._id}))})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,g,null,function(a){d.path("/elements/"+a._id)})},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id}),a.addTo=d.search().addTo,b.filter={},c.id||f.all(function(b){function c(a){for(var b,c=JSON.parse(a),d=[],e=0;b=c[e];e++)d.push(b.id);return d}a.models=[];for(var d,e=0;d=b[e];e++)if(d.elements){var f={name:d.modelCode||d.desc},g=c(d.elements);g.unshift(d._id),f._id=JSON.stringify(g),a.models.push(f)}}),a.$on("measureUnitsChanged",function(){a.setUnitsNames()}),a.measureUnitName=a.measureUnitOldName="יחידת מדידה",a.workUnitName=a.workUnitOldName="יחידת עבודה",a.setUnitsNames=function(){a.item&&e(function(){var c=$("label.control-label"),d=$(".form-control");a.measureUnitOldName=a.measureUnitName,a.workUnitOldName=a.workUnitName,a.item.elementType&&a.item.elementType.measureUnit&&(angular.isObject(a.item.elementType.measureUnit)?a.measureUnitName=b.measureUnits.findById(a.item.elementType.measureUnit._id).name:a.measureUnitName=b.measureUnits.findById(a.item.elementType.measureUnit).name),a.item.workUnit&&a.item.workUnit._id&&(angular.isObject(a.item.workUnit)?a.workUnitName=b.measureUnits.findById(a.item.workUnit._id).name:a.workUnitName=b.measureUnits.findById(a.item.workUnit).name),c.each(function(b){var d=c[b];$(d).text()&&($(d).text($(d).text().replace(a.workUnitOldName,a.workUnitName)),$(d).text($(d).text().replace(a.measureUnitOldName,a.measureUnitName))),$(d).attr("title")&&($(d).attr("title",$(d).attr("title").replace(a.workUnitOldName,a.workUnitName)),$(d).attr("title",$(d).attr("title").replace(a.measureUnitOldName,a.measureUnitName)))}),d.each(function(b){var c=d[b];$(c).attr("placeholder")&&($(c).attr("placeholder",$(c).attr("placeholder").replace(a.workUnitOldName,a.workUnitName)),$(c).attr("placeholder",$(c).attr("placeholder").replace(a.measureUnitOldName,a.measureUnitName)))})},100)},a.duplicateForTest=function(){for(var b=1e5;a.items.length<b;)a.items=a.items.concat(a.items)},a.calcElementCost=function(){if(a.item){var b=a.item;return b.amount=1,a.elementsCost({requiredTime:0},[b],[])}}}]),angular.module("adminApp").controller("CoatingsCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Coatings",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("ציפויים","coatings",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/coatings")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/coatings/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/coatings/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("MaterialsCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Materials",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("חומרים","materials",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/materials")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/materials/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/materials/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("ProvidersCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","Providers",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("ספקים","providers",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/providers")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/providers/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/providers/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("ElementFeaturesCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","ElementFeatures",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("תכונות נוספות","elementFeatures",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/elementFeatures")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/elementFeatures/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/elementFeatures/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("ElementTypesCtrl",["$scope","$rootScope","$routeParams","$location","$timeout","ElementTypes",function(a,b,c,d,e,f){a.reloadItem=function(c){b.reloadItemImp(a,f,c,function(){a.updateBreadcrumbs("סוגי אלמנטים","elementTypes",a.item)})},a.updateItem=function(c){b.updateItemImp(a,f,c,function(){b.init()})},a.removeItem=function(c){b.removeItemImp(a,f,c,function(){d.path("/elementTypes")})},a.addItem=function(c){b.addItemImp(a,f,null,function(a){d.path("/elementTypes/"+a._id)})},a.duplicateItem=function(c){b.tempItem=c,b.addItemImp(a,f,null,function(a){d.path("/elementTypes/"+a._id)})},a.moveItemDown=function(c){b.moveItemImp(a,f,a.items,c,1)},a.moveItemUp=function(c){b.moveItemImp(a,f,a.items,c,-1)},b.tempItem?e(function(){a.item=b.tempItem,a.item._id=c.id,b.tempItem=null,e(function(){a.updateItem(a.item)})}):a.reloadItem({_id:c.id})}]),angular.module("adminApp").controller("ExportCtrl",["$scope",function(a){a.tableToExcel=function(){var a="data:application/vnd.ms-excel;base64,",b='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',c=function(a){return window.btoa(unescape(encodeURIComponent(a)))},d=function(a,b){return a.replace(/{(\w+)}/g,function(a,c){return b[c]})};return function(e,f,g){e.nodeType||(e=document.getElementById(e));var h={worksheet:f||"Worksheet",table:e.innerHTML};document.getElementById("dlink").href=a+c(d(b,h)),document.getElementById("dlink").download=g,document.getElementById("dlink").click()}}()}]),$.cloudinary.config().cloud_name="turkenich",$.cloudinary.config().upload_preset="hozspifg";var photoAlbumControllers=angular.module("adminApp");photoAlbumControllers.controller("photoUploadCtrlJQuery",["$scope","$rootScope","$routeParams","$location",function(a,b,c,d){a.files={},a.updateTitle=function(){var b=a.widget.fileupload("option","formData");b.context="photo="+a.title,a.widget.fileupload("option","formData",b)},a.widget=$(".cloudinary_fileupload").unsigned_cloudinary_upload($.cloudinary.config().upload_preset,{tags:"myphotoalbum",context:"photo="},{dropZone:"#direct_upload_jquery",start:function(b){a.status="Starting upload...",a.files={},a.$apply()},fail:function(b,c){a.status="Upload failed",a.$apply()}}).on("cloudinaryprogress",function(b,c){var d=c.files[0].name,e=a.files[d]||{};e.progress=Math.round(100*c.loaded/c.total),e.status="Uploading... "+e.progress+"%",a.files[d]=e,a.$apply()}).on("cloudinaryprogressall",function(b,c){a.progress=Math.round(100*c.loaded/c.total),a.status="Uploading... "+a.progress+"%",a.$apply()}).on("cloudinarydone",function(c,d){b.photos=b.photos||[],d.result.context={custom:{photo:a.title}},a.result=d.result;var e=d.files[0].name,f=a.files[e]||{};f.name=e,f.result=d.result,a.files[e]=f,b.photos.push(d.result),a.$apply()})}]).controller("photoUploadCtrl",["$scope","$rootScope","$routeParams","$location","$upload",function(a,b,c,d,e){function f(a){var b;b=a.split(",")[0].indexOf("base64")>=0?atob(a.split(",")[1]):unescape(a.split(",")[1]);for(var c=a.split(",")[0].split(":")[1].split(";")[0],d=new Uint8Array(b.length),e=0;e<b.length;e++)d[e]=b.charCodeAt(e);return new Blob([d],{type:c})}a.$watch("camera",function(c){if(c){var d=f(c);a.upload=e.upload({url:"https://api.cloudinary.com/v1_1/"+$.cloudinary.config().cloud_name+"/upload",data:{upload_preset:$.cloudinary.config().upload_preset,tags:"myphotoalbum",context:"photo="+a.title},file:d}).progress(function(b){d.progress=Math.round(100*b.loaded/b.total),d.status="Uploading... "+d.progress+"%",a.$$phase||a.$apply()}).success(function(c,e,f,g){b.photos=b.photos||[],c.context={custom:{photo:a.title}},d.result=c,b.photos.push(c),a.$$phase||a.$apply()})}}),a.$watch("files",function(){a.files&&a.files.forEach(function(c){a.upload=e.upload({url:"https://api.cloudinary.com/v1_1/"+$.cloudinary.config().cloud_name+"/upload",data:{upload_preset:$.cloudinary.config().upload_preset,tags:"myphotoalbum",context:"photo="+a.title},file:c}).progress(function(b){c.progress=Math.round(100*b.loaded/b.total),c.status="Uploading... "+c.progress+"%",a.$$phase||a.$apply()}).success(function(d,e,f,g){b.photos=b.photos||[],d.context={custom:{photo:a.title}},c.result=d,b.photos.push(d),a.$$phase||a.$apply()})})}),a.dragOverClass=function(a){var b=a.dataTransfer.items,c=!1;if(null!=b){for(var d=0;d<b.length;d++)if("file"==b[d].kind){c=!0;break}}else c=!0;return c?"dragover":"dragover-err"}}]),angular.module("adminApp").factory("Prices",["$resource",function(a){return a(Consts.api_root+"prices/:id",{},{all:{withCredentials:!0,method:"GET",params:{},isArray:!0},query:{withCredentials:!0,method:"GET",params:{},isArray:!1},create:{withCredentials:!0,method:"POST",params:{}},update:{withCredentials:!0,method:"PUT",params:{id:"@_id"}},remove:{withCredentials:!0,method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Settings",["$resource",function(a){return a(Consts.api_root+"settings/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Orders",["$resource",function(a){return a(Consts.api_root+"orders/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Models",["$resource",function(a){return a(Consts.api_root+"models/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},maxId:{method:"GET",params:{id:"maxId"},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Elements",["$resource",function(a){return a(Consts.api_root+"elements/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("ElementTypes",["$resource",function(a){return a(Consts.api_root+"elementTypes/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Materials",["$resource",function(a){return a(Consts.api_root+"materials/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Coatings",["$resource",function(a){return a(Consts.api_root+"coatings/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("Providers",["$resource",function(a){return a(Consts.api_root+"providers/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").factory("ElementFeatures",["$resource",function(a){return a(Consts.api_root+"elementFeatures/:id",{},{all:{method:"GET",params:{},isArray:!0},query:{method:"GET",params:{},isArray:!1},create:{method:"POST",params:{}},update:{method:"PUT",params:{id:"@_id"}},remove:{method:"DELETE",params:{id:"@_id"}}})}]),angular.module("adminApp").directive("itemActions",function(){return{template:'  <div class="btn-group" role="group"><button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="updateItem(item);"><i class="fa fa-fw fa-save"></i> שמירה</button><button class="btn btn-{{isDirty() ? \'primary\' : \'disabled\' }}" ng-click="setSaving(true); updateItem(item); "><i class="fa fa-fw fa-{{saving ? \'refresh fa-spin\' : \'check\'}}"></i> שמירה וסיום</button><button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="cancelChanges(); duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button><button class="btn btn-{{isDirty() ? \'warning\' : \'disabled\' }}" ng-click="cancelChanges(); goBack(0);"><i class="fa fa-fw fa-undo"></i> ביטול</button><button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-fw fa-trash"></i> מחיקה</button><button class="btn btn-default" ng-click="openModal(\'export\')"><i class="fa fa-fw fa-download"></i> ייצוא</button></div><div style="clear:both;"></div>',restrict:"E",link:function(a,b,c){a.isDirty=function(){return $(".ng-dirty").length>0},a.cancelChanges=function(){$(".ng-dirty").removeClass("ng-dirty")},a.$on("$locationChangeStart",function(b){if(a.isDirty()){var c=confirm("עדיין לא שמרת את הפריט. מעבר העמוד יבטל את השינויים, האם ברצונך להמשיך?");c||b.preventDefault()}})}}}),angular.module("adminApp").filter("listFilter",["$rootScope",function(a){return function(b){function c(a,b){for(var c in b){var d=b[c];if(c.indexOf("_")>0){var e=c.split("_"),f=e[0];if(e[1])var g=e[1]}else f=c;if(!a[f])return!1;if(angular.isArray(d)){if(-1==d.indexOf(a[f]))return!1}else if(angular.isDate(d)){var h=new Date(d),i=new Date(a[f]);if("below"==g){if(i>h)return!1}else if("above"==g){if(h>i)return!1}else if(d&&h!=i)return!1}else if(angular.isObject(d)){if(angular.isObject(a[f])){if(d._id!=a[f]._id)return!1}else if(d._id!=a[f])return!1}else if(angular.isNumber(d)){if("below"==g){if(d<a[f])return!1}else if("above"==g){if(d>a[f])return!1}else if(d&&d!=a[f])return!1}else if("string"==typeof a[f]&&"string"==typeof d){var j=new RegExp(d.toLowerCase());if(!j.test(a[f].toLowerCase()))return!1}}return!0}if(!(b.length<=0)){for(var d,e=a.filter,f=[],g=100,h=0;(d=b[h])&&!(f.length>g);h++)c(d,e)&&f.push(d);return f}}}]);
+var Utils = {
+  isHeroku: (document.location.host.search('herokuapp.com') > -1),
+  findIdInArray: function (arr, idVal, idKey) {
+    if (typeof idKey == 'undefined') idKey = '_id';
+    for (var i = 0, a; a = arr[i]; i++) {
+      if (a[idKey] == idVal) {
+        return a;
+      }
+    }
+    return false;
+  }
+}
+
+var Consts = {
+  OunceToGrams: 28.3495,
+  api_root: (Utils.isHeroku ? 'https://turkenich-api.herokuapp.com/' : 'http://localhost:3000/'),
+}
+
+function yo(title, data) {
+  console.log(title, data);
+}
+
+Array.prototype.findById = function (idVal, idKey) {
+  if (typeof idKey == 'undefined') idKey = '_id';
+  for (var i = 0, a; a = this[i]; i++) {
+    if (a[idKey] == idVal) {
+      return a;
+    }
+  }
+  return {};
+}
+
+Array.prototype.findIndexById = function (idVal, idKey) {
+  if (typeof idKey == 'undefined') idKey = '_id';
+  for (var i = 0, a; a = this[i]; i++) {
+    if (a[idKey] == idVal) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+Array.prototype.findNextById = function (idVal, idKey) {
+  if (typeof idKey == 'undefined') idKey = '_id';
+  var res = {};
+  for (var i = 0, a; a = this[i]; i++) {
+    if (a[idKey] > idVal) {
+      if (!res[idKey] || a[idKey] < res[idKey]) {
+        res = a;
+      }
+    }
+  }
+  return res;
+}
+
+Array.prototype.findPrevById = function (idVal, idKey) {
+  if (typeof idKey == 'undefined') idKey = '_id';
+  var res = {};
+  for (var i = 0, a; a = this[i]; i++) {
+    if (a[idKey] < idVal) {
+      if (!res[idKey] || a[idKey] > res[idKey]) {
+        res = a;
+      }
+    }
+  }
+
+  return res;
+}
+
+String.prototype.isJson = function (text) {
+  if (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').
+      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+      replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+    //the json is ok
+    return true;
+  } else {
+
+    //the json is not ok
+    return false;
+
+  }
+}
+
+Number.prototype.two = function () {
+  var n = parseInt(this * 100) / 100;
+  var arr = String(n).split('.');
+  if (!arr[1] || arr[1]==='00') {
+    return arr[0];
+  } else {
+    return arr[0] + '.' + arr[1].slice(0,2);
+  }
+}
+
+'use strict';
+
+angular
+  .module('adminApp', [
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute',
+    'angularFileUpload',
+    'cloudinary',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls',
+    'ui.bootstrap.transition',
+    'ngClipboard'
+  ])
+  .config(['$routeProvider', '$httpProvider', 'ngClipProvider', function ($routeProvider, $httpProvider, ngClipProvider) {
+    $httpProvider.interceptors.push(function() {
+      return {
+        'request': function(config) {
+
+          if (
+            (config.url.indexOf('://turkenich') >= 0) ||
+            (config.url.indexOf('://localhost') >= 0) ||
+            (config.url.indexOf('://127.0.0.1') >= 0)
+          ) {
+            config.headers.Authorization = (localStorage['Authorization']);
+          }
+          return config;
+        }
+      };
+    });
+
+    ngClipProvider.setPath("images/ZeroClipboard.swf");
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
+      }).
+      when('/upload', {
+        templateUrl: 'views/partials/photo-upload.html',
+        controller: 'photoUploadCtrl'
+      })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl',
+        reloadOnSearch: false
+      })
+      .when('/orders', {
+        templateUrl: 'views/orders.html',
+        controller: 'OrdersCtrl',
+        reloadOnSearch: false
+      })
+      .when('/orders/:id', {
+        templateUrl: 'views/order.html',
+        controller: 'OrdersCtrl',
+        reloadOnSearch: false
+      })
+
+      .when('/models', {
+        templateUrl: 'views/models.html',
+        controller: 'ModelsCtrl',
+        reloadOnSearch: false
+      })
+      .when('/models/:id', {
+        templateUrl: 'views/model.html',
+        controller: 'ModelsCtrl',
+        reloadOnSearch: false
+      })
+
+      .when('/elements', {
+        templateUrl: 'views/elements.html',
+        controller: 'ElementsCtrl',
+        reloadOnSearch: false
+      })
+      .when('/elements/:id', {
+        templateUrl: 'views/element.html',
+        controller: 'ElementsCtrl',
+        reloadOnSearch: false
+      })
+
+      .when('/prices', {
+        templateUrl: 'views/prices.html',
+        controller: 'PricesCtrl',
+        reloadOnSearch: false
+      })
+      .when('/prices/:id', {
+        templateUrl: 'views/price.html',
+        controller: 'PricesCtrl',
+        reloadOnSearch: false
+      })
+
+      .when('/coatings', {
+        templateUrl: 'views/coatings.html',
+        controller: 'CoatingsCtrl'
+      })
+      .when('/coatings/:id', {
+        templateUrl: 'views/coating.html',
+        controller: 'CoatingsCtrl'
+      })
+      .when('/materials', {
+        templateUrl: 'views/materials.html',
+        controller: 'MaterialsCtrl'
+      })
+      .when('/materials/:id', {
+        templateUrl: 'views/material.html',
+        controller: 'MaterialsCtrl'
+      })
+      .when('/providers', {
+        templateUrl: 'views/providers.html',
+        controller: 'ProvidersCtrl'
+      })
+      .when('/providers/:id', {
+        templateUrl: 'views/provider.html',
+        controller: 'ProvidersCtrl'
+      })
+      .when('/elementFeatures', {
+        templateUrl: 'views/elementFeatures.html',
+        controller: 'ElementFeaturesCtrl'
+      })
+      .when('/elementFeatures/:id', {
+        templateUrl: 'views/elementFeature.html',
+        controller: 'ElementFeaturesCtrl'
+      })
+      .when('/elementTypes', {
+        templateUrl: 'views/elementTypes.html',
+        controller: 'ElementTypesCtrl'
+      })
+      .when('/elementTypes/:id', {
+        templateUrl: 'views/elementType.html',
+        controller: 'ElementTypesCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  }]);
+
+/*
+Copyright (c) 2013, Goldark SS LTDA <http://www.goldark.co>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the 
+documentation and/or other materials provided with the distribution.
+-Neither the name of the Goldark nor the names of its contributors may be used to endorse or promote products derived from this software 
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+OF SUCH DAMAGE.
+*/
+
+/*
+This module is based in the firefox jsonview extenrsion made by Ben Hollis: https://github.com/bhollis/jsonview/
+*/
+'use strict';
+
+angular.module('adminApp')
+.directive('jsonExplorer', ['$http', function ($http) {
+	return {
+		restrict: 'E',
+		scope: {
+			jsonData: '@',
+		},
+		link: function (scope, elem, attrs) {
+			attrs.$observe('jsonData', function (val) {
+				var output = '';
+				var formatter = {};
+				formatter.jsString = function (s) {
+					var has = {
+      					'\b': 'b',
+      					'\f': 'f',
+      					'\r': 'r',
+      					'\n': 'n',
+      					'\t': 't'
+    				}, ws;
+    				for (ws in has) {
+      					if (-1 === s.indexOf(ws)) {
+        					delete has[ws];
+      					}
+    				}
+    				
+    				s = JSON.stringify({a:s});
+    				s = s.slice(6, -2);
+    				for (ws in has) {
+      					s = s.replace(new RegExp('\\\\u000' + (ws.charCodeAt().toString(16)), 'ig'),
+                    		'\\' + has[ws]);
+    				}
+
+    				return this.htmlEncode(s);
+				};
+				formatter.htmlEncode =  function (t) {
+						if (t == null) {
+							return '';
+						}
+    					return t.toString().replace(/&/g,"&amp;")
+    						.replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  					};
+				formatter.decorateWithSpan = function (value, className) {
+					return '<span class="' + className + '">' + this.htmlEncode(value) + '</span>';
+				};
+				formatter.arrayToHtml = function (json) {
+					var hasContents = false;
+    				var output = '';
+    				var numProps = 0;
+    
+    				for (var prop in json ) {
+      					numProps++;
+    				}
+
+    				for (var prop in json) {
+      					hasContents = true;
+      					output += '<li>' + this.valueToHtml(json[prop]);
+      					if (numProps > 1) {
+       						output += ',';
+      					}
+      					output += '</li>';
+      					numProps--;
+    				}
+    
+    				if (hasContents) {
+      					output = '[<ul class="array collapsible">' + output + '</ul>]';
+    				} else {
+      					output = '[ ]';
+    				}
+        			return output;
+				};
+
+				formatter.objectToHtml = function (json) {
+					var hasContents = false;
+    				var output = '';
+    				var numProps = 0;
+    				for (var prop in json ) {
+      					numProps++;
+    				}
+
+    				for (var prop in json) {
+      					hasContents = true;
+      					output += '<li>' + 
+      					'<span class="prop"><span class="q">"</span>' + this.jsString(prop) +
+                			'<span class="q">"</span></span>: ' + this.valueToHtml(json[prop]);
+	      				if (numProps > 1) {
+	        				output += ',';
+	      				}
+	      				output += '</li>';
+	      				numProps--;
+    				}
+    
+	    			if (hasContents) {
+	      				output = '{<ul class="obj collapsible">' + output + '</ul>}';
+	    			} else {
+	      				output = '{ }';
+	    			}
+	    
+	    			return output;
+				};
+				
+				formatter.valueToHtml = function (value) {
+					var type = value && value.constructor;
+					var output = '';
+
+					if (value == null) {
+						output += this.decorateWithSpan('null', 'null');
+					}
+
+					if (value && type == Array) {
+						output += this.arrayToHtml(value);
+					}
+
+					if (value && type == Object) {
+						output += this.objectToHtml(value);
+					}
+
+					if (type == Number) {
+						output += this.decorateWithSpan(value, 'num');
+					}
+
+					if (type == String) {
+						if (/^(http|https|file):\/\/[^\s]+$/i.test(value)) {
+        					output += '<a href="' + value + '"><span class="q">"</span>' + 
+        						this.jsString(value) + '<span class="q">"</span></a>';
+      					} else {
+        					output += '<span class="string">"' + this.jsString(value) + '"</span>';
+      					}
+					}
+
+					if (type == Boolean) {
+						output += this.decorateWithSpan(value, 'bool');
+					}
+
+					return output;
+				};
+				formatter.jsonToHtml = function (json) {
+					return '<div class="gd-ui-json-explorer">' + this.valueToHtml(json) + '</div>';
+				};
+				
+				var json = JSON.parse(val || '{}');
+				var x = formatter.jsonToHtml(json);
+				elem.html(x);
+				function collapse (evt) {
+					var collapser = evt.target;
+    				var target = collapser.parentNode.getElementsByClassName('collapsible');
+    
+    				if (!target.length) {
+      					return;
+    				}
+
+    				target = target[0];
+
+    				if (target.style.display == 'none') {
+				      var ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
+				      target.parentNode.removeChild(ellipsis);
+				      target.style.display = '';
+				      collapser.innerHTML = '-';
+    				} else {
+    				  target.style.display = 'none';
+				   	  var ellipsis = document.createElement('span');
+				      ellipsis.className = 'ellipsis';
+				      ellipsis.innerHTML = ' &hellip; ';
+				      target.parentNode.insertBefore(ellipsis, target);
+				      collapser.innerHTML = '+';
+    				}
+				}
+				
+				var collections = angular.element(elem)[0].getElementsByTagName('ul');
+				for (var i = 0; i < collections.length; i++) {
+					var collectionItem = collections[i];
+					if (collectionItem.className.indexOf('collapsible') != -1) {
+						if (collectionItem.parentNode.nodeName == 'LI') {
+							var collapser = document.createElement('div');
+							collapser.className = 'collapser';
+							collapser.innerHTML = '-';
+							collapser.addEventListener('click', collapse, false);
+							collectionItem.parentNode.insertBefore(collapser, collectionItem.parentNode.firstChild);
+						}						
+					}
+				}
+			});
+      	}
+    }
+}]);
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:dynamicInput
+ * @description
+ * # dynamicInput
+ */
+angular.module('adminApp')
+  .directive('dynamicInput', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        type: '@',
+        model: '=',
+        placeholder: '=',
+        item: '=',
+        name: '@',
+        desc: '@',
+        options: '=',
+      },
+      template: function (element) {
+        var tmpl = '' +
+          '<div class="form-group tile">' +
+          '<label for="{{id}}" class="control-label" title="{{placeholder}}">{{name}}</label>' +
+          '<a ng-show="name && desc" tabindex="0" role="button" class="fa fa-info-circle tile-info"  data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></a>'
+
+        switch (element.attr('type')) {
+          case 'date':
+            if (element.attr('locked')) {
+              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</span>';
+            } else {
+              tmpl += '<textarea class="form-control" id="{{id}}" type="text">{{model | date:\'dd/MM/yyyy\'}}</textarea>';
+            }
+            break;
+          case 'select':
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}" ng-change="measureUnitsChanged()" ng-options="option.name  for option in options track by option._id " >' +
+            '<option value="" selected>--------</option>' +
+            '</select>';
+            break;
+          case 'textarea':
+            tmpl += '<textarea class="form-control" id="{{id}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            break;
+          case 'image':
+            tmpl += '<input class="form-control" id="{{id}}" type="text" ng-model="model" placeholder="{{placeholder}}" style="height:0px; padding:0px; visibility: hidden;"/>' +
+            '<a  ng-click="displayUploader(true);" id="imageUploader" class="thumbnail" style="malrgin: -15px 0 0 0;"><img ng-src="{{model || \'/images/default_image.png\'}}" alt="..."></a>' +
+            '<image-uploader ng-if="showUploader" type="photo" enabled="true" width="640"height="480" model="model"></image-uploader>'
+            break;
+          default:
+            if (element.attr('locked')) {
+              tmpl += '<span class="form-control" id="{{id}}" type="text">{{model | number:2}}</span>';
+            } else {
+              tmpl += '<input class="form-control" id="{{id}}" type="{{type}}" ng-model="model" placeholder="{{placeholder}}"/>';
+            }
+            break;
+        }
+
+        //tmpl += '<p class="help-block"></p>' +
+        '</div>';
+
+        return tmpl;
+      },
+      link: function postLink(scope, element, attrs) {
+        scope.id = attrs.type + '_' + attrs.name.replace(/'/g, "");
+        scope.placeholder = scope.placeholder ? scope.placeholder : scope.desc;
+
+        scope.showUploader = $rootScope.showUploader;
+        scope.displayUploader = function (status) {
+          $rootScope.showUploader = status;
+          scope.showUploader = $rootScope.showUploader;
+        }
+
+        //pre select existing value in select boxes
+        scope.$watch('model', function (newVal, oldVal) {
+          if (newVal) {
+            if (element.attr('type') == 'select') {
+              $timeout(function () {
+                if (angular.isObject(scope.model)) {
+                  scope.model = scope.options.findById(scope.model._id);
+                } else {
+                  scope.model = scope.options.findById(scope.model);
+                }
+              });
+            }
+          }
+        });
+
+        $(function () {
+          $('[data-toggle="popover"]').popover()
+        })
+
+        scope.measureUnitsChanged = function () {
+          scope.$emit('measureUnitsChanged');
+        }
+      }
+    }
+  }]);
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:dynamicInput
+ * @description
+ * # dynamicInput
+ */
+angular.module('adminApp')
+  .directive('dynamicFilter', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        type: '@',
+        model: '@',
+        name: '@',
+        desc: '@',
+        options: '=',
+        range: '@'
+      },
+      template: function (element) {
+        var tmpl = '' +
+          '<div class="form-group tile {{range}}">' +
+          '<label for="{{id}}" class="control-label {{range}}" title="{{desc}}">{{name}}</label>' +
+          '<i class="fa fa-info-circle tile-info {{range}}" data-container="body" data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="{{desc}}"></i>';
+
+        switch (element.attr('type')) {
+          case 'select':
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
+            '<option value="" selected>--------</option>' +
+            '</select>';
+            break;
+          case 'parent':
+            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
+            '<option value="" selected>--------</option>' +
+            '</select>';
+            break;
+          case 'textarea':
+            tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
+            break;
+          case 'date':
+            tmpl += '<p class="input-group {{range}}">' +
+            '<input type="text" class="form-control ltr-datepicker {{range}}" datepicker-popup="dd/MM/yy" ng-model="filter" is-open="opened" close-text="Close"  ng-change="updateFilter()" />' +
+            '<span class="input-group-btn">' +
+            '<button type="button" class="btn btn-default {{range}}" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>' +
+            '</span>' +
+            '</p>';
+
+            break;
+
+          default:
+            tmpl += '<input class="form-control {{range}}" id="{{id}}" type="{{type}}" placeholder="{{desc}}" ng-model="filter" ng-change="updateFilter()"/>';
+            break;
+        }
+
+        //tmpl += '<p class="help-block"></p>' +
+        '</div>';
+
+        return tmpl;
+      },
+      link: function postLink(scope, element, attrs) {
+        scope.id = attrs.model.replace(/'/g, "");
+
+        scope.updateFilter = function () {
+          if (scope.type == 'parent'){
+            if (!scope.filter) {
+              $rootScope.filter['_id']=null;
+              return;
+            }
+            $rootScope.filter['_id'] = JSON.parse(scope.filter._id);
+          }else{
+            var suffix='';
+            if (angular.isUndefined(scope.range)) {
+              suffix='';
+            }else{
+              suffix = '_' + scope.range;
+            }
+            if (scope.filter){
+              $rootScope.filter[scope.id + suffix] = scope.filter;
+            }else{
+              delete $rootScope.filter[scope.id + suffix];
+            }
+          }
+          console.log('filter updated', $rootScope.filter);
+        }
+
+        scope.open = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          scope.opened = true;
+        };
+
+        scope.$watch('options', function (newVal, oldVal) {
+          if (newVal) {
+            if (element.attr('type') == 'select') {
+              if (angular.isDefined(scope.options) && scope.options[0] && !scope.model) {
+                scope.model = scope.options[0];
+              }
+            }
+          }
+        });
+
+
+      }
+    };
+  }]);
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:dynamicInput
+ * @description
+ * # dynamicInput
+ */
+angular.module('adminApp')
+  .directive('listItem', ['$rootScope', '$location', function ($rootScope, $location) {
+    return {
+      restrict: 'E',
+      scope: {
+        index: '=',
+        item: '=',
+        path: '@',
+        addto: '=',
+      },
+      templateUrl: 'views/partials/listItem.html',
+      link: function postLink(scope, element, attrs) {
+        scope.removeItem = scope.$parent.removeItem;
+        scope.moveItemUp = scope.$parent.moveItemUp;
+        scope.moveItemDown = scope.$parent.moveItemDown;
+
+        //scope.item.smallImage = function(){
+        if (scope.item.image) {
+          var splitted = scope.item.image.split('/');
+          splitted[splitted.length-2] = 'c_fill,g_center,h_120,w_160';
+          scope.item.small_image = splitted.join('/');
+        }else if (angular.isDefined(scope.item.image)) {
+          scope.item.small_image = 'images/placeholder.png';
+
+        }
+
+        switch (scope.path) {
+          case
+          'elements'
+          :
+            scope.parentPath = 'models';
+            break;
+          case
+          'models'
+          :
+            scope.parentPath = 'orders';
+            break;
+          default :
+            scope.parentPath = false;
+        }
+
+        if (scope.addto) {
+          scope.link = '#/' + scope.parentPath + '/' + scope.addto + '?addId=' + scope.item._id;
+        } else {
+          scope.link = '#/' + scope.path + '/' + scope.item._id;
+        }
+      }
+    }
+      ;
+  }])
+;
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:imageUploader
+ * @description
+ * # imageUploader
+ */
+angular.module('adminApp')
+  .directive('imageUploader', ['$rootScope', '$upload', '$timeout', '$sce', function ($rootScope, $upload, $timeout, $sce) {
+    return {
+      templateUrl: 'views/partials/camera.html',
+      replace: false,
+      transclude: true,
+      restrict: 'E',
+      scope: {
+        type: '@',
+        width: '@',
+        model: '@',
+        height: '@',
+        overlaySrc: '=',
+        countdown: '@',
+        enabled: '=',
+        files: '=',
+        captureMessage: '@'
+      },
+      link: function (scope, element, attrs, ngModel) {
+        scope.activeCountdown = false;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+        scope.$on('$destroy', function () {
+          if (scope.stream && typeof scope.stream.stop === 'function') {
+            scope.stream.stop();
+          }
+        });
+        scope.enableCamera = function () {
+          return navigator.getUserMedia({
+            audio: false,
+            video: true
+          }, function (stream) {
+            return scope.$apply(function () {
+              scope.stream = stream;
+              scope.isLoaded = true;
+              return scope.videoStream = $sce.trustAsResourceUrl(window.URL.createObjectURL(stream));
+            });
+          }, function (error) {
+            return scope.$apply(function () {
+              scope.isLoaded = true;
+              return scope.noCamera = true;
+            });
+          });
+        };
+        scope.disableCamera = function () {
+          return navigator.getUserMedia({
+            audio: false,
+            video: true
+          }, function (stream) {
+            return scope.$apply(function () {
+              return scope.videoStream = '';
+            });
+          });
+        };
+        scope.takePicture = function () {
+          var canvas, context, countdownTick, countdownTime;
+          canvas = window.document.getElementById('ng-photo-canvas');
+          countdownTime = scope.countdown != null ? parseInt(scope.countdown) * 1000 : 0;
+          if (canvas != null) {
+            if (countdownTime > 0) {
+              scope.activeCountdown = true;
+              scope.hideUI = true;
+            }
+            context = canvas.getContext('2d');
+            if (scope.countdownTimer) {
+              $timeout.cancel(scope.countdownTimer);
+            }
+            scope.countdownTimer = $timeout(function () {
+              var cameraFeed;
+              scope.activeCountdown = false;
+              cameraFeed = window.document.getElementById('ng-camera-feed');
+              context.drawImage(cameraFeed, 0, 0, scope.width, scope.height);
+              if (scope.overlaySrc != null) {
+                scope.addFrame(context, scope.overlaySrc, function (image) {
+                  scope.$apply(function () {
+                    return scope.media = canvas.toDataURL('image/jpeg');
+                  });
+                  if (scope.captureCallback != null) {
+                    return scope.captureCallback(scope.media);
+                  }
+                });
+              } else {
+                scope.media = canvas.toDataURL('image/jpeg');
+                if (scope.captureCallback != null) {
+                  scope.captureCallback(scope.media);
+                }
+              }
+              return scope.hideUI = false;
+            }, countdownTime + 1000);
+            scope.countdownText = parseInt(scope.countdown);
+            countdownTick = setInterval(function () {
+              return scope.$apply(function () {
+                var nextTick;
+                nextTick = parseInt(scope.countdownText) - 1;
+                if (nextTick === 0) {
+                  scope.countdownText = scope.captureMessage != null ? scope.captureMessage : 'GO!';
+                  return clearInterval(countdownTick);
+                } else {
+                  return scope.countdownText = nextTick;
+                }
+              });
+            }, 1000);
+          } else {
+          }
+          return false;
+        };
+        scope.addFrame = function (context, url, callback) {
+          var overlay;
+          if (callback == null) {
+            callback = false;
+          }
+          overlay = new Image();
+          overlay.onload = function () {
+            context.drawImage(overlay, 0, 0, scope.width, scope.height);
+            if (callback) {
+              return callback(context);
+            }
+          };
+          overlay.crossOrigin = '';
+          return overlay.src = url;
+        };
+        scope.$watch('media', function (newVal) {
+          if (newVal != null) {
+            return scope.packagedMedia = scope.media.replace(/^data:image\/\w+;base64,/, '');
+          }
+        });
+        scope.$watch('overlaySrc', function (newVal, oldVal) {
+          var preloader;
+          if (scope.overlaySrc != null) {
+            scope.isLoaded = false;
+            preloader = new Image();
+            preloader.crossOrigin = '';
+            preloader.src = newVal;
+            return preloader.onload = function () {
+              return scope.$apply(function () {
+                return scope.isLoaded = true;
+              });
+            };
+          } else {
+            return scope.isLoaded = true;
+          }
+        });
+        scope.$watch('enabled', function (newVal, oldVal) {
+          if (newVal) {
+            if (!oldVal) {
+              return scope.enableCamera();
+            }
+          } else {
+            if (oldVal != null) {
+              return scope.disableCamera();
+            }
+          }
+        });
+
+
+        scope.$watch('files', function() {
+          if (!scope.files) return;
+          scope.files.forEach(function(file){
+            scope.upload = $upload.upload({
+              url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+              data: {
+                upload_preset: $.cloudinary.config().upload_preset,
+              },
+              file: file
+            }).progress(function (e) {
+              file.progress = Math.round((e.loaded * 100.0) / e.total);
+              file.status = "Uploading... " + file.progress + "%";
+            }).success(function (data, status, headers, config) {
+              console.log('uploaded!!!', data);
+              scope.uploadedImage = data.secure_url;
+              scope.$parent.item.image = data.secure_url;
+              $('#imageUploader').addClass('ng-dirty');
+              $timeout(function(){
+                scope.close();
+              }, 1000);
+              //$rootScope.photos = $rootScope.photos || [];
+              //data.context = {custom: {photo: scope.title}};
+              //file.result = data;
+              //$rootScope.photos.push(data);
+            });
+          });
+        });
+
+        function dataURItoBlob(dataURI) {
+          // convert base64/URLEncoded data component to raw binary data held in a string
+          var byteString;
+          if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+          else
+            byteString = unescape(dataURI.split(',')[1]);
+
+          // separate out the mime component
+          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+          // write the bytes of the string to a typed array
+          var ia = new Uint8Array(byteString.length);
+          for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+
+          return new Blob([ia], {type: mimeString});
+        }
+
+        scope.uploading = {};
+        scope.uploadedImage = (scope.$parent && scope.$parent.item && scope.$parent.item.image) ? scope.$parent.item.image : "";
+
+        scope.retakePicture = function(){
+          scope.uploadedImage = '';
+        }
+
+        scope.captureCallback = function (dataURI) {
+
+          if (!dataURI) return;
+
+          var file = dataURItoBlob(dataURI);
+
+          scope.upload = $upload.upload({
+            url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+            data: {
+              upload_preset: $.cloudinary.config().upload_preset,
+            },
+            file: file
+          }).progress(function (e) {
+            scope.uploading.progress = Math.round((e.loaded * 100.0) / e.total);
+            scope.uploading.status = "Uploading... " + file.progress + "%";
+          }).success(function (data, status, headers, config) {
+            console.log('uploaded!!!', data);
+            scope.uploadedImage = data.secure_url;
+            scope.$parent.item.image = data.secure_url;
+            $('#imageUploader').addClass('ng-dirty');
+            $timeout(function(){
+              scope.close();
+            }, 1000);
+          });
+        };
+
+        scope.close = function(){
+          scope.$parent.displayUploader(false);
+        }
+
+        return scope.$watch('type', function () {
+          switch (scope.type) {
+            case 'photo':
+              if (scope.enabled) {
+                return scope.enableCamera();
+              }
+              break;
+            default:
+              if (scope.enabled) {
+                return scope.enableCamera();
+              }
+          }
+        });
+      }
+    };
+  }
+  ]);
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:modal
+ * @description
+ * # modal
+ */
+angular.module('adminApp').controller('ModalInstanceCtrl', function ($scope, $modalInstance, ok, cancel) {
+
+  $scope.ok = function () {
+    $modalInstance.close('ok');
+    if (typeof ok == "function") ok();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.close('cancel');
+    if (typeof cancel == "function") cancel();
+  };
+});
+
+
+/*
+angular.module('adminApp')
+  .directive('modal', function () {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        element.text('this is the modal directive');
+      }
+    };
+  });
+*/
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('RootCtrl', ['$rootScope', '$scope', '$cookies', '$sce', '$timeout', '$http', '$location', '$window', '$interval', '$modal', 'ElementTypes', 'Materials', 'Coatings', 'ElementFeatures', 'Providers', 'Prices',
+    function ($rootScope, $scope, $cookies, $sce, $timeout, $http, $location, $window, $interval, $modal, ElementTypes, Materials, Coatings, ElementFeatures, Providers, Prices) {
+
+      $rootScope.version = 'GRUNT_VERSION';
+      console.log('VERSION: ' + $rootScope.version);
+
+      $rootScope.exportType = '';
+
+      $scope.authenticate = function () {
+        $http.get(Consts.api_root + 'authenticate').
+          success(function (data, status, headers, config) {
+            $scope.authenticated = true;
+            $rootScope.init();
+            console.log('authenticated', data);
+          }).
+          error(function (data, status, headers, config) {
+            $scope.authenticated = false;
+          });
+      }
+
+      $rootScope.dbloading = false;
+      $rootScope.checkDdbloading = function () {
+        $rootScope.elementTypes.$promise.then(function () {
+          yo('loading elementTypes', $rootScope.elementTypes);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.materials.$promise.then(function () {
+          yo('loading materials', $rootScope.materials);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.providers.$promise.then(function () {
+          yo('loading providers', $rootScope.providers);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.coatings.$promise.then(function () {
+          yo('loading coatings', $rootScope.coatings);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.elementFeatures.$promise.then(function () {
+          yo('loading elementFeatures', $rootScope.elementFeatures);
+          $rootScope.dbloading = false;
+        });
+        $rootScope.currencies.$promise.then(function () {
+          yo('loading currencies', $rootScope.currencies);
+          $rootScope.dbloading = false;
+        });
+        if ($rootScope.anyDbloading) {
+          $rootScope.dbloading = false;
+        }
+        $rootScope.dbloading = true;
+      }
+
+      $rootScope.init = function () {
+
+        console.log('rootScope init');
+
+        $scope.updateBreadcrumbs();
+        $rootScope.saving = false;
+        $rootScope.elementTypes = ElementTypes.all();
+        $rootScope.materials = Materials.all();
+        $rootScope.providers = Providers.all();
+        $rootScope.coatings = Coatings.all();
+        $rootScope.elementFeatures = ElementFeatures.all();
+        $rootScope.currencies = Prices.all(function (currencies) {
+          $rootScope.currencies = currencies;
+          $rootScope.coins = [];
+          for (var i = 0; i < currencies.length; i++) {
+            if (currencies[i].code == 'TIME') continue;
+            $rootScope.coins.push(currencies[i]);
+          }
+        });
+        $rootScope.checkDdbloading();
+      }
+
+      $rootScope.measureUnits = [
+        {name: "גרם", _id: 'gram'},
+        {name: "סנטימטר", _id: 'centimeter'},
+        {name: "יחידה", _id: 'unit'},
+      ]
+
+      $rootScope.weightUnits = [
+        {name: "אונקייה", _id: 'ounce', grams: 31.104},
+        {name: "גרם", _id: 'gram', grams: 1},
+        {name: "קילוגרם", _id: 'kilo', grams: 1000},
+      ]
+
+      $scope.logout = function () {
+        localStorage['Authorization'] = "";
+        document.location.reload();
+      }
+
+      $scope.changePassword = function () {
+        localStorage['Authorization'] = md5($('input#password').val());
+        document.location.reload();
+      }
+
+      $scope.alert = '';
+      $scope.alertClass = '';
+      $scope.showAlert = function (text, type) {
+        $timeout(function () {
+          $scope.alertClass = type || 'warning';
+          $scope.alert = text;
+          $scope.alertIsShown = true;
+        });
+        $timeout(function () {
+          $scope.alertIsShown = false;
+        }, 3000);
+
+      }
+      $scope.connected = false;
+      $scope.waitForConnection = $interval(function () {
+        $http.get(Consts.api_root + 'ping').
+          success(function (data, status, headers, config) {
+            $('.loader').css('opacity', 0);
+            $interval.cancel($scope.waitForConnection);
+            $scope.authenticate();
+            $timeout(function () {
+              $('.loader').remove();
+            }, 2000);
+          }).
+          error(function (data, status, headers, config) {
+          });
+      }, 2000);
+
+
+      $scope.updateBreadcrumbs = function (name, path, item) {
+        $rootScope.location = path;
+        $rootScope.breadcrumbs = [{name: 'ראשי', link: '#/'}];
+        if (!name || !path) return;
+        $rootScope.breadcrumbs.push({
+          name: name, link: '#/' + path
+        });
+        if (item) {
+          $rootScope.breadcrumbs.push({
+            name: (item.code || item.name || item.desc), link: '#/' + path + '/' + item._id
+          });
+        }
+      }
+
+      $scope.setSaving = function (val) {
+        $rootScope.saving = val;
+      }
+
+      $scope.goBack = function (delay) {
+        $timeout(function () {
+          var path = $location.path().split('/');
+          path.splice(path.length - 1, 1);
+          $location.path(path.join('/'));
+          //window.history.back();
+        }, (delay || 0))
+      }
+      $scope.trustUrl = function (url) {
+        return $sce.trustAsResourceUrl(url);
+      }
+
+      $scope.getFromJson = function (str, id) {
+        if (!str || !str.isJson) {
+          return '';
+        }
+        var tot = 0;
+        var jsn = JSON.parse(str);
+        for (var i in jsn){
+          if (!jsn.hasOwnProperty(i)) return;
+          if (i.indexOf(id) >= 0){
+            tot += Number(jsn[id]);
+          }
+        }
+        return tot;
+      }
+
+      $scope.spreadJson = function (str) {
+        if (!str || !str.isJson) {
+          return '';
+        }
+        var flds = {};
+        var jsn = JSON.parse(str);
+        for (var i in jsn){
+          if (!jsn.hasOwnProperty(i)) return;
+          flds[i] = true;
+        }
+        var spread = [];
+        for (var i in flds){
+          if (!flds.hasOwnProperty(i)) return;
+          spread.push(i);
+        }
+        console.log('spread', spread);
+        return spread;
+      }
+
+      $scope.spreadJsons = function (parent, field) {
+        var flds = {};
+
+        for (var child, c=0; child = parent[c]; c++) {
+          var str = child[field];
+          if (!str || !str.isJson) {
+            continue;
+          }
+          var jsn = JSON.parse(str);
+          for (var i in jsn) {
+            if (!jsn.hasOwnProperty(i)) return;
+            flds[i] = true;
+          }
+        }
+        var spread = [];
+        for (var i in flds){
+          if (!flds.hasOwnProperty(i)) return;
+          spread.push(i);
+        }
+        console.log('spreads', spread);
+        return spread;
+      }
+
+      $rootScope.reloadItemImp = function (scope, Model, item, callback) {
+        if (item && item['_id']) {
+          scope.item = Model.query({'id': item['_id']}, function () {
+            if (angular.isFunction(callback)) callback(scope.item);
+          });
+        } else {
+          scope.items = Model.all({}, function () {
+            if (angular.isFunction(callback)) callback(scope.items);
+          });
+        }
+      }
+
+      $rootScope.updateItemImp = function (scope, Model, item, callback) {
+        console.log('updating', item);
+        Model.update(item, function (_item) {
+          console.log('updated', _item);
+          $('.ng-dirty').removeClass('ng-dirty');
+          $scope.showAlert('הפריט נשמר בהצלחה');
+          if (angular.isFunction(callback)) callback(_item);
+          if ($rootScope.saving) {
+            $scope.setSaving('false');
+            window.history.back();
+          }
+        }, function () {
+          $scope.showAlert('אירעה שגיאה בשמירת הפריט - נא לנסות שנית');
+          $scope.setSaving('false');
+        });
+      }
+      $rootScope.removeItemImp = function (scope, Model, item, callback) {
+        $scope.openModal('confirmDelete', function () {
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריט?')) {
+            console.log('deleting', item);
+            Model.remove({id: item._id}, function () {
+              $scope.showAlert('הפריט נמחק בהצלחה');
+              if (angular.isFunction(callback)) callback(item);
+            });
+            if (scope.items && scope.items.length > 0) {
+              var i = scope.items.findIndexById(item._id);
+              scope.items.splice(i, 1);
+            }
+          }
+        }, function () {
+          console.log('CANCELED')
+        });
+      }
+      $rootScope.addItemImp = function (scope, Model, item, callback) {
+        if (item) {
+          Model.create(item, function (item) {
+            if (angular.isFunction(callback)) callback(item);
+          });
+        } else {
+          Model.create(function (item) {
+            if (angular.isFunction(callback)) callback(item);
+          });
+        }
+      }
+
+      $rootScope.moveItemImp = function (scope, Model, items, item, dir, callback) {
+        //var index = items.findIndexById(item._id, '_id');
+        if (dir > 0) var item1 = items.findNextById(item.pos, 'pos');
+        else if (dir < 0) var item1 = items.findPrevById(item.pos, 'pos');
+
+        if (item && item1) {
+          var tmp = item.pos;
+          item.pos = item1.pos;
+          item1.pos = tmp;
+          $rootScope.updateItemImp(scope, Model, item, callback);
+          $rootScope.updateItemImp(scope, Model, item1, callback);
+        }
+      }
+
+      $rootScope.getPopulatedItemImp = function (scope, Model, item, callback) {
+        Model.query({'id': item['_id']}, function (item) {
+          if (angular.isFunction(callback)) callback(item);
+        });
+      }
+
+      $scope.exportToCsv = function (item, title) {
+        $scope.exportJson(item, 'element', true);
+        //$rootScope.getPopulatedItemImp($scope, Elements, item, function (item) {
+        //});
+      }
+
+      $scope.clearForm = function () {
+        $('.form-control').val('').text('');
+        $rootScope.filter = {};
+      }
+
+      $rootScope.sort = 'name';
+      $rootScope.desc = false;
+      $rootScope.sortBy = function (name) {
+        $rootScope.sort = name;
+        $rootScope.desc = !(name == 'name');
+      }
+      $rootScope.isSortedBy = function (name) {
+        return $rootScope.sort == name;
+      }
+
+      $rootScope.location = 'main';
+      $rootScope.locationIs = function (name) {
+        return $rootScope.location == name;
+      }
+
+      $scope.openModal = function (template, ok, cancel) {
+        var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'views/partials/' + template + '.html?v=' + $rootScope.version,
+          controller: 'ModalInstanceCtrl',
+          resolve: {
+            ok: function () {
+              return ok;
+            },
+            cancel: function () {
+              return cancel;
+            }
+          }
+        });
+      }
+
+
+      $scope.noimage = 'images/noimage.jpg';
+
+      $rootScope.showUploader = false;
+      $rootScope.displayUploader = function (status) {
+        $rootScope.showUploader = status;
+      }
+
+
+      $scope.elementsCost = function (model, elements, prices) {
+
+        if (!elements || !elements.length) return;
+
+        //console.log('calculating cost...');
+
+        var cost = 0;
+        var eleCost = 0;
+
+        var providerWorkCost = 0;
+        var elementFeatureCost = 0;
+        var coatingCost = 0;
+        var materialCost = 0;
+
+        $rootScope.workCost = 0;
+        $rootScope.providerWorkCost = 0;
+        $rootScope.elementFeatureCost = 0;
+        $rootScope.coatingCost = 0;
+        $rootScope.materialCost = 0;
+        $rootScope.materialsCost = {};
+
+        var override;
+        var currencies = [];
+        for (var c, i = 0; c = $scope.currencies[i]; i++) {
+          currencies.push(c);
+          override = (prices.findById(c._id || c));
+          if (override.newPrice) {
+            currencies[currencies.length - 1].conversion = parseInt(override.newPrice);
+          }
+        }
+        $rootScope.currenciesWithOverride = currencies;
+
+        var materialsCost = {};
+        model.eTypesCosts = {};
+
+        //calc each element costs (material, work, waste, currency)
+        for (var ele, e = 0; ele = elements[e]; e++) {
+
+          //get ele weight in grams
+          var eleWeight = (ele.measureUnitWeight || 0);
+          var eleWeightIncludingWaste = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+
+          //material cost
+          if ($rootScope.materials && ele.material) {
+            var material = $rootScope.materials.findById(ele.material._id || ele.material);
+            //get material price for gram
+            var materialPrice = (material.price || 0);
+            var materialWeight = ($rootScope.weightUnits.findById(material.weightUnit) || {}).grams || 1;
+            var materialConversion = currencies.findById(material.currency).conversion || 0;
+
+            override = (prices.findById(material._id));
+            if (override && override.newPrice) {
+              materialPrice = parseInt(override.newPrice);
+            }
+
+            //add to cost
+            materialCost = eleWeightIncludingWaste * ele.amount * (materialPrice * materialConversion / materialWeight); //waste affects only the material calc
+
+            materialCost = parseInt(materialCost * 100) / 100;
+            $rootScope.materialCost += materialCost;
+            if (!materialsCost[material._id]) {
+              materialsCost[material._id] = materialCost;
+            } else {
+              materialsCost[material._id] += materialCost;
+            }
+          }
+          //coating cost
+          if ($rootScope.coatings && ele.coating) {
+            var coating = $rootScope.coatings.findById(ele.coating._id || ele.coating);
+            //get measure unit of the coating
+            var coatingMeasureUnit = coating.measureUnit;
+            var coatingPrice = (coating.price || 0);
+            var coatingConversion = currencies.findById(coating.currency).conversion || 0;
+
+            override = (prices.findById(coating._id));
+            if (override && override.newPrice) {
+              coatingPrice = parseInt(override.newPrice);
+            }
+
+            //add to cost
+            if (coatingMeasureUnit == 'gram') {
+              coatingCost = eleWeight * ele.amount * coatingPrice * coatingConversion;
+            } else {
+              coatingCost = ele.amount * coatingPrice * coatingConversion;
+            }
+            $rootScope.coatingCost += coatingCost;
+          }
+          //elementFeatures cost
+          if ($rootScope.elementFeatures && ele.elementFeature) {
+            var elementFeature = $rootScope.elementFeatures.findById(ele.elementFeature._id || ele.elementFeature);
+            //get measure unit of the elementFeature
+            var elementFeatureMeasureUnit = elementFeature.measureUnit;
+            var elementFeaturePrice = (elementFeature.price || 0);
+            var elementFeatureConversion = currencies.findById(elementFeature.currency).conversion || 0;
+
+            override = (prices.findById(elementFeature._id));
+            if (override && override.newPrice) {
+              elementFeaturePrice = parseInt(override.newPrice);
+            }
+
+            //add to cost
+            if (elementFeatureMeasureUnit == 'gram') {
+              elementFeatureCost = eleWeight * ele.amount * elementFeaturePrice * elementFeatureConversion;
+            } else {
+              elementFeatureCost = ele.amount * elementFeaturePrice * elementFeatureConversion;
+            }
+            $rootScope.elementFeatureCost += elementFeatureCost;
+          }
+          //work cost
+
+          //get the work cost per unit in ILS
+          if ($rootScope.currencies && ele.workUnitCurrency) {
+            var workUnitCurrency = $rootScope.currencies.findById(ele.workUnitCurrency._id || ele.workUnitCurrency);
+            var workUnitPrice = ele.workUnitPrice * (workUnitCurrency.conversion || 0);
+            override = (prices.findById(workUnitCurrency._id));
+            if (override && override.newPrice) {
+              workUnitPrice = ele.workUnitPrice * (override.newPrice || 0);
+            }
+            var workUnit = ele.workUnit;
+            if (workUnit == 'gram') {
+              providerWorkCost = eleWeight * ele.amount * workUnitPrice;
+            } else {
+              providerWorkCost = ele.amount * workUnitPrice || 0;
+            }
+            $rootScope.providerWorkCost += providerWorkCost;
+
+          }
+
+          //save cost by elementType
+          eleCost = parseInt((providerWorkCost + elementFeatureCost + coatingCost + materialCost) * 100) / 100;
+
+          if (ele.elementType) {
+            var elementType = ($rootScope.elementTypes.findById(ele.elementType._id || ele.elementType) || {}).name;
+            if (!model.eTypesCosts[elementType]) {
+              model.eTypesCosts[elementType] = eleCost;
+            } else {
+              model.eTypesCosts[elementType] += eleCost;
+            }
+          }
+
+        }
+
+        //add work time
+        var workTime = model.requiredTime || 0;
+        var minutePrice = ($scope.currencies.findById('TIME', 'code').conversion || 0);
+        override = (prices.findById('TIME', 'code'));
+        if (override && override.newPrice) {
+          minutePrice = (override.newPrice || 0);
+        }
+
+        $rootScope.workCost = (minutePrice || 0) * workTime;
+
+
+        //Calc Total Cost
+        $rootScope.workCost = parseInt($rootScope.workCost * 100) / 100;
+        $rootScope.providerWorkCost = parseInt($rootScope.providerWorkCost * 100) / 100;
+        $rootScope.elementFeatureCost = parseInt($rootScope.elementFeatureCost * 100) / 100;
+        $rootScope.coatingCost = parseInt($rootScope.coatingCost * 100) / 100;
+        $rootScope.materialCost = parseInt($rootScope.materialCost * 100) / 100;
+        $rootScope.materialsCost = materialsCost;
+
+        cost = parseInt(($rootScope.workCost + $rootScope.providerWorkCost + $rootScope.elementFeatureCost + $rootScope.coatingCost + $rootScope.materialCost) * 100) / 100;
+
+        return cost;
+
+      }
+
+      $scope.elementsWeight = function (elements) {
+
+        if (!elements || !elements.length) return;
+
+        var materialsWeight = {};
+        $rootScope.materialsWeight = {};
+
+        //console.log('calculating weight...');
+
+        var weight = 0;
+        var totWeight = 0;
+
+        //calc each element weight
+        for (var ele, e = 0; ele = elements[e]; e++) {
+          //get ele weight in grams
+          weight = parseInt(ele.amount * (ele.measureUnitWeight || 0) * 100) / 100;
+
+          var material = $rootScope.materials.findById(ele.material);
+          if (!materialsWeight[material._id]) {
+            materialsWeight[material._id] = weight;
+          } else {
+            materialsWeight[material._id] += weight;
+          }
+          totWeight += weight;
+        }
+
+        $rootScope.materialsWeight = materialsWeight;
+
+        return totWeight;
+      }
+
+      $scope.$on('$locationChangeEnd', function (event) {
+        $('.navbar-collapse.collapse').removeClass('in');
+      });
+
+      $scope.exportJson = function (JSONData, ReportTitle, ShowLabel) {
+        //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+        var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+        arrData = typeof arrData != 'Array' ? [arrData] : arrData;
+
+        var CSV = '';
+        //Set Report title in first row or line
+
+        CSV += ReportTitle + '\r\n\n';
+
+        //This condition will generate the Label/Header
+        if (ShowLabel) {
+          var row = "";
+
+          //This loop will extract the label from 1st index of on array
+          for (var index in arrData[0]) {
+
+            if ((index.charAt(0) == '_' || index.charAt(0) == '$')) continue;
+
+            //Now convert each value to string and comma-seprated
+            row += index + ',';
+          }
+
+          row = row.slice(0, -1);
+
+          //append Label row with line break
+          CSV += row + '\r\n';
+        }
+
+        //1st loop is to extract each row
+        var val;
+        for (var i = 0; i < arrData.length; i++) {
+          var row = "";
+
+          //2nd loop will extract each column and convert it in string comma-seprated
+          for (var index in arrData[i]) {
+            val = arrData[i][index];
+            if (angular.isFunction(val)) continue;
+            else if ((index.charAt(0) == '_' || index.charAt(0) == '$')) continue;
+            else if (angular.isObject(val)) {
+              val = val.name || val.desc;
+            }
+
+
+            row += '"' + val + '",';
+          }
+
+          row.slice(0, row.length - 1);
+
+          //add a line break after each row
+          CSV += row + '\r\n';
+        }
+
+        if (CSV == '') {
+          alert("Invalid data");
+          return;
+        }
+
+        //Generate a file name
+        var fileName = "MyReport_";
+        //this will remove the blank-spaces from the title and replace it with an underscore
+        fileName += ReportTitle.replace(/ /g, "_");
+
+        //Initialize file format you want csv or xls
+        var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(CSV);
+
+        // Now the little tricky part.
+        // you can use either>> window.open(uri);
+        // but this will not work in some browsers
+        // or you will not get the correct file extension
+
+        //this trick will generate a temp <a /> tag
+        var link = document.createElement("a");
+        link.href = uri;
+
+        //set the visibility hidden so it will not effect on your web-layout
+        link.style = "visibility:hidden";
+        link.download = fileName + ".csv";
+
+        //this part will append the anchor tag and remove it after automatic click
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      $rootScope.copiedTable = -1;
+      $rootScope.exportTables = [];
+      $rootScope.setCopiedTable = function (i) {
+        $rootScope.watingTable = i;
+      }
+      $rootScope.getExportTables = function () {
+
+        $rootScope.copiedTable = -1;
+
+        var res = [];
+        $.each($('.export-table'), function (i, table) {
+          res.push({
+            name: $(table).attr('title'),
+            target: $(table).attr('data-target'),
+          })
+          $rootScope.exportTables = res;
+        })
+        $rootScope.exportTables = res;
+      }
+      $rootScope.newSpreadsheet = function () {
+        $window.open('http://spreadsheets.google.com/ccc?new&hl=he');
+      }
+
+      $rootScope.getHtmlToCopy = function (target, idx) {
+
+        $rootScope.copiedTable = -1;
+        $rootScope.waitingTable = idx;
+
+
+        function $chk(obj) {
+          return !!(obj || obj === 0)
+        }
+
+        var copyConst = {rowSeperator: "\r\n", colSeperator: "\t"}
+
+        var TableUtil = {
+          nodeToString: function (table, rowSeperator, colSeperator) {
+            var d = "";
+            try {
+              if (table.childNodes.length) {
+                if ("TD" == table.nodeName || "TH" == table.nodeName) {
+                  colSeperator = rowSeperator = "";
+                }
+                for (table = table.firstChild; table;) {
+                  d += TableUtil.nodeToString(table, rowSeperator, colSeperator);
+                  if ("TR" == table.nodeName) {
+                    d += rowSeperator;
+                  } else if ("TD" == table.nodeName || "TH" == table.nodeName) {
+                    d += colSeperator;
+                  }
+                  table = table.nextSibling
+                }
+              } else {
+                "#text" == table.nodeName && $chk(table.nodeValue) && "" !== table.nodeValue && (rowSeperator = table.nodeValue, colSeperator = RegExp("\\t", "g"), rowSeperator = rowSeperator.replace(RegExp("\\n", "g"), ""), rowSeperator = rowSeperator.replace(colSeperator, ""), d += rowSeperator.trim());
+              }
+            } catch (e) {
+              $rootScope.copiedTable = -1;
+              $rootScope.waitingTable = -1;
+              console.log("getting html error", e);
+            }
+            return d;
+          }
+        };
+
+        console.log('getting html to copy');
+        var res = TableUtil.nodeToString($('table#' + target)[0], copyConst.rowSeperator, copyConst.colSeperator);
+        console.log('got html to copy', res);
+
+        $rootScope.copiedTable = idx;
+        $rootScope.waitingTable = -1;
+
+        return (res);
+      }
+
+      $scope.setExportFile = function (filename) {
+        return $scope.exportFile = 'views/exports/' + filename + '.html';
+      }
+      $scope.exportTable = function (filename) {
+
+        $timeout(function () {
+          $scope.setExportFile(filename);
+        });
+
+        $timeout(function () {
+          var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+              , base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+              }
+              , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                  return c[p];
+                })
+              }
+            return function (table, name, filename) {
+              if (!table.nodeType) table = document.getElementById(table)
+              var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+
+              document.getElementById("dlink").href = uri + base64(format(template, ctx));
+              document.getElementById("dlink").download = filename;
+              document.getElementById("dlink").click();
+
+            }
+          })()
+
+          tableToExcel('exportTable', 'export', 'export_filename.xls');
+        }, 1000);
+      }
+
+      $rootScope.init();
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('MainCtrl', ['$scope', function ($scope) {
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+  }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('PricesCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Prices',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Prices) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, Prices, item, function(){
+          $scope.updateBreadcrumbs('מטבעות', 'prices', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Prices, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Prices, item, function(){
+          $location.path('/prices');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Prices, null, function (item) {
+          $location.path('/prices/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Prices, null, function (item) {
+          $location.path('/prices/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, Prices, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, Prices, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('SettingsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Settings',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Settings) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, Settings, item);
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Settings, item);
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Settings, item, function(){
+          $location.path('/settings');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Settings, null, function (item) {
+          $location.path('/settings/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Settings, null, function (item) {
+          $location.path('/settings/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, Settings, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, Settings, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('OrdersCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models', 'Orders',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models, Orders) {
+
+      $rootScope.init();
+
+      $scope.reloadItem = function (item) {
+        $rootScope.anyDbloading = true;
+        $rootScope.reloadItemImp($scope, Orders, item, function () {
+          $scope.parseModelsFromDb();
+          $scope.parsePricesFromDb();
+          $scope.updateBreadcrumbs('הזמנות', 'orders', $scope.item);
+          $rootScope.anyDbloading = false;
+        });
+      }
+      $scope.updateItem = function (item, asIs) {
+        if (!asIs) item = $scope.setItemVars(item);
+        $rootScope.updateItemImp($scope, Orders, item);
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Orders, item, function () {
+          $location.path('/orders');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Orders, null, function (item) {
+          $location.path('/orders/' + item._id);
+        });
+      }
+
+      $scope.deleteUnnamedItems = function () {
+        $scope.openModal('confirmDeleteUnnamed', function () {
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?')) {
+            var items = angular.copy($scope.items);
+            for (var item, i = 0; item = items[i]; i++) {
+              if (!item.name) {
+                $scope.items.splice(i, 1);
+                Orders.remove({id: item._id});
+              }
+            }
+          }
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        item = $scope.setItemVars(item);
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Orders, null, function (item) {
+          $location.path('/orders/' + item._id);
+        });
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $scope.item = $rootScope.tempItem;
+        $scope.item['_id'] = $routeParams['id'];
+
+        $rootScope.tempItem = null;
+        $timeout(function () {
+          $scope.updateItem($scope.item, true);
+          $scope.parseModelsFromDb();
+          $scope.parsePricesFromDb();
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+      var addId = $location.search()['addId'];
+
+      $rootScope.filter = {};
+
+      $scope.setItemVars = function (item) {
+        item.models = $scope.parseModelsToDb();
+        item.prices = $scope.parsePricesToDb();
+        return item;
+      }
+
+      $scope.removeModel = function (model) {
+        console.log('deleting', model);
+        if ($scope.models && $scope.models.length > 0) {
+          var i = $scope.models.findIndexById(model._id);
+          $scope.models.splice(i, 1);
+        }
+
+        $scope.updateItem($scope.item);
+      }
+
+      $scope.zeroModel = function (model) {
+        if ($scope.models && $scope.models.length > 0) {
+          var i = $scope.models.findIndexById(model._id);
+          $scope.models[i].amount = 0;
+        }
+
+        $scope.updateItem($scope.item);
+      }
+
+      $scope.moveItem = function (model, dir) {
+
+        var model1;
+        if (dir > 0) model1 = $scope.models.findNextById(model.pos, 'pos');
+        else if (dir < 0) model1 = $scope.models.findPrevById(model.pos, 'pos');
+
+
+        if (model && model1 && model1.pos >= 0) {
+          var tmp = model.pos;
+          model.pos = model1.pos;
+          model1.pos = tmp;
+        }
+
+        $scope.updateItem($scope.item);
+
+      }
+      //private
+      $scope.parseModelsFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.models) $scope.item.models = "[]";
+
+        var eles = JSON.parse($scope.item.models);
+
+        if (addId) {
+          var ele = eles.findIndexById(addId, 'id');
+          if ((ele >= 0) && eles[ele]) {
+            eles[ele].amount += 1;
+          } else {
+            eles.push({
+              id: addId, amount: 1, pos: eles.length
+            });
+          }
+        }
+
+        $scope.models = [];
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          Models.query({'id': ele['id']}, function (_model) {
+            _model.amount = eles.findById(_model._id, 'id').amount || 0;
+            _model.pos = eles.findById(_model._id, 'id').pos || 0;
+            $scope.models.push(_model);
+
+            if (addId && ($scope.models.length == eles.length)) {
+              $scope.updateItem($scope.item);
+              addId = false;
+              $location.search({'addId': null});
+            }
+
+            if (($scope.models.length == eles.length)) {
+              $scope.getOrderElements();
+            }
+          });
+        }
+
+
+      }
+
+
+      $scope.parseModelsToDb = function () {
+
+        if (!$scope.item || !$scope.item.models || !$scope.models) return;
+
+        //fix position if needed
+        var poss = [];
+        var min_pos = 99999999;
+        for (var ele, e = 0; ele = $scope.models[e]; e++) {
+          if (!(ele.pos >= 0)) ele.pos = 0;
+          while (poss[ele.pos]) {//this position already exist
+            ele.pos++;
+          }
+          if (ele.pos < min_pos) min_pos = ele.pos;
+          poss[ele.pos] = true;
+        }
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.models[e]; e++) {
+          eles.push({
+            id: ele._id, amount: ele.amount, pos: (ele.pos - min_pos)
+          });
+        }
+
+
+        $scope.item.models = JSON.stringify(eles);
+        return $scope.item.models;
+
+      }
+
+      $scope.parsePricesFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.prices) $scope.item.prices = "[]";
+
+        $scope.prices = [];
+        for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          if (ele.code == 'ILS') continue; //ignore shekels
+          ele.newPrice = null;
+          ele.icon = 'ils';
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.materials[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.coatings[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.elementFeatures[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+
+        var eles = JSON.parse($scope.item.prices);
+        //format is: _id: newPrice
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          var id = $scope.prices.findIndexById(ele.id);
+          if (id < 0) continue;
+          $scope.prices[id].newPrice = ele.newPrice;
+        }
+
+      }
+
+
+      $scope.parsePricesToDb = function () {
+
+        if (!$scope.item || !$scope.item.prices || !$scope.prices) return;
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.prices[e]; e++) {
+          if (ele.newPrice) {
+            eles.push({
+              id: ele._id, newPrice: ele.newPrice
+            });
+          }
+        }
+
+        $scope.item.prices = JSON.stringify(eles);
+
+        return $scope.item.prices;
+
+      }
+      $scope.getOrderElements = function () {
+
+        if (!$scope.models || !$scope.models.length) return;
+
+        var elements = {};
+        for (var model, i = 0; model = $scope.models[i]; i++) {
+          var eles = JSON.parse(model.elements);
+          for (var ele, j = 0; ele = eles[j]; j++) {
+            if (!elements[ele.id]) elements[ele.id] = 0;
+            elements[ele.id] += 1;
+          }
+        }
+
+        $scope.elements = [];
+        for (var e in elements) {
+          Elements.query({'id': e}, function (_element) {
+            $scope.elements.push(_element);
+
+            if (($scope.elements.length == eles.length)) {
+              $scope.calcOrderCost();
+            }
+
+          });
+        }
+      }
+
+      $scope.updateOrderQuantities = function () {
+
+        $scope.totalWorkTime = 0;
+
+        var elements = {};
+        for (var model, i = 0; model = $scope.models[i]; i++) {
+          $scope.totalWorkTime += model.amount * (model.requiredTime || 0);
+          var eles = JSON.parse(model.elements);
+          for (var ele, j = 0; ele = eles[j]; j++) {
+            if (!elements[ele.id]) elements[ele.id] = 0;
+            elements[ele.id] += (model.amount * ele.amount);
+          }
+        }
+
+        for (var e in elements) {
+          //var amount = elements[e]; //not needed
+          var ele = $scope.elements.findIndexById(e);
+          if (ele >= 0) {
+            $scope.elements[ele].amount = (elements[e] || 0);
+          }
+        }
+      }
+
+      $scope.calcOrderCost = function () {
+
+        if (!$scope.elements || !$scope.elements.length > 0) {
+          return
+        }
+
+        $scope.updateOrderQuantities();
+        return $scope.elementsCost({requiredTime: $scope.totalWorkTime}, $scope.elements, $scope.prices);
+
+      }
+
+      $scope.calcOrderWeight = function () {
+
+        if (!$scope.elements || !$scope.elements.length > 0) return;
+
+        return $scope.elementsWeight($scope.elements);
+
+      }
+
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('ModelsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Elements', 'Models', 'Orders',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Elements, Models, Orders) {
+
+      $rootScope.init();
+
+      $scope.reloadItem = function (item) {
+        $rootScope.anyDbloading = true;
+        $rootScope.reloadItemImp($scope, Models, item, function () {
+          $scope.parseElementsFromDb();
+          $scope.parsePricesFromDb();
+          $scope.setmodelId();
+          $scope.updateBreadcrumbs('דגמים', 'models', $scope.item);
+          $rootScope.anyDbloading = false;
+          console.log('Item loaded', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item, asIs) {
+        if (!asIs) {
+          item = $scope.setItemVars(item);
+          $scope.getElementsString();
+        }
+        $rootScope.updateItemImp($scope, Models, item);
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Models, item, function () {
+          $location.path('/models');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Models, null, function (item) {
+          $location.path('/models/' + item._id);
+        });
+      }
+
+      $scope.deleteUnnamedItems = function () {
+        $scope.openModal('confirmDeleteUnnamed', function () {
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?')) {
+            var items = angular.copy($scope.items);
+            for (var item, i = 0; item = items[i]; i++) {
+              if (!item.name) {
+                $scope.items.splice(i, 1);
+                Models.remove({id: item._id});
+              }
+            }
+          }
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        item = $scope.setItemVars(item);
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Models, null, function (item) {
+          $location.path('/models/' + item._id);
+        });
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $scope.item = $rootScope.tempItem;
+        $scope.item['_id'] = $routeParams['id'];
+
+        $rootScope.tempItem = null;
+        $timeout(function () {
+          $scope.updateItem($scope.item, true);
+          $scope.parseElementsFromDb();
+          $scope.parsePricesFromDb();
+          $scope.setmodelId();
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+      var addId = $location.search()['addId'];
+
+      //when this page is opened to choose and element to add to a model
+      $scope.addTo = $location.search()['addTo'];
+
+
+      $rootScope.filter = {};
+
+      $scope.setItemVars = function (item) {
+        item.name = ($scope.item.modelType || "") + ($scope.item.modelId || "");
+        item.elements = $scope.parseElementsToDb();
+        item.prices = $scope.parsePricesToDb();
+        return item;
+      }
+
+      $scope.setmodelId = function () {
+        //get the next recommended id
+        if (!$scope.item) return;
+        if (!$scope.item.modelType || $scope.item.modelId) {
+          $scope.item.recModelId = '0';
+          return;
+        }
+
+        if ($routeParams['id'] && !$scope.item.modelId) {
+          Models.maxId($scope.item, function (item) {
+            $scope.item.recModelId = parseInt(Number(item.modelId.replace(/^\D+/g, ''))) + 1;
+          });
+        }
+      }
+
+      $scope.removeElement = function (element) {
+        console.log('deleting', element);
+        if ($scope.elements && $scope.elements.length > 0) {
+          var i = $scope.elements.findIndexById(element._id);
+          $scope.elements.splice(i, 1);
+        }
+
+        $scope.updateItem($scope.item);
+      }
+
+      $scope.zeroElement = function (element) {
+        if ($scope.elements && $scope.elements.length > 0) {
+          var i = $scope.elements.findIndexById(element._id);
+          $scope.elements[i].amount = 0;
+        }
+
+        $scope.updateItem($scope.item);
+      }
+
+      Orders.all(function (orders) {
+        $scope.orders = [];
+        for (var order, i = 0; order = orders[i]; i++) {
+          if (!order.models) continue;
+          var _order = {
+            name: order.name || order.desc,
+          }
+          var id = parseOrderModels(order.models);
+          id.unshift(order._id);
+          _order._id = JSON.stringify(id);
+
+          $scope.orders.push(_order);
+        }
+        function parseOrderModels(models) {
+          var eles = JSON.parse(models);
+          var res = [];
+          for (var ele, e = 0; ele = eles[e]; e++) {
+            res.push(ele['id']);
+          }
+          return res
+        }
+      });
+
+      $scope.$watch('item.modelType', function (newVal, oldVal) {
+        if (newVal && (oldVal != newVal)) {
+          $scope.setmodelId();
+        }
+      });
+
+      $scope.moveItem = function (ele, dir) {
+        var ele1;
+        if (dir > 0) ele1 = $scope.elements.findNextById(ele.pos, 'pos');
+        else if (dir < 0) ele1 = $scope.elements.findPrevById(ele.pos, 'pos');
+
+
+        if (ele && ele1 && ele1.pos >= 0) {
+          var tmp = ele.pos;
+          ele.pos = ele1.pos;
+          ele1.pos = tmp;
+        }
+
+        $scope.updateItem($scope.item);
+
+      }
+
+      $scope.parseElementsFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.elements) $scope.item.elements = "[]";
+
+        var eles = JSON.parse($scope.item.elements);
+
+        if (addId) {
+          var ele = eles.findIndexById(addId, 'id');
+          if ((ele >= 0) && eles[ele]) {
+            eles[ele].amount += 1;
+          } else {
+            eles.push({
+              id: addId, amount: 1, pos: eles.length
+            });
+          }
+        }
+
+        $scope.elements = [];
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          Elements.query({'id': ele['id']}, function (_element) {
+            _element.amount = eles.findById(_element._id, 'id').amount || 0;
+            _element.pos = eles.findById(_element._id, 'id').pos || 0;
+            $scope.elements.push(_element);
+
+            if (addId && ($scope.elements.length == eles.length)) {
+              $scope.updateItem($scope.item);
+              addId = false;
+              $location.search({'addId': null});
+            }
+
+            if (($scope.elements.length == eles.length)) {
+              $scope.calcModelCost();
+            }
+
+          });
+        }
+
+
+      }
+
+
+      $scope.parseElementsToDb = function () {
+
+        if (!$scope.item || !$scope.item.elements || !$scope.elements) return;
+
+        //fix position if needed
+        var poss = [];
+        var min_pos = 99999999;
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          if (!(ele.pos >= 0)) ele.pos = 0;
+          while (poss[ele.pos]) {//this position already exist
+            ele.pos++;
+          }
+          if (ele.pos < min_pos) min_pos = ele.pos;
+          poss[ele.pos] = true;
+        }
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          eles.push({
+            id: ele._id, amount: ele.amount, pos: (ele.pos - min_pos)
+          });
+        }
+
+        $scope.item.elements = JSON.stringify(eles);
+
+        return $scope.item.elements;
+
+      }
+
+      $scope.getElementsString = function () {
+        var arr = [];
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          arr.push(ele.name);
+        }
+        $scope.item.elementsStr = arr.join(', ');
+      }
+
+      $scope.parsePricesFromDb = function () {
+
+        if (!$scope.item) return;
+        if (!$scope.item.prices) $scope.item.prices = "[]";
+
+        $scope.prices = [];
+        $scope.pricesByName = {};
+        for (var ele, e = 0; ele = $scope.currencies[e]; e++) {
+          if (ele.code == 'ILS') continue; //ignore shekels
+          ele.newPrice = null;
+          ele.icon = 'ils';
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.materials[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name + ' (' + ($rootScope.weightUnits.findById(ele.weightUnit._id || ele.weightUnit) || {}).name + ')';
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.coatings[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+        for (var ele, e = 0; ele = $scope.elementFeatures[e]; e++) {
+          ele.newPrice = null;
+          ele.icon = ($rootScope.currencies.findById(ele.currency) || {}).code;
+          ele.fullname = ele.name;
+          $scope.prices.push(ele);
+        }
+
+        var eles = JSON.parse($scope.item.prices);
+        //format is: _id: newPrice
+        for (var ele, e = 0; ele = eles[e]; e++) {
+          var id = $scope.prices.findIndexById(ele.id);
+          if (id < 0) continue;
+          $scope.prices[id].newPrice = ele.newPrice;
+        }
+
+        for (var price, e = 0; price = $scope.prices[e]; e++) {
+          $scope.pricesByName[price.name] = price.newPrice || price.price;
+        }
+
+      }
+
+
+      $scope.parsePricesToDb = function () {
+
+        if (!$scope.item || !$scope.item.prices || !$scope.prices) return;
+
+        var eles = [];
+        for (var ele, e = 0; ele = $scope.prices[e]; e++) {
+          if (ele.newPrice) {
+            eles.push({
+              id: ele._id, newPrice: ele.newPrice
+            });
+          }
+        }
+
+        $scope.item.prices = JSON.stringify(eles);
+
+        return $scope.item.prices;
+
+      }
+
+      $scope.calcModelCost = function () {
+
+        if (!$scope.elements || !$scope.elements.length) return;
+
+        var cost = $scope.elementsCost($scope.item, $scope.elements, $scope.prices);
+
+        $scope.costs = {};
+        for (var c, i = 0; c = $rootScope.currenciesWithOverride[i]; i++) {
+          $scope.costs[c.code] = cost / c.conversion;
+        }
+
+        $scope.item.costs = JSON.stringify($scope.costs);
+        $scope.item.eTypesCosts = JSON.stringify($scope.item.eTypesCosts);
+
+        return cost;
+
+      }
+
+      $scope.calcModelWeight = function () {
+
+        if (!$scope.elements || !$scope.elements.length) return;
+
+        var totalWeight = $scope.elementsWeight($scope.elements);
+
+        $scope.weights = {
+          total: totalWeight
+        }
+        var metal = '';
+        var metals = [];
+        for (var i in $rootScope.materialsWeight) {
+          metal = $rootScope.materials.findById(i).name;
+          if (!metal) continue;
+          $scope.weights[metal] = $rootScope.materialsWeight[i];
+          if (metals.indexOf(metal) == -1) metals.push(metal);
+        }
+
+        var stones = [];
+        var stonesCost = 0;
+        var stone = '';
+        var patt = new RegExp(/(אבן|אבנים)/);
+
+        for (var ele, e = 0; ele = $scope.elements[e]; e++) {
+          stone = $rootScope.elementTypes.findById(ele.elementType._id || ele.elementType).name;
+          if (!stone) continue;
+          if (patt.test(stone)) {
+            if (stones.indexOf(ele.name) == -1) stones.push(ele.name);
+            stonesCost += ele.cost;
+          }
+        }
+
+        $scope.item.metals = metals.join(', ');
+        $scope.item.stones = stones.join(', ');
+        $scope.item.weights = JSON.stringify($scope.weights);
+
+        return totalWeight;
+
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('ElementsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Models', 'Elements',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Models, Elements) {
+
+      $rootScope.init();
+
+      $scope.reloadItem = function (item) {
+        $rootScope.anyDbloading = true;
+        $rootScope.reloadItemImp($scope, Elements, item, function () {
+          $scope.updateBreadcrumbs('אלמנטים', 'elements', $scope.item);
+          $scope.setUnitsNames();
+          $rootScope.anyDbloading = false;
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Elements, item, function () {
+          $scope.setUnitsNames();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Elements, item, function () {
+          $location.path('/elements');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Elements, null, function (item) {
+          $location.path('/elements/' + item._id);
+        });
+      }
+      $scope.deleteUnnamedItems = function () {
+        $scope.openModal('confirmDeleteUnnamed', function () {
+          if (confirm('האם אתה בטוח שברצונך למחוק את הפריטים (זהירות בבקשה)?')) {
+            var items = angular.copy($scope.items);
+            for (var item, i = 0; item = items[i]; i++) {
+              if (!item.name) {
+                $scope.items.splice(i, 1);
+                Elements.remove({id: item._id});
+              }
+            }
+          }
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Elements, null, function (item) {
+          $location.path('/elements/' + item._id);
+        });
+      }
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+      //when this page is opened to choose and element to add to a model
+      $scope.addTo = $location.search()['addTo'];
+
+      $rootScope.filter = {};
+
+      if (!$routeParams['id']) {
+        //only fetch models on elements screen (used for filtering)
+        Models.all(function (models) {
+          $scope.models = [];
+          for (var model, i = 0; model = models[i]; i++) {
+            if (!model.elements) continue;
+            var _model = {
+              name: model.modelCode || model.desc
+            }
+            var id = parseModelElements(model.elements);
+            id.unshift(model._id);
+            _model._id = JSON.stringify(id);
+
+            $scope.models.push(_model);
+          }
+          function parseModelElements(elements) {
+            var eles = JSON.parse(elements);
+            var res = [];
+            for (var ele, e = 0; ele = eles[e]; e++) {
+              res.push(ele['id']);
+            }
+            return res
+          }
+        });
+      }
+
+      $scope.$on('measureUnitsChanged', function () {
+        $scope.setUnitsNames();
+      });
+
+      $scope.measureUnitName = $scope.measureUnitOldName = 'יחידת מדידה';
+      $scope.workUnitName = $scope.workUnitOldName = 'יחידת עבודה';
+      $scope.setUnitsNames = function () {
+        if (!$scope.item) return;
+        $timeout(function () {
+          var labels = $('label.control-label');
+          var inputs = $('.form-control');
+
+          $scope.measureUnitOldName = $scope.measureUnitName;
+          $scope.workUnitOldName = $scope.workUnitName;
+
+          if ($scope.item.elementType && $scope.item.elementType.measureUnit) {
+            if (angular.isObject($scope.item.elementType.measureUnit)) {
+              $scope.measureUnitName = $rootScope.measureUnits.findById($scope.item.elementType.measureUnit._id).name;
+            } else {
+              $scope.measureUnitName = $rootScope.measureUnits.findById($scope.item.elementType.measureUnit).name;
+            }
+          }
+          if ($scope.item.workUnit && $scope.item.workUnit._id) {
+            if (angular.isObject($scope.item.workUnit)) {
+              $scope.workUnitName = $rootScope.measureUnits.findById($scope.item.workUnit._id).name;
+            } else {
+              $scope.workUnitName = $rootScope.measureUnits.findById($scope.item.workUnit).name;
+            }
+          }
+          labels.each(function (i) {
+            var label = labels[i];
+            if ($(label).text()) {
+              $(label).text($(label).text().replace($scope.workUnitOldName, $scope.workUnitName));
+              $(label).text($(label).text().replace($scope.measureUnitOldName, $scope.measureUnitName));
+            }
+            if ($(label).attr('title')) {
+              $(label).attr('title', $(label).attr('title').replace($scope.workUnitOldName, $scope.workUnitName));
+              $(label).attr('title', $(label).attr('title').replace($scope.measureUnitOldName, $scope.measureUnitName));
+            }
+          });
+          inputs.each(function (i) {
+            var input = inputs[i];
+            if ($(input).attr('placeholder')) {
+              $(input).attr('placeholder', $(input).attr('placeholder').replace($scope.workUnitOldName, $scope.workUnitName));
+              $(input).attr('placeholder', $(input).attr('placeholder').replace($scope.measureUnitOldName, $scope.measureUnitName));
+            }
+          });
+        }, 100)
+      }
+
+      //duplicate items to reach 100000 (for testing)
+      $scope.duplicateForTest = function () {
+        var limit = 100000;
+        while ($scope.items.length < limit) {
+          $scope.items = $scope.items.concat($scope.items);
+        }
+      };
+
+      $scope.calcElementCost = function () {
+
+        if (!$scope.item) return;
+
+        var item = $scope.item;
+        item.amount = 1;
+        return $scope.elementsCost({requiredTime: 0}, [item], []);
+
+      }
+
+    }])
+;
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('CoatingsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Coatings',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Coatings) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, Coatings, item, function(){
+          $scope.updateBreadcrumbs('ציפויים', 'coatings', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Coatings, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Coatings, item, function(){
+          $location.path('/coatings');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Coatings, null, function (item) {
+          $location.path('/coatings/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Coatings, null, function (item) {
+          $location.path('/coatings/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, Coatings, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, Coatings, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('MaterialsCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Materials',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Materials) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, Materials, item, function(){
+          $scope.updateBreadcrumbs('חומרים', 'materials', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Materials, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Materials, item, function(){
+          $location.path('/materials');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Materials, null, function (item) {
+          $location.path('/materials/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Materials, null, function (item) {
+          $location.path('/materials/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, Materials, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, Materials, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('ProvidersCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'Providers',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, Providers) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, Providers, item, function(){
+          $scope.updateBreadcrumbs('ספקים', 'providers', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, Providers, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, Providers, item, function(){
+          $location.path('/providers');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, Providers, null, function (item) {
+          $location.path('/providers/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, Providers, null, function (item) {
+          $location.path('/providers/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, Providers, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, Providers, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('ElementFeaturesCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'ElementFeatures',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, ElementFeatures) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, ElementFeatures, item, function(){
+          $scope.updateBreadcrumbs('תכונות נוספות', 'elementFeatures', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, ElementFeatures, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, ElementFeatures, item, function(){
+          $location.path('/elementFeatures');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, ElementFeatures, null, function (item) {
+          $location.path('/elementFeatures/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, ElementFeatures, null, function (item) {
+          $location.path('/elementFeatures/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, ElementFeatures, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, ElementFeatures, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .controller('ElementTypesCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', 'ElementTypes',
+    function ($scope, $rootScope, $routeParams, $location, $timeout, ElementTypes) {
+
+      $scope.reloadItem = function (item) {
+        $rootScope.reloadItemImp($scope, ElementTypes, item, function(){
+          $scope.updateBreadcrumbs('סוגי אלמנטים', 'elementTypes', $scope.item);
+        });
+      }
+      $scope.updateItem = function (item) {
+        $rootScope.updateItemImp($scope, ElementTypes, item, function(){
+          $rootScope.init();
+        });
+      }
+      $scope.removeItem = function (item) {
+        $rootScope.removeItemImp($scope, ElementTypes, item, function(){
+          $location.path('/elementTypes');
+        });
+      }
+      $scope.addItem = function (item) {
+        $rootScope.addItemImp($scope, ElementTypes, null, function (item) {
+          $location.path('/elementTypes/' + item._id);
+        });
+      }
+
+      $scope.duplicateItem = function (item) {
+        $rootScope.tempItem = item;
+        $rootScope.addItemImp($scope, ElementTypes, null, function (item) {
+          $location.path('/elementTypes/' + item._id);
+        });
+      }
+
+      $scope.moveItemDown = function(item){
+        $rootScope.moveItemImp($scope, ElementTypes, $scope.items, item, 1)
+      }
+      $scope.moveItemUp = function(item){
+        $rootScope.moveItemImp($scope, ElementTypes, $scope.items, item, -1)
+      }
+
+
+      //piece of code for item duplication
+      if ($rootScope.tempItem) {
+        $timeout(function () {
+          $scope.item = $rootScope.tempItem;
+          $scope.item['_id'] = $routeParams['id'];
+
+          $rootScope.tempItem = null;
+          $timeout(function () {
+            $scope.updateItem($scope.item);
+          })
+        })
+      } else {
+        $scope.reloadItem({_id: $routeParams['id']});
+      }
+
+    }]);
+
+angular.module('adminApp')
+  .controller('ExportCtrl', function ($scope) {
+    $scope.tableToExcel = (function () {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+        , base64 = function (s) {
+          return window.btoa(unescape(encodeURIComponent(s)))
+        }
+        , format = function (s, c) {
+          return s.replace(/{(\w+)}/g, function (m, p) {
+            return c[p];
+          })
+        }
+      return function (table, name, filename) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+
+        document.getElementById("dlink").href = uri + base64(format(template, ctx));
+        document.getElementById("dlink").download = filename;
+        document.getElementById("dlink").click();
+
+      }
+    })()
+  });
+
+'use strict';
+
+/* Controllers */
+
+$.cloudinary.config().cloud_name = 'turkenich';
+$.cloudinary.config().upload_preset = 'hozspifg';
+
+
+var photoAlbumControllers = angular.module('adminApp');
+
+photoAlbumControllers.controller('photoUploadCtrlJQuery', ['$scope', '$rootScope', '$routeParams', '$location',
+  /* Uploading with jQuery File Upload */
+  function($scope, $rootScope, $routeParams, $location) {
+    $scope.files = {};
+    $scope.updateTitle = function(){
+      var uploadParams = $scope.widget.fileupload('option', 'formData');
+      uploadParams["context"] = "photo=" + $scope.title;
+      $scope.widget.fileupload('option', 'formData', uploadParams);
+    };
+
+    $scope.widget = $(".cloudinary_fileupload")
+      .unsigned_cloudinary_upload($.cloudinary.config().upload_preset, {tags: 'myphotoalbum', context:'photo='}, {
+        // Uncomment the following lines to enable client side image resizing and valiation.
+        // Make sure cloudinary/processing is included the js file
+        //disableImageResize: false,
+        //imageMaxWidth: 800,
+        //imageMaxHeight: 600,
+        //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
+        //maxFileSize: 20000000, // 20MB
+        dropZone: "#direct_upload_jquery",
+        start: function (e) {
+          $scope.status = "Starting upload...";
+          $scope.files = {};
+          $scope.$apply();
+        },
+        fail: function (e, data) {
+          $scope.status = "Upload failed";
+          $scope.$apply();
+        }
+      })
+      .on("cloudinaryprogress", function (e, data) {
+        var name = data.files[0].name;
+        var file = $scope.files[name] || {};
+        file.progress = Math.round((data.loaded * 100.0) / data.total);
+        file.status = "Uploading... " + file.progress + "%";
+        $scope.files[name] = file;
+        $scope.$apply();
+        })
+      .on("cloudinaryprogressall", function (e, data) {
+        $scope.progress = Math.round((data.loaded * 100.0) / data.total);
+        $scope.status = "Uploading... " + $scope.progress + "%";
+        $scope.$apply();
+      })
+      .on("cloudinarydone", function (e, data) {
+        $rootScope.photos = $rootScope.photos || [];
+        data.result.context = {custom: {photo: $scope.title}};
+        $scope.result = data.result;
+        var name = data.files[0].name;
+        var file = $scope.files[name] ||{};
+        file.name = name;
+        file.result = data.result;
+        $scope.files[name] = file;
+        $rootScope.photos.push(data.result);
+        $scope.$apply();
+      });
+  }]).controller('photoUploadCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$upload',
+  /* Uploading with Angular File Upload */
+  function($scope, $rootScope, $routeParams, $location, $upload) {
+
+    function dataURItoBlob(dataURI) {
+      // convert base64/URLEncoded data component to raw binary data held in a string
+      var byteString;
+      if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+      else
+        byteString = unescape(dataURI.split(',')[1]);
+
+      // separate out the mime component
+      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+      // write the bytes of the string to a typed array
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      return new Blob([ia], {type:mimeString});
+    }
+    $scope.$watch('camera', function(dataURI) {
+
+      if (!dataURI) return;
+
+      var file = dataURItoBlob(dataURI);
+
+      $scope.upload = $upload.upload({
+        url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+        data: {
+          upload_preset: $.cloudinary.config().upload_preset,
+          tags: 'myphotoalbum',
+          context:'photo=' + $scope.title
+        },
+        file: file
+      }).progress(function (e) {
+        file.progress = Math.round((e.loaded * 100.0) / e.total);
+        file.status = "Uploading... " + file.progress + "%";
+        if(!$scope.$$phase) {
+          $scope.$apply();
+        }
+      }).success(function (data, status, headers, config) {
+        $rootScope.photos = $rootScope.photos || [];
+        data.context = {custom: {photo: $scope.title}};
+        file.result = data;
+        $rootScope.photos.push(data);
+        if(!$scope.$$phase) {
+          $scope.$apply();
+        }
+      });
+    });
+
+    $scope.$watch('files', function() {
+      if (!$scope.files) return;
+      $scope.files.forEach(function(file){
+        $scope.upload = $upload.upload({
+          url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+          data: {upload_preset: $.cloudinary.config().upload_preset, tags: 'myphotoalbum', context:'photo=' + $scope.title},
+          file: file
+        }).progress(function (e) {
+          file.progress = Math.round((e.loaded * 100.0) / e.total);
+          file.status = "Uploading... " + file.progress + "%";
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        }).success(function (data, status, headers, config) {
+          $rootScope.photos = $rootScope.photos || [];
+          data.context = {custom: {photo: $scope.title}};
+          file.result = data;
+          $rootScope.photos.push(data);
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        });
+      });
+    });
+
+    /* Modify the look and fill of the dropzone when files are being dragged over it */
+    $scope.dragOverClass = function($event) {
+      var items = $event.dataTransfer.items;
+      var hasFile = false;
+      if (items != null) {
+        for (var i = 0 ; i < items.length; i++) {
+          if (items[i].kind == 'file') {
+            hasFile = true;
+            break;
+          }
+        }
+      } else {
+        hasFile = true;
+      }
+      return hasFile ? "dragover" : "dragover-err";
+    };
+  }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Prices', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'prices/:id', {}, {
+            all: { withCredentials: true, method: 'GET', params: {}, isArray: true },
+            query: { withCredentials: true, method: 'GET', params: {}, isArray: false },
+            create: { withCredentials: true, method: 'POST', params: {} },
+            update: { withCredentials: true, method: 'PUT', params: {id: '@_id'} },
+            remove: { withCredentials: true, method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Settings', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'settings/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Orders', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'orders/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+  .factory('Models', ['$resource', function ($resource) {
+    return $resource(Consts.api_root + 'models/:id', {}, {
+      all: {method: 'GET', params: {}, isArray: true},
+      query: {method: 'GET', params: {}, isArray: false},
+      maxId: {method: 'GET', params: {id: 'maxId'}, isArray: false},
+      create: {method: 'POST', params: {}},
+      update: {method: 'PUT', params: {id: '@_id'}},
+      remove: {method: 'DELETE', params: {id: '@_id'}}
+    });
+  }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Elements', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'elements/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('ElementTypes', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'elementTypes/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Materials', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'materials/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Coatings', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'coatings/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('Providers', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'providers/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+angular.module('adminApp')
+    .factory('ElementFeatures', ['$resource', function ($resource) {
+        return $resource(Consts.api_root + 'elementFeatures/:id', {}, {
+            all: { method: 'GET', params: {}, isArray: true },
+            query: { method: 'GET', params: {}, isArray: false },
+            create: { method: 'POST', params: {} },
+            update: { method: 'PUT', params: {id: '@_id'} },
+            remove: { method: 'DELETE', params: {id: '@_id'} }
+        });
+    }]);
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name adminApp.directive:itemActions
+ * @description
+ * # itemActions
+ */
+angular.module('adminApp')
+  .directive('itemActions', function () {
+    return {
+      template: '  ' +
+      '<div class="btn-group" role="group">' +
+      '<button class="btn btn-{{isDirty() ? \'default\' : \'disabled\' }}" ng-click="updateItem(item);"><i class="fa fa-fw fa-save"></i> שמירה</button>' +
+      '<button class="btn btn-{{isDirty() ? \'primary\' : \'disabled\' }}" ng-click="setSaving(true); updateItem(item); "><i class="fa fa-fw fa-{{saving ? \'refresh fa-spin\' : \'check\'}}"></i> שמירה וסיום</button>' +
+      '<button class="btn btn-{{isDirty() ? \'success\' : \'disabled\' }}" ng-click="cancelChanges(); duplicateItem(item)"><i class="fa fa-fw fa-plus"></i> שמירה כחדש</button>' +
+      '<button class="btn btn-{{isDirty() ? \'warning\' : \'disabled\' }}" ng-click="cancelChanges(); goBack(0);"><i class="fa fa-fw fa-undo"></i> ביטול</button>' +
+      '<button class="btn btn-danger" ng-click="removeItem(item)"><i class="fa fa-fw fa-trash"></i> מחיקה</button>' +
+      '<button class="btn btn-default" ng-click="openModal(\'export\')"><i class="fa fa-fw fa-download"></i> ייצוא</button>' +
+
+      '</div>'+
+      '<div style="clear:both;"></div>'
+      ,
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        scope.isDirty = function () {
+          return ($('.ng-dirty').length > 0);
+        }
+
+        scope.cancelChanges = function () {
+          ($('.ng-dirty').removeClass('ng-dirty'));
+        }
+
+        scope.$on('$locationChangeStart', function (event) {
+          if (scope.isDirty()) {
+            var answer = confirm("עדיין לא שמרת את הפריט. מעבר העמוד יבטל את השינויים, האם ברצונך להמשיך?")
+            if (!answer) {
+              event.preventDefault();
+            }
+          }
+        });
+      }
+    };
+  });
+
+'use strict';
+
+/**
+ * @ngdoc filter
+ * @name adminApp.filter:listFilter
+ * @function
+ * @description
+ * # listFilter
+ * Filter in the adminApp.
+ */
+angular.module('adminApp')
+  .filter('listFilter', ['$rootScope', function ($rootScope) {
+    return function (input) {
+      if (input.length <= 0) return;
+
+      var filter = $rootScope.filter;
+      var list = [];
+      var limit = 100;
+
+      for (var item, i=0; item=input[i]; i++){
+        if (list.length > limit) break;
+        if (shouldKeepItem(item, filter)) {
+          list.push(item);
+        }
+      }
+
+      function shouldKeepItem(item, filters){
+        for (var field in filters){
+
+          var filter = filters[field];
+
+          if (field.indexOf('_') > 0){
+            var f_parts = field.split('_');
+            var f = f_parts[0];
+            if (f_parts[1]) {var f_type = f_parts[1];}
+          }else{
+            f = field;
+          }
+
+          if (!item[f]) return false;
+          if (angular.isArray(filter)){
+            if (filter.indexOf(item[f])==-1) return false;
+          }
+          else if (angular.isDate(filter)){
+            var filterDate = new Date(filter);
+            var itemDate = new Date(item[f]);
+            if (f_type=='below'){
+              if (filterDate < itemDate) return false;
+            }else if (f_type=='above'){
+              if (filterDate > itemDate) return false;
+            }else{
+              if (filter && filterDate != itemDate) return false;
+            }
+          }
+          else if (angular.isObject(filter)) {
+            if (angular.isObject(item[f])){
+              if (filter._id != item[f]._id) return false;
+            }else{
+              if (filter._id != item[f]) return false;
+            }
+          }
+          else if (angular.isNumber(filter)){
+            if (f_type=='below'){
+              if (filter < item[f]) return false;
+            }else if (f_type=='above'){
+              if (filter > item[f]) return false;
+            }else{
+              if (filter && filter != item[f]) return false;
+            }
+          }
+          else if ((typeof(item[f]) == 'string') && (typeof(filter) == 'string')){
+            var patt = new RegExp(filter.toLowerCase());
+            if (!patt.test(item[f].toLowerCase())) return false;
+          }
+        }
+        return true;
+      }
+
+      return list;
+    };
+  }]);

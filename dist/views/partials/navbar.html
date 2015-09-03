@@ -1,1 +1,48 @@
-<nav class="navbar navbar-inverse navbar-custom navbar-fixed-top" role="navigation"><div class="container-fluid"><!-- Brand and toggle get grouped for better mobile display --><div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="#/">טורקניץ תמחורים</a></div><!-- Collect the nav links, forms, and other content for toggling --><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><ul class="nav navbar-nav"><li><a ng-class="{active: locationIs('orders')}" href="#/orders">הזמנות</a></li><li><a ng-class="{active: locationIs('models')}" href="#/models">דגמים</a></li><li><a ng-class="{active: locationIs('elements')}" href="#/elements">אלמנטים</a></li><li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">הגדרות <span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a href="#/providers">ספקים</a></li><li><a href="#/elementTypes">סוגי אלמנטים</a></li><li><a href="#/materials">חומרים</a></li><li><a href="#/coatings">ציפויים</a></li><li><a href="#/elementFeatures">תכונות נוספות</a></li><li><a href="#/prices">מטבעות</a></li></ul></li></ul><ul class="nav navbar-nav navbar-left"><li class=""><a ng-click="logout()">התנתק</a></li><li><a ng-click="openModal('calculator')"><i class="fa fa-calculator"></i></a></li></ul></div><!-- /.navbar-collapse --></div><!-- /.container-fluid --></nav><ol class="breadcrumb bottom"><li ng-repeat="breadcrumb in breadcrumbs" ng-class="breadcrumb.class"><a ng-href="{{breadcrumb.link}}">{{breadcrumb.name}}</a></li></ol>
+<nav class="navbar navbar-inverse navbar-custom navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/">טורקניץ תמחורים</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a ng-class="{active: locationIs('orders')}" href="#/orders">הזמנות</a></li>
+        <li><a ng-class="{active: locationIs('models')}" href="#/models">דגמים</a></li>
+        <li><a ng-class="{active: locationIs('elements')}" href="#/elements">אלמנטים</a></li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">הגדרות <span
+            class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#/providers">ספקים</a></li>
+            <li><a href="#/elementTypes">סוגי אלמנטים</a></li>
+            <li><a href="#/materials">חומרים</a></li>
+            <li><a href="#/coatings">ציפויים</a></li>
+            <li><a href="#/elementFeatures">תכונות נוספות</a></li>
+            <li><a href="#/prices">מטבעות</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-left">
+        <li class=""><a ng-click="logout()">התנתק</a></li>
+        <li>
+          <a ng-click="openModal('calculator')"><i class="fa fa-calculator"></i></a>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+<ol class="breadcrumb bottom">
+  <li ng-repeat="breadcrumb in breadcrumbs" ng-class="breadcrumb.class"><a ng-href="{{breadcrumb.link}}">{{breadcrumb.name}}</a>
+  </li>
+</ol>
