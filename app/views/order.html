@@ -103,6 +103,18 @@
                    name="מחיר מכירה"
                    desc="מחיר מכירה של ההזמנה כולה">
     </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.salePriceUSD"
+                   type="number"
+                   name="מחיר מכירה USD"
+                   desc="מחיר מכירה של ההזמנה כולה (US dollar)">
+    </dynamic-input>
+    <dynamic-input item="item"
+                   model="item.profit"
+                   type="number"
+                   name="אחוזי רווח"
+                   desc="אחוזי רווח דרושים">
+    </dynamic-input>
 
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="price in prices">
@@ -177,6 +189,8 @@
      data-target="production_order" style="display: none"></div>
 <div ng-include="'views/exports/catalog.html?v={{version}}'" class="export-table" title="קטלוג ללקוח"
      data-target="catalog" style="display: none"></div>
+<div ng-include="'views/exports/catalog_short.html?v={{version}}'" class="export-table" title="קטלוג ללקוח (מקוצר)"
+     data-target="catalog_short" style="display: none"></div>
 <div ng-include="'views/exports/price_list.html?v={{version}}'" class="export-table" title="מחירון"
      data-target="price_list" style="display: none"></div>
 
