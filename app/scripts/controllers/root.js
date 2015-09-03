@@ -171,6 +171,48 @@ angular.module('adminApp')
         return tot;
       }
 
+      $scope.spreadJson = function (str) {
+        if (!str || !str.isJson) {
+          return '';
+        }
+        var flds = {};
+        var jsn = JSON.parse(str);
+        for (var i in jsn){
+          if (!jsn.hasOwnProperty(i)) return;
+          flds[i] = true;
+        }
+        var spread = [];
+        for (var i in flds){
+          if (!flds.hasOwnProperty(i)) return;
+          spread.push(i);
+        }
+        console.log('spread', spread);
+        return spread;
+      }
+
+      $scope.spreadJsons = function (parent, field) {
+        var flds = {};
+
+        for (var child, c=0; child = parent[c]; c++) {
+          var str = child[field];
+          if (!str || !str.isJson) {
+            continue;
+          }
+          var jsn = JSON.parse(str);
+          for (var i in jsn) {
+            if (!jsn.hasOwnProperty(i)) return;
+            flds[i] = true;
+          }
+        }
+        var spread = [];
+        for (var i in flds){
+          if (!flds.hasOwnProperty(i)) return;
+          spread.push(i);
+        }
+        console.log('spreads', spread);
+        return spread;
+      }
+
       $rootScope.reloadItemImp = function (scope, Model, item, callback) {
         if (item && item['_id']) {
           scope.item = Model.query({'id': item['_id']}, function () {
