@@ -313,5 +313,14 @@ angular.module('adminApp')
 
       }
 
+      $scope.calcOrderGross = function () {
+
+        var gross = 0;
+        for (var model, i = 0; model = $scope.models[i]; i++) {
+          gross += (Number(model.weight) * model.amount);
+        }
+
+        return gross;
+      }
 
     }]);
