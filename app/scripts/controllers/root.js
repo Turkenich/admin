@@ -381,7 +381,7 @@ angular.module('adminApp')
 
           //get ele weight in grams
           var eleWeight = (ele.measureUnitWeight || 0);
-          var eleWeightIncludingWaste = (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
+          var eleWeightIncludingWaste = (ele.waste == 100) ? 0 : (ele.measureUnitWeight || 0) / (1 - (ele.waste / 100 || 0));
 
           //material cost
           if ($rootScope.materials && ele.material) {
