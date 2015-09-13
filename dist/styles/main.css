@@ -759,9 +759,10 @@ form.row {
 
 .list-buttons {
   float: left;
-  position: absolute;
-  bottom: 10px;
-  left: 10px; }
+  /*position: absolute;*/
+  /*bottom: 10px;*/
+  /*left: 10px; */
+}
 
 ul.nav.nav-pills {
   margin-bottom: 20px; }
@@ -864,15 +865,7 @@ input.list-cost {
 
 /*# sourceMappingURL=root.css.map */
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \000031;
-  }
-}
+/* line 1, ../../app/styles/upload.scss */
 
 #posterframe {
   position: absolute;
@@ -880,44 +873,20 @@ input.list-cost {
   top: 10px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \000032;
-  }
-}
+/* line 2, ../../app/styles/upload.scss */
 
 #logo {
   height: 51px;
   width: 241px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \000034;
-  }
-}
+/* line 4, ../../app/styles/upload.scss */
 
 .actions {
   margin: 20px 0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \000035;
-  }
-}
+/* line 5, ../../app/styles/upload.scss */
 
 .upload_link {
   color: #000;
@@ -933,15 +902,7 @@ input.list-cost {
   margin: 5px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \000039;
-  }
-}
+/* line 9, ../../app/styles/upload.scss */
 
 .photo {
   margin: 10px;
@@ -949,15 +910,7 @@ input.list-cost {
   border-top: 2px solid #ccc;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000310;
-  }
-}
+/* line 10, ../../app/styles/upload.scss */
 
 .photo .thumbnail {
   margin-top: 10px;
@@ -966,15 +919,7 @@ input.list-cost {
   border: none;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000311;
-  }
-}
+/* line 11, ../../app/styles/upload.scss */
 
 .toggle_info {
   margin-top: 10px;
@@ -983,15 +928,7 @@ input.list-cost {
   display: block;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000312;
-  }
-}
+/* line 12, ../../app/styles/upload.scss */
 
 .thumbnail_holder {
   height: 182px;
@@ -999,73 +936,33 @@ input.list-cost {
   margin-right: 10px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000313;
-  }
-}
+/* line 13, ../../app/styles/upload.scss */
 
 .info td,
 .uploaded_info td {
   font-size: 12px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000314;
-  }
-}
+/* line 14, ../../app/styles/upload.scss */
 
 .note {
   margin: 20px 0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000316;
-  }
-}
+/* line 16, ../../app/styles/upload.scss */
 
 .inline {
   display: inline-block;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000317;
-  }
-}
+/* line 17, ../../app/styles/upload.scss */
 
 td {
   vertical-align: top;
   padding-right: 5px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000319;
-  }
-}
+/* line 19, ../../app/styles/upload.scss */
 
 #direct_upload_jquery,
 #direct_upload {
@@ -1075,30 +972,14 @@ td {
   border-bottom: 1px solid #ccc;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000322;
-  }
-}
+/* line 22, ../../app/styles/upload.scss */
 
 #direct_upload_jquery h1,
 #direct_upload h1 {
   margin: 0 0 15px 0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000324;
-  }
-}
+/* line 24, ../../app/styles/upload.scss */
 
 .back_link {
   font-weight: bold;
@@ -1107,58 +988,26 @@ td {
   margin: 10px 0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000326;
-  }
-}
+/* line 26, ../../app/styles/upload.scss */
 
 #direct_upload,
 #direct_upload_jquery {
   border: 4px dashed #ccc;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000327;
-  }
-}
+/* line 27, ../../app/styles/upload.scss */
 
 #direct_upload.dragover {
   border-color: #0c0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000328;
-  }
-}
+/* line 28, ../../app/styles/upload.scss */
 
 #direct_upload.dragover-err {
   border-color: #c00;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000330;
-  }
-}
+/* line 30, ../../app/styles/upload.scss */
 
 .upload_details {
   font-size: 12px;
@@ -1167,15 +1016,7 @@ td {
   word-wrap: break-word;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000331;
-  }
-}
+/* line 31, ../../app/styles/upload.scss */
 
 .upload_button_holder {
   position: relative;
@@ -1183,15 +1024,7 @@ td {
   display: inline-block;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000337;
-  }
-}
+/* line 37, ../../app/styles/upload.scss */
 
 .upload_button {
   display: inline-block;
@@ -1210,43 +1043,19 @@ td {
   cursor: pointer;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000354;
-  }
-}
+/* line 54, ../../app/styles/upload.scss */
 
 .upload_button_holder .upload_button {
   display: block;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000358;
-  }
-}
+/* line 58, ../../app/styles/upload.scss */
 
 .upload_button:hover {
   background-color: #1185f0;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000361;
-  }
-}
+/* line 61, ../../app/styles/upload.scss */
 
 .upload_button_holder .cloudinary_fileupload {
   opacity: 0;
@@ -1262,15 +1071,7 @@ td {
   border: none;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000374;
-  }
-}
+/* line 74, ../../app/styles/upload.scss */
 
 .progress-bar {
   width: 100px;
@@ -1278,15 +1079,7 @@ td {
   height: 4px;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000379;
-  }
-}
+/* line 79, ../../app/styles/upload.scss */
 
 .progress-bar .progress {
   height: 4px;
@@ -1294,15 +1087,7 @@ td {
   width: 0%;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000385;
-  }
-}
+/* line 85, ../../app/styles/upload.scss */
 
 .camera-container {
   position: fixed;
@@ -1314,15 +1099,7 @@ td {
   z-index: 100000;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \0000395;
-  }
-}
+/* line 95, ../../app/styles/upload.scss */
 
 .camera-wrapper {
   margin: 100px auto 20px;
@@ -1336,15 +1113,7 @@ td {
   position: relative;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003106;
-  }
-}
+/* line 106, ../../app/styles/upload.scss */
 
 .camera-messages {
   text-align: center;
@@ -1352,15 +1121,7 @@ td {
   margin: auto;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003112;
-  }
-}
+/* line 112, ../../app/styles/upload.scss */
 
 .camera-overlay,
 .camera-feed {
@@ -1377,15 +1138,7 @@ td {
   background-color: #000;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003126;
-  }
-}
+/* line 126, ../../app/styles/upload.scss */
 
 .camera-controls {
   margin: 0px auto;
@@ -1393,15 +1146,7 @@ td {
   text-align: center;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003132;
-  }
-}
+/* line 132, ../../app/styles/upload.scss */
 
 .ng-camera-take-btn {
   height: 80px;
@@ -1414,15 +1159,7 @@ td {
   color: #111;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003142;
-  }
-}
+/* line 142, ../../app/styles/upload.scss */
 
 .camera-close {
   position: absolute;
@@ -1434,29 +1171,13 @@ td {
   cursor: pointer;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003150;
-  }
-}
+/* line 150, ../../app/styles/upload.scss */
 
 .camera-close:hover {
   color: white;
 }
 
-@media -sass-debug-info {
-  filename {
-    font-family: file\:\/\/\/home\/morpheus\/Projects\/Turkenich\/admin\/app\/styles\/upload\.scss;
-  }
-
-  line {
-    font-family: \00003155;
-  }
-}
+/* line 155, ../../app/styles/upload.scss */
 
 .input-uploader {
   height: 200px;

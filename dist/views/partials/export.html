@@ -3,12 +3,35 @@
     <h3 class="modal-title"> בחר את סוג הייצוא אותו תרצה להעתיק
     </h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" ng-init="getExportTables()">
+    <!--
+        <div class="btn-group-vertical" role="group" ng-init="getExportTables()">
+          <button ng-repeat="exportBtn in exportTables"
+                  class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.target, $index)"
+                  ng-click="setCopiedTable($index)"
+                  clip-copy-mime-type="text/plain">
+            <i class="fa fa-check" ng-show="copiedTable==$index"></i><i class="fa fa-refresh fa-spin"
+                                                                        ng-show="waitingTable==$index"></i>
+            {{exportBtn.name}}
+          </button>
+        </div>
+    -->
 
-    <div class="btn-group-vertical" role="group" ng-init="getExportTables()">
-      <a ng-repeat="exportBtn in exportTables"
-         class="btn btn-default" style="width:100%;" href="" clip-copy="getHtmlToCopy(exportBtn.target, $index)" ng-click="setCopiedTable($index)"
-         clip-copy-mime-type="text/plain"><i class="fa fa-check" ng-show="copiedTable==$index"></i><i class="fa fa-refresh fa-spin" ng-show="waitingTable==$index"></i> {{exportBtn.name}} </a>
+    <div class="form-group" role="group" ng-repeat="exportBtn in exportTables">
+      <div class="input-group">
+
+        <input type="text" class="form-control" ng-value="exportBtn.name">
+        <span class="input-group-btn">
+          <button class="btn btn-success" ng-if="copiedTable==$index">הועתק בהצלחה</button>
+          <button class="btn btn-warning" ng-if="waitingTable==$index">מעתיק...</button>
+          <button ng-if="copiedTable!=$index && waitingTable!=$index"
+                  class="btn btn-default" style="width:100%;" href=""
+                  clip-copy="getHtmlToCopy(exportBtn.target, $index)"
+                  ng-click="setCopiedTable($index)"
+                  clip-copy-mime-type="text/plain">העתק דו"ח זה
+          </button>
+        </span>
+      </div>
     </div>
 
     <div class="alert alert-danger" role="alert" style="margin: 20px 0 0; text-align: center;">
