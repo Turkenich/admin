@@ -151,9 +151,10 @@ form.row {
 
 .list-buttons {
   float: left;
-  position: absolute;
-  bottom: 10px;
-  left: 10px; }
+  /*position: absolute;*/
+  /*bottom: 10px;*/
+  /*left: 10px; */
+}
 
 ul.nav.nav-pills {
   margin-bottom: 20px; }

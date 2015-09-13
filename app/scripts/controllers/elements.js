@@ -77,7 +77,7 @@ angular.module('adminApp')
           for (var model, i = 0; model = models[i]; i++) {
             if (!model.elements) continue;
             var _model = {
-              name: model.modelCode || model.desc
+              name: model.name || model.desc
             }
             var id = parseModelElements(model.elements);
             id.unshift(model._id);

@@ -31,9 +31,14 @@ angular.module('adminApp')
             '</select>';
             break;
           case 'parent':
-            tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
-            '<option value="" selected>--------</option>' +
-            '</select>';
+            //tmpl += '<select class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()" ng-options="option.name  for option in options track by option._id " >' +
+            //'<option value="" selected>--------</option>' +
+            //'</select>';
+            tmpl += '<input class="form-control" id="{{id}}" type="text" ng-model="filter" placeholder="{{desc}}" typeahead-on-select="updateFilter()" typeahead="option as option.name for option in options | filter:{name:$viewValue}" typeahead-loading="loadingLocations" typeahead-no-results="noResults" />' +
+            '<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>' +
+            '<div ng-show="noResults">' +
+            '<i class="glyphicon glyphicon-remove"></i> אין תוצאות' +
+            '</div>';
             break;
           case 'textarea':
             tmpl += '<textarea class="form-control" id="{{id}}" ng-model="filter" placeholder="{{desc}}" ng-change="updateFilter()"/>';
@@ -63,6 +68,7 @@ angular.module('adminApp')
 
         scope.updateFilter = function () {
           if (scope.type == 'parent'){
+            debugger;
             if (!scope.filter) {
               $rootScope.filter['_id']=null;
               return;
